@@ -1,0 +1,126 @@
+:root {
+  --bg: #fcfdf9;
+  --ink: #26301f;
+  --muted: #7d8973;
+  --line: #dee5d5;
+  --accent: #4f7a43;
+  --warn: #a8701d;
+  --bad: #995739;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1f18;
+    --ink: #e7ecdf;
+    --muted: #9aa58f;
+    --line: #353d2f;
+    --accent: #8fbf7f;
+    --warn: #e0b265;
+    --bad: #e29a7a;
+  }
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  width: 340px;
+  margin: 0;
+  padding: 14px 16px 16px;
+  font:
+    13px/1.5 system-ui,
+    sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+label {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+input,
+select {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 7px 12px;
+  background: transparent;
+  color: var(--ink);
+}
+button.primary {
+  width: 100%;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+button.link {
+  border: 0;
+  padding: 0;
+  color: var(--accent);
+}
+.hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 6px 0 10px;
+}
+#message:empty {
+  display: none;
+}
+#message.error {
+  color: var(--bad);
+}
+h2 {
+  font-size: 13px;
+  margin: 14px 0 6px;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 260px;
+  overflow: auto;
+}
+li {
+  display: flex;
+  gap: 8px;
+  padding: 5px 0;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+}
+li .tag {
+  flex: none;
+  width: 74px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+li.attention .tag {
+  color: var(--warn);
+}
+li.filled .tag {
+  color: var(--accent);
+}

@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Folio Autofill",
+  "version": "0.1.0",
+  "description": "Fills job applications from your local Folio workspace when you click Fill. Never submits.",
+  "action": {
+    "default_title": "Folio Autofill",
+    "default_popup": "popup.html"
+  },
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": [
+    "http://127.0.0.1/*",
+    "http://localhost/*",
+    "https://*.greenhouse.io/*"
+  ],
+  "minimum_chrome_version": "116"
+}

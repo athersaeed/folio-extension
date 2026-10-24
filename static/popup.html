@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Folio Autofill</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <strong>Folio Autofill</strong>
+      <button
+        id="settings-toggle"
+        class="link"
+        aria-expanded="false"
+        aria-controls="settings"
+      >
+        Settings
+      </button>
+    </header>
+
+    <form id="settings" hidden>
+      <label>
+        Folio address
+        <input
+          id="folio-url"
+          type="url"
+          spellcheck="false"
+          placeholder="http://127.0.0.1:5173"
+        />
+      </label>
+      <label>
+        Pairing key
+        <input
+          id="pairing-key"
+          type="password"
+          spellcheck="false"
+          autocomplete="off"
+        />
+      </label>
+      <p class="hint">
+        Find the key in Folio under Personal profile → Browser extension.
+      </p>
+      <button type="submit">Save and connect</button>
+    </form>
+
+    <main id="main" hidden>
+      <label>
+        Resume to use
+        <select id="resume"></select>
+      </label>
+      <p id="summary" class="hint"></p>
+      <button id="fill" class="primary">Fill this page</button>
+      <p class="hint">
+        Fills empty fields only. Review everything, then submit yourself.
+      </p>
+    </main>
+
+    <p id="message" role="status"></p>
+    <section id="results" hidden>
+      <h2 id="results-title"></h2>
+      <ul id="results-list"></ul>
+    </section>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
