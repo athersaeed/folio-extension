@@ -82,7 +82,7 @@ const RULES = [
   },
   {
     key: "howHeard",
-    re: /\bhow did you (hear|find out|learn|find)\b|\bwhere did you (hear|find|see)\b/,
+    re: /\bhow did you (\w+ )?(hear|find out|learn|find|come across)\b|\bwhere did you (\w+ )?(hear|find|see)\b|\breferral source\b/,
   },
   {
     key: "country",

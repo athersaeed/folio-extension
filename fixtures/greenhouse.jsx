@@ -41,7 +41,14 @@ const Input = (props) => (
   <components.Input {...props} onKeyUp={props.selectProps.onKeyUp} />
 );
 // Same control logic as Greenhouse's wrapper: menuIsOpen is local state.
-function GhSelect({ id, label, options, required }) {
+function GhSelect({
+  id,
+  label,
+  options,
+  required,
+  onInputChange,
+  hideDropdownIndicator,
+}) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   state[id] = value?.label ?? null;
@@ -59,6 +66,8 @@ function GhSelect({ id, label, options, required }) {
         aria-labelledby={`${id}-label`}
         required={required}
         options={options.map((o) => ({ label: o, value: o }))}
+        onInputChange={onInputChange}
+        filterOption={onInputChange ? () => true : undefined}
         value={value}
         onChange={(v) => {
           setValue(v);
@@ -75,6 +84,36 @@ function GhSelect({ id, label, options, required }) {
         onMouseUp={() => setOpen(!open)}
       />
     </div>
+  );
+}
+
+// Greenhouse's candidate-location: options arrive from a search provider after
+// typing (here a fake, delayed one).
+const PLACES = [
+  "Toronto, Ontario, Canada",
+  "Toronto, Ohio, United States",
+  "North Toronto, Ontario, Canada",
+  "Waterloo, Ontario, Canada",
+];
+function GhLocation() {
+  const [options, setOptions] = useState([]);
+  return (
+    <GhSelect
+      id="candidate-location"
+      label="Location (City)"
+      required
+      options={options}
+      onInputChange={(text) => {
+        const t = text.toLowerCase().split(",")[0].trim();
+        setTimeout(
+          () =>
+            setOptions(
+              t ? PLACES.filter((p) => p.toLowerCase().includes(t)) : [],
+            ),
+          250,
+        );
+      }}
+    />
   );
 }
 
@@ -170,6 +209,7 @@ function App() {
         options={["Canada", "United Kingdom", "United States"]}
       />
       <Text id="phone" label="Phone" type="tel" />
+      <GhLocation />
       <Upload />
       <Text id="question_1001" label="LinkedIn Profile" />
       <Text id="question_1002" label="Website" />

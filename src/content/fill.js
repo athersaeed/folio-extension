@@ -44,7 +44,14 @@ export function fillText(el, value) {
   fire(el, "input");
   fire(el, "change");
   el.blur();
-  return el.value === value;
+  // Masked inputs (phone, dates) reformat as they go; same characters means it stuck.
+  const bare = (v) => v.replace(/[^\p{L}\p{N}]/gu, "");
+  const got = bare(el.value),
+    want = bare(value);
+  // endsWith tolerates an added country code such as +1.
+  return (
+    el.value === value || (!!got && (got.endsWith(want) || want.endsWith(got)))
+  );
 }
 
 export function fillSelect(el, value, profileKey) {

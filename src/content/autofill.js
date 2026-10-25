@@ -16,9 +16,10 @@ const MARK = "data-folio-autofill";
 
 function mark(el, status) {
   el.setAttribute(MARK, status);
-  el.style.outline =
-    status === "filled" ? "2px solid #5f9c58" : "2px solid #d39b38";
-  el.style.outlineOffset = "1px";
+  // !important: react-select styles its control with outline: 0 !important.
+  const color = status === "filled" ? "#5f9c58" : "#d39b38";
+  el.style.setProperty("outline", `2px solid ${color}`, "important");
+  el.style.setProperty("outline-offset", "1px", "important");
 }
 
 export async function autofill(doc, applicant, file) {

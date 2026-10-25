@@ -48,6 +48,10 @@ export function matchOption(options, value, key = "") {
     // Several "Yes, ..." variants means the question needs a human decision.
     return hits.length === 1 ? list.indexOf(hits[0]) : -1;
   }
+  if (key === "location") {
+    i = matchLocation(options, value);
+    if (i >= 0) return i;
+  }
   if (key === "country" || key === "location") {
     const group = countryGroup(wanted);
     if (group >= 0) {
@@ -67,4 +71,25 @@ export function matchOption(options, value, key = "") {
     if (hits.length === 1) return hits[0];
   }
   return -1;
+}
+
+// "Toronto, ON" vs search results like "Toronto, Ontario, Canada": the city must
+// match exactly, and a given region must start a word in the rest ("ON" →
+// "Ontario"). Several hits that all fit keep the provider's ranking.
+function matchLocation(options, value) {
+  const [city, ...rest] = String(value).split(",").map(clean).filter(Boolean);
+  if (!city) return -1;
+  const regions = rest.flatMap((r) => r.split(" "));
+  const fits = options
+    .map((o, n) => {
+      const [first, ...others] = String(o).split(",").map(clean);
+      if (first !== city) return -1;
+      const words = others.join(" ").split(" ");
+      const ok = regions.every((r) => words.some((w) => w.startsWith(r)));
+      return ok ? n : -1;
+    })
+    .filter((n) => n >= 0);
+  if (!fits.length) return -1;
+  // Without a region, only an unambiguous city is safe.
+  return regions.length || fits.length === 1 ? fits[0] : -1;
 }

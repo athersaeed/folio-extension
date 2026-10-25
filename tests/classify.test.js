@@ -42,6 +42,7 @@ const CASES = [
   ["What are your salary expectations?", "salaryExpectation"],
   ["When can you start?", "startDate"],
   ["How did you hear about this job?", "howHeard"],
+  ["How did you initially hear about this job?", "howHeard"],
   ["Gender", "gender"],
   ["Are you Hispanic/Latino?", "hispanicLatino"],
   ["Race", "race"],
@@ -128,5 +129,21 @@ test("option matching", () => {
     0,
   );
   assert.equal(matchOption(["LinkedIn", "Referral"], ""), -1);
+  const toronto = [
+    "Toronto, Ontario, Canada",
+    "Toronto, Ohio, United States",
+    "North Toronto, Ontario, Canada",
+  ];
+  assert.equal(matchOption(toronto, "Toronto, ON", "location"), 0);
+  assert.equal(matchOption(toronto, "Toronto, OH", "location"), 1);
+  assert.equal(
+    matchOption(toronto, "Toronto", "location"),
+    -1,
+    "ambiguous city",
+  );
+  assert.equal(
+    matchOption(["Waterloo, Ontario, Canada"], "Toronto, ON", "location"),
+    -1,
+  );
   assert.equal(matchOption(["Option A", "Option B"], "Something else"), -1);
 });
