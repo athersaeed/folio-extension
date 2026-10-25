@@ -7,6 +7,7 @@ export function summarize(frames) {
   const attention = entries.filter(
     (e) =>
       e.status === "failed" ||
+      e.status === "check" ||
       (e.required && ["unmatched", "no-value"].includes(e.status)),
   );
   const skipped = entries.filter(

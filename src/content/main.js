@@ -1,5 +1,6 @@
 // Injected into the page (and same-tab frames) only when the user clicks Fill.
 import { autofill } from "./autofill.js";
+import { captureAnswers } from "./capture.js";
 
 function decode(base64) {
   const binary = atob(base64);
@@ -17,4 +18,9 @@ globalThis.__folioAutofill = async (applicant, file, options) => ({
     file && { name: file.name, type: file.type, bytes: decode(file.base64) },
     options,
   ),
+});
+
+globalThis.__folioCapture = () => ({
+  url: location.href,
+  ...captureAnswers(document),
 });

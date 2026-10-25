@@ -4,6 +4,7 @@ import {
   checkUrl,
   fetchApplicant,
   fetchResumeFile,
+  saveAnswers,
 } from "./folio-api.js";
 import { summarize } from "./summary.js";
 import {
@@ -54,8 +55,11 @@ async function connect() {
   }
   select.value = data.applicant.resume?.id || data.resumes[0].id;
   const count = Object.keys(data.applicant.fields).length;
+  const bank = data.answers?.length || 0;
   $("summary").textContent =
-    `${count} saved answer${count === 1 ? "" : "s"} ready.`;
+    `${count} profile answer${count === 1 ? "" : "s"}` +
+    (bank ? ` and ${bank} saved from past forms` : "") +
+    " ready.";
   $("main").hidden = false;
   renderOptions();
 }
@@ -107,8 +111,15 @@ function renderOptions() {
             ? hasResumeFile
             : key === "startDate"
               ? !!saved.noticePeriod
-              : !!saved[key];
-        note.textContent = available ? "" : "not saved in Folio";
+              : key === "savedAnswers"
+                ? !!data?.answers?.length
+                : !!saved[key];
+        note.textContent =
+          key === "savedAnswers" && available
+            ? `${data.answers.length} saved`
+            : available
+              ? ""
+              : "not saved in Folio";
         row.append(box, label, note);
         set.append(row);
       }
@@ -169,7 +180,7 @@ $("fill").addEventListener("click", async () => {
       args: [
         fresh.applicant,
         disabled.has("resume") ? null : file,
-        { off: [...disabled] },
+        { off: [...disabled], answers: fresh.answers || [] },
       ],
     });
     render(summarize(results.map((r) => r.result).filter(Boolean)));
@@ -206,17 +217,126 @@ function render({ filled, attention, skipped }) {
         "attention",
         e.status === "no-value"
           ? "no answer"
-          : e.status === "failed"
+          : e.status === "failed" || e.status === "check"
             ? "check"
             : "required",
       ),
     ),
-    ...filled.map((e) => row(e, "filled", "filled")),
+    ...filled.map((e) =>
+      row(e, "filled", e.key === "saved" ? "saved" : "filled"),
+    ),
     ...skipped.map((e) =>
       row(e, "", { kept: "kept", off: "off" }[e.status] || "skipped"),
     ),
   );
 }
+
+// --- Saving answers from the page -------------------------------------------
+let captured = [];
+$("capture").addEventListener("click", async () => {
+  const button = $("capture");
+  button.disabled = true;
+  say("Reading your answers…");
+  try {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+    if (!tab?.id || !/^https?:/.test(tab.url || "https:"))
+      throw new Error("Open the application you answered first.");
+    const target = { tabId: tab.id, allFrames: true };
+    await chrome.scripting.executeScript({ target, files: ["content.js"] });
+    const frames = await chrome.scripting.executeScript({
+      target,
+      func: () => globalThis.__folioCapture?.(),
+    });
+    const seen = new Set();
+    captured = frames
+      .flatMap((f) => f.result?.answers || [])
+      .filter((a) => !seen.has(a.question) && seen.add(a.question))
+      .map((a) => ({ ...a, include: true, detected: a.company }));
+    const company = frames.map((f) => f.result?.company).find(Boolean) || "";
+    captured.forEach((a) => (a.pageCompany = company));
+    renderReview();
+    say(captured.length ? "" : "No answers of yours to save on this page yet.");
+  } catch (e) {
+    say(e.message, true);
+  } finally {
+    button.disabled = false;
+  }
+});
+function renderReview() {
+  $("review").hidden = !captured.length;
+  const chosen = captured.filter((a) => a.include).length;
+  $("review-title").textContent =
+    `${captured.length} answer${captured.length === 1 ? "" : "s"} found`;
+  $("review-save").textContent = `Save ${chosen} to Folio`;
+  $("review-save").disabled = !chosen;
+  $("review-list").replaceChildren(
+    ...captured.map((a) => {
+      const li = document.createElement("li");
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      box.checked = a.include;
+      box.setAttribute("aria-label", `Save answer to: ${a.question}`);
+      box.addEventListener("change", () => {
+        a.include = box.checked;
+        renderReview();
+      });
+      const q = document.createElement("span");
+      q.className = "q";
+      q.textContent = a.question;
+      const ans = document.createElement("span");
+      ans.className = "a";
+      ans.textContent =
+        a.kind === "draft"
+          ? `${a.answer.slice(0, 90)}… (saved as a draft, never autofilled)`
+          : a.answer;
+      li.append(box, q, ans);
+      if (a.pageCompany) {
+        const scope = document.createElement("label");
+        scope.className = "scope";
+        const only = document.createElement("input");
+        only.type = "checkbox";
+        only.checked = !!a.company;
+        only.addEventListener("change", () => {
+          a.company = only.checked ? a.pageCompany : "";
+        });
+        scope.append(only, ` Only for ${a.pageCompany}`);
+        li.append(scope);
+      }
+      return li;
+    }),
+  );
+}
+$("review-cancel").addEventListener("click", () => {
+  captured = [];
+  renderReview();
+});
+$("review-save").addEventListener("click", async () => {
+  const button = $("review-save");
+  button.disabled = true;
+  try {
+    const answers = captured
+      .filter((a) => a.include)
+      .map(({ question, answer, kind, company }) => ({
+        question,
+        answer,
+        kind,
+        company,
+      }));
+    const result = await saveAnswers(settings, answers);
+    captured = [];
+    renderReview();
+    await connect();
+    say(
+      `Saved to Folio: ${result.added} new, ${result.updated} updated (${result.total} in total).`,
+    );
+  } catch (e) {
+    say(e.message, true);
+    button.disabled = false;
+  }
+});
 
 Promise.all([loadSettings(), loadDisabled()]).then(([loaded, off]) => {
   settings = loaded;

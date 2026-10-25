@@ -4,6 +4,7 @@
 import { classify } from "../classify.js";
 import { collectFields } from "./fields.js";
 import { startPlan, dateForTextField, matchNotice } from "../start-date.js";
+import { findSavedAnswer, detectCompany } from "../answers.js";
 import {
   hasValue,
   fillText,
@@ -23,8 +24,15 @@ function mark(el, status) {
   el.style.setProperty("outline-offset", "1px", "important");
 }
 
-export async function autofill(doc, applicant, file, { off = [] } = {}) {
+export async function autofill(
+  doc,
+  applicant,
+  file,
+  { off = [], answers = [] } = {},
+) {
   const disabled = new Set(off);
+  const bank = disabled.has("savedAnswers") ? [] : answers;
+  const company = bank.length ? detectCompany(doc) : "";
   const report = [];
   const values = applicant.fields || {};
   for (const field of collectFields(doc)) {
@@ -44,6 +52,29 @@ export async function autofill(doc, applicant, file, { off = [] } = {}) {
         : field.kind === "combobox"
           ? field.el.closest('[class*="control"]') || field.el
           : field.el;
+    // Not a profile question: try the answers the user saved from past forms.
+    const saved =
+      !profileKey &&
+      bank.length &&
+      field.kind !== "checkbox" &&
+      field.kind !== "file" &&
+      !hasValue(field)
+        ? findSavedAnswer(bank, field.label, company)
+        : null;
+    if (saved) {
+      entry.key = "saved";
+      let ok = false;
+      try {
+        ok = await fillSaved(field, saved.answer.answer);
+      } catch (e) {
+        entry.error = String(e?.message || e);
+      }
+      // Similar but not identical wording: filled, but the user must check it.
+      entry.status = !ok ? "failed" : saved.exact ? "filled" : "check";
+      entry.savedQuestion = saved.answer.question;
+      mark(target, entry.status === "filled" ? "filled" : "attention");
+      continue;
+    }
     if (!profileKey) {
       entry.status = "unmatched";
       if (field.required && !hasValue(field)) mark(target, "attention");
@@ -111,6 +142,14 @@ async function fillStartDate(field, plan) {
   if (el.type === "date") return fillText(el, plan.iso);
   const hint = `${el.getAttribute("placeholder") || ""} ${field.label}`;
   return fillText(el, dateForTextField(plan, hint) ?? plan.text);
+}
+
+function fillSaved(field, text) {
+  const { el, kind } = field;
+  if (kind === "select") return fillSelect(el, text, "");
+  if (kind === "radio") return fillRadio(field, text, "");
+  if (kind === "combobox") return fillCombobox(el, text, "");
+  return fillText(el, text);
 }
 
 // Hidden upload inputs: outline the visible group instead.

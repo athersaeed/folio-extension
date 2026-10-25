@@ -29,11 +29,15 @@ export function checkUrl(value) {
   return url.origin;
 }
 
-async function call(settings, route) {
+async function call(settings, route, init = {}) {
   let response;
   try {
     response = await fetch(settings.folioUrl + route, {
-      headers: { "X-Folio-Extension-Key": settings.pairingKey },
+      ...init,
+      headers: {
+        "X-Folio-Extension-Key": settings.pairingKey,
+        ...init.headers,
+      },
       cache: "no-store",
     });
   } catch {
@@ -74,4 +78,15 @@ export async function fetchResumeFile(settings, resume) {
       txt: "text/plain",
     }[extension] || "application/octet-stream";
   return { name, type, base64: btoa(binary) };
+}
+
+// Adds answers the user approved in the popup to Folio's answer bank.
+export async function saveAnswers(settings, answers) {
+  return (
+    await call(settings, "/api/ext/answers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ answers }),
+    })
+  ).json();
 }

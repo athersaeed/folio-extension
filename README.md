@@ -32,6 +32,27 @@ reported as "off" and never flagged as missing. Fields without a saved answer in
 Folio are marked "not saved in Folio". The choice is stored in the extension
 (`chrome.storage.local`), so it applies to every job page.
 
+## Saved answers (the answer bank)
+
+After answering a form yourself, click **Save answers from this page**. The
+popup lists the questions you answered that aren't profile questions (name,
+email and so on are skipped, as are consent boxes, uploads and anything that
+looks like an ID, password or bank detail). Untick what you don't want reused,
+then **Save to Folio**. Answers are stored in your Folio data folder
+(`workspace.json` → `answers`), and you can edit or delete them on Folio's
+**Saved answers** page.
+
+- Same question next time (ignoring case, punctuation and the `*`): filled.
+- Similar wording (≥75% word overlap): filled but outlined amber as "check".
+- Essays (long text answers) are saved as **drafts** and never autofilled.
+- Questions naming the company or pointing at it ("this company", "work here")
+  and all drafts are saved **only for that company**; you can change the scope
+  in the review list or in Folio.
+- Switch it off under Options → "Learned from past forms".
+
+The extension's only write to Folio is `POST /api/ext/answers`, which can add
+or update answers and nothing else.
+
 ## How it works
 
 ```

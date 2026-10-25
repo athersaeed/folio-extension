@@ -38,6 +38,17 @@ export function hasValue(field) {
   return !!el.value.trim();
 }
 
+// What the user has entered, as text: typed value, chosen option or radio label.
+export function readValue(field) {
+  const { el, kind } = field;
+  if (kind === "radio")
+    return field.options.find((o) => o.el.checked)?.label || "";
+  if (kind === "select")
+    return el.value ? el.selectedOptions[0]?.textContent.trim() || "" : "";
+  if (kind === "combobox") return comboboxValue(el);
+  return el.value || "";
+}
+
 export function fillText(el, value) {
   el.focus();
   setNativeValue(el, value);

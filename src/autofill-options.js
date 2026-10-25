@@ -42,6 +42,10 @@ export const OPTION_GROUPS = [
     ],
   },
   {
+    title: "Learned from past forms",
+    fields: [["savedAnswers", "Saved answers (from Folio)"]],
+  },
+  {
     title: "Voluntary self-identification",
     fields: [
       ["gender", "Gender"],

@@ -187,3 +187,43 @@ li.filled .tag {
   font-size: 10px;
   color: var(--muted);
 }
+button.wide {
+  width: 100%;
+  margin-top: 4px;
+}
+#review {
+  margin-top: 12px;
+}
+#review-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 8px;
+  align-items: start;
+}
+#review-list input {
+  width: auto;
+  margin: 2px 0 0;
+  accent-color: var(--accent);
+}
+#review-list .q {
+  font-weight: 600;
+}
+#review-list .a,
+#review-list .scope {
+  grid-column: 2;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+#review-list .scope {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 10px;
+}
+#review-list .scope input {
+  display: inline-block;
+}
+#review-cancel {
+  margin-left: 10px;
+}
