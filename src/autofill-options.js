@@ -36,7 +36,7 @@ export const OPTION_GROUPS = [
     title: "Preferences",
     fields: [
       ["salaryExpectation", "Salary expectation"],
-      ["startDate", "Start date / notice"],
+      ["startDate", "Start date (from notice period)"],
       ["willingToRelocate", "Willing to relocate"],
       ["howHeard", "How you heard about the job"],
     ],

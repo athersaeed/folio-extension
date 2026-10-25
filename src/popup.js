@@ -102,7 +102,12 @@ function renderOptions() {
         box.addEventListener("change", () => update([key], box.checked));
         const note = document.createElement("span");
         note.className = "note";
-        const available = key === "resume" ? hasResumeFile : !!saved[key];
+        const available =
+          key === "resume"
+            ? hasResumeFile
+            : key === "startDate"
+              ? !!saved.noticePeriod
+              : !!saved[key];
         note.textContent = available ? "" : "not saved in Folio";
         row.append(box, label, note);
         set.append(row);

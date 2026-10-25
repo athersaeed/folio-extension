@@ -54,13 +54,19 @@ export function fillText(el, value) {
   );
 }
 
-export function fillSelect(el, value, profileKey) {
+// `pick(optionTexts) → index` chooses the option; by default it compares the
+// saved answer's wording, start dates pass a notice-period matcher instead.
+const byWording = (value, profileKey) => (texts) =>
+  matchOption(texts, value, profileKey);
+
+export function fillSelect(
+  el,
+  value,
+  profileKey,
+  pick = byWording(value, profileKey),
+) {
   const options = [...el.options];
-  const i = matchOption(
-    options.map((o) => o.textContent),
-    value,
-    profileKey,
-  );
+  const i = pick(options.map((o) => o.textContent));
   if (i < 0) return false;
   setNativeValue(el, options[i].value);
   fire(el, "input");
@@ -68,12 +74,13 @@ export function fillSelect(el, value, profileKey) {
   return el.selectedIndex === i;
 }
 
-export function fillRadio(field, value, profileKey) {
-  const i = matchOption(
-    field.options.map((o) => o.label),
-    value,
-    profileKey,
-  );
+export function fillRadio(
+  field,
+  value,
+  profileKey,
+  pick = byWording(value, profileKey),
+) {
+  const i = pick(field.options.map((o) => o.label));
   if (i < 0) return false;
   const input = field.options[i].el;
   input.click();
@@ -141,28 +148,22 @@ async function openCombobox(el) {
   mouse(control, "click");
   return waitForOptions(el, 500);
 }
-export async function fillCombobox(el, value, profileKey) {
+export async function fillCombobox(
+  el,
+  value,
+  profileKey,
+  pick = byWording(value, profileKey),
+) {
   let options = await openCombobox(el);
   // Async lists (locations) only load after typing.
-  if (
-    !options.length ||
-    matchOption(
-      options.map((o) => o.textContent),
-      value,
-      profileKey,
-    ) < 0
-  ) {
+  if (!options.length || pick(options.map((o) => o.textContent)) < 0) {
     setNativeValue(el, value);
     fire(el, "input");
     key(el, "keyup", "a");
     await sleep(400);
     options = await waitForOptions(el, 2500);
   }
-  const i = matchOption(
-    options.map((o) => o.textContent),
-    value,
-    profileKey,
-  );
+  const i = pick(options.map((o) => o.textContent));
   if (i < 0) {
     key(el, "keydown", "Escape");
     key(el, "keyup", "Escape");

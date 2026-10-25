@@ -3,6 +3,7 @@
 // Never submits, never overwrites a field that already has a value.
 import { classify } from "../classify.js";
 import { collectFields } from "./fields.js";
+import { startPlan, dateForTextField, matchNotice } from "../start-date.js";
 import {
   hasValue,
   fillText,
@@ -66,7 +67,10 @@ export async function autofill(doc, applicant, file, { off = [] } = {}) {
       if (entry.status === "filled") mark(fileTarget(field.el), "filled");
       continue;
     }
-    const value = values[profileKey];
+    // Start dates are worked out from the notice period at fill time.
+    const plan = profileKey === "startDate" ? startPlan(values) : null;
+    const value =
+      profileKey === "startDate" ? plan?.notice : values[profileKey];
     if (!value) {
       entry.status = "no-value";
       if (field.required) mark(target, "attention");
@@ -79,7 +83,9 @@ export async function autofill(doc, applicant, file, { off = [] } = {}) {
     }
     let ok = false;
     try {
-      if (field.kind === "select") ok = fillSelect(field.el, value, profileKey);
+      if (plan) ok = await fillStartDate(field, plan);
+      else if (field.kind === "select")
+        ok = fillSelect(field.el, value, profileKey);
       else if (field.kind === "radio") ok = fillRadio(field, value, profileKey);
       else if (field.kind === "combobox")
         ok = await fillCombobox(field.el, value, profileKey);
@@ -91,6 +97,20 @@ export async function autofill(doc, applicant, file, { off = [] } = {}) {
     mark(target, ok ? "filled" : "attention");
   }
   return report;
+}
+
+// Dropdowns pick by notice length; date inputs get the date; text boxes get a
+// bare date when they spell out a format, otherwise a readable sentence.
+async function fillStartDate(field, plan) {
+  const pick = (texts) => matchNotice(texts, plan);
+  const { el, kind } = field;
+  if (kind === "select") return fillSelect(el, plan.notice, "startDate", pick);
+  if (kind === "radio") return fillRadio(field, plan.notice, "startDate", pick);
+  if (kind === "combobox")
+    return fillCombobox(el, plan.notice, "startDate", pick);
+  if (el.type === "date") return fillText(el, plan.iso);
+  const hint = `${el.getAttribute("placeholder") || ""} ${field.label}`;
+  return fillText(el, dateForTextField(plan, hint) ?? plan.text);
 }
 
 // Hidden upload inputs: outline the visible group instead.
