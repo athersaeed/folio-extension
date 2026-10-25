@@ -8,12 +8,13 @@ function decode(base64) {
   return bytes;
 }
 
-globalThis.__folioAutofill = async (applicant, file) => ({
+globalThis.__folioAutofill = async (applicant, file, options) => ({
   url: location.href,
   isTop: window === window.top,
   report: await autofill(
     document,
     applicant,
     file && { name: file.name, type: file.type, bytes: decode(file.base64) },
+    options,
   ),
 });

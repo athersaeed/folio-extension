@@ -74,3 +74,23 @@ test("fills empty fields, keeps typed ones, flags required unknowns", async () =
   );
   assert.deepEqual(skipped.map((e) => e.status).sort(), ["kept", "no-value"]);
 });
+
+test("fields switched off are left alone and never flagged", async () => {
+  const { window } = new JSDOM(HTML);
+  const doc = window.document;
+  const report = await autofill(
+    doc,
+    { fields: { firstName: "Ada", email: "ada@example.test" } },
+    null,
+    { off: ["firstName"] },
+  );
+  assert.equal(doc.getElementById("first_name").value, "");
+  assert.equal(
+    doc.getElementById("first_name").hasAttribute("data-folio-autofill"),
+    false,
+  );
+  assert.equal(doc.querySelector("[name=email]").value, "ada@example.test");
+  const first = report.find((e) => e.key === "firstName");
+  assert.equal(first.status, "off");
+  assert.equal(summarize([{ report }]).attention.includes(first), false);
+});

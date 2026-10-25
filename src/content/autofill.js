@@ -22,7 +22,8 @@ function mark(el, status) {
   el.style.setProperty("outline-offset", "1px", "important");
 }
 
-export async function autofill(doc, applicant, file) {
+export async function autofill(doc, applicant, file, { off = [] } = {}) {
+  const disabled = new Set(off);
   const report = [];
   const values = applicant.fields || {};
   for (const field of collectFields(doc)) {
@@ -45,6 +46,11 @@ export async function autofill(doc, applicant, file) {
     if (!profileKey) {
       entry.status = "unmatched";
       if (field.required && !hasValue(field)) mark(target, "attention");
+      continue;
+    }
+    // Switched off in the popup's Options tab: leave it, and don't nag.
+    if (disabled.has(profileKey)) {
+      entry.status = "off";
       continue;
     }
     if (hasValue(field)) {

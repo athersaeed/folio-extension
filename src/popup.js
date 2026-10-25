@@ -6,9 +6,16 @@ import {
   fetchResumeFile,
 } from "./folio-api.js";
 import { summarize } from "./summary.js";
+import {
+  OPTION_GROUPS,
+  loadDisabled,
+  saveDisabled,
+} from "./autofill-options.js";
 
 const $ = (id) => document.getElementById(id);
-let settings, data;
+let settings,
+  data,
+  disabled = new Set();
 
 function say(text, isError = false) {
   $("message").textContent = text;
@@ -50,6 +57,64 @@ async function connect() {
   $("summary").textContent =
     `${count} saved answer${count === 1 ? "" : "s"} ready.`;
   $("main").hidden = false;
+  renderOptions();
+}
+
+// --- Options tab -------------------------------------------------------------
+function showTab(name) {
+  for (const tab of ["fill", "options"]) {
+    $(`tab-${tab}`).setAttribute("aria-selected", String(tab === name));
+    $(`panel-${tab}`).hidden = tab !== name;
+  }
+  $("results").hidden = name !== "fill" || !$("results-list").children.length;
+}
+$("tab-fill").addEventListener("click", () => showTab("fill"));
+$("tab-options").addEventListener("click", () => showTab("options"));
+
+function renderOptions() {
+  const saved = data?.applicant.fields || {};
+  const hasResumeFile = !!data?.applicant.resume?.original;
+  $("options-list").replaceChildren(
+    ...OPTION_GROUPS.map((group) => {
+      const set = document.createElement("fieldset");
+      set.className = "option-group";
+      const legend = document.createElement("legend");
+      legend.append(group.title);
+      const allOn = group.fields.every(([key]) => !disabled.has(key));
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "link";
+      toggle.textContent = allOn ? "Turn all off" : "Turn all on";
+      toggle.addEventListener("click", () =>
+        update(
+          group.fields.map(([key]) => key),
+          !allOn,
+        ),
+      );
+      legend.append(toggle);
+      set.append(legend);
+      for (const [key, label] of group.fields) {
+        const row = document.createElement("label");
+        row.className = "option";
+        const box = document.createElement("input");
+        box.type = "checkbox";
+        box.checked = !disabled.has(key);
+        box.addEventListener("change", () => update([key], box.checked));
+        const note = document.createElement("span");
+        note.className = "note";
+        const available = key === "resume" ? hasResumeFile : !!saved[key];
+        note.textContent = available ? "" : "not saved in Folio";
+        row.append(box, label, note);
+        set.append(row);
+      }
+      return set;
+    }),
+  );
+}
+async function update(keys, on) {
+  for (const key of keys) on ? disabled.delete(key) : disabled.add(key);
+  await saveDisabled(disabled);
+  renderOptions();
 }
 
 $("settings-toggle").addEventListener("click", () =>
@@ -94,8 +159,13 @@ $("fill").addEventListener("click", async () => {
     await chrome.scripting.executeScript({ target, files: ["content.js"] });
     const results = await chrome.scripting.executeScript({
       target,
-      func: (applicant, file) => globalThis.__folioAutofill?.(applicant, file),
-      args: [fresh.applicant, file],
+      func: (applicant, file, options) =>
+        globalThis.__folioAutofill?.(applicant, file, options),
+      args: [
+        fresh.applicant,
+        disabled.has("resume") ? null : file,
+        { off: [...disabled] },
+      ],
     });
     render(summarize(results.map((r) => r.result).filter(Boolean)));
     say("");
@@ -137,12 +207,15 @@ function render({ filled, attention, skipped }) {
       ),
     ),
     ...filled.map((e) => row(e, "filled", "filled")),
-    ...skipped.map((e) => row(e, "", e.status === "kept" ? "kept" : "skipped")),
+    ...skipped.map((e) =>
+      row(e, "", { kept: "kept", off: "off" }[e.status] || "skipped"),
+    ),
   );
 }
 
-loadSettings().then((loaded) => {
+Promise.all([loadSettings(), loadDisabled()]).then(([loaded, off]) => {
   settings = loaded;
+  disabled = off;
   $("folio-url").value = settings.folioUrl;
   $("pairing-key").value = settings.pairingKey;
   connect();

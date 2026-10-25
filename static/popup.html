@@ -44,15 +44,46 @@
     </form>
 
     <main id="main" hidden>
-      <label>
-        Resume to use
-        <select id="resume"></select>
-      </label>
-      <p id="summary" class="hint"></p>
-      <button id="fill" class="primary">Fill this page</button>
-      <p class="hint">
-        Fills empty fields only. Review everything, then submit yourself.
-      </p>
+      <div class="tabs" role="tablist">
+        <button
+          id="tab-fill"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-fill"
+        >
+          Fill
+        </button>
+        <button
+          id="tab-options"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-options"
+        >
+          Options
+        </button>
+      </div>
+      <section id="panel-fill" role="tabpanel" aria-labelledby="tab-fill">
+        <label>
+          Resume to use
+          <select id="resume"></select>
+        </label>
+        <p id="summary" class="hint"></p>
+        <button id="fill" class="primary">Fill this page</button>
+        <p class="hint">
+          Fills empty fields only. Review everything, then submit yourself.
+        </p>
+      </section>
+      <section
+        id="panel-options"
+        role="tabpanel"
+        aria-labelledby="tab-options"
+        hidden
+      >
+        <p class="hint">
+          Choose what Folio may fill. Switched-off fields are left for you.
+        </p>
+        <div id="options-list"></div>
+      </section>
     </main>
 
     <p id="message" role="status"></p>

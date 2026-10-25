@@ -22,6 +22,16 @@ server on your computer, fills **empty** fields only, outlines what it filled
    **Show pairing key** under _Browser extension_.
 5. Click the extension icon → Settings, paste the Folio address and the key.
 
+## Choosing what gets filled
+
+The popup's **Options** tab lists every kind of field the extension can fill,
+grouped like Folio's profile (contact, links, resume upload, eligibility,
+preferences, voluntary self-identification). Everything starts on. Switch a field
+or a whole group off and the extension leaves those questions for you: they are
+reported as "off" and never flagged as missing. Fields without a saved answer in
+Folio are marked "not saved in Folio". The choice is stored in the extension
+(`chrome.storage.local`), so it applies to every job page.
+
 ## How it works
 
 ```
@@ -54,7 +64,8 @@ sequence, then types to filter for async lists.
 
 ```bash
 npm test                 # classifier, option matching, jsdom autofill
-npm run fixture          # builds fixtures/dist for the browser fixture
+npm run fixture          # builds fixtures/dist: the test form, plus the real popup
+                         # with chrome.* stubbed at fixtures/dist/popup/index.html
 ```
 
 `fixtures/greenhouse.html` is a synthetic Greenhouse-like form built with real
