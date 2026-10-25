@@ -1,3 +1,4 @@
+import { ext } from "./ext.js";
 // Which kinds of field the extension may fill. Everything is on by default;
 // the user switches fields off in the popup's Options tab. Keys match the
 // classifier's output and Folio's profile schema.
@@ -58,8 +59,8 @@ export const OPTION_GROUPS = [
 ];
 
 export async function loadDisabled() {
-  const { disabledKeys = [] } = await chrome.storage.local.get("disabledKeys");
+  const { disabledKeys = [] } = await ext.storage.local.get("disabledKeys");
   return new Set(Array.isArray(disabledKeys) ? disabledKeys : []);
 }
 export const saveDisabled = (set) =>
-  chrome.storage.local.set({ disabledKeys: [...set] });
+  ext.storage.local.set({ disabledKeys: [...set] });

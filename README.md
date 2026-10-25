@@ -17,10 +17,29 @@ server on your computer, fills **empty** fields only, outlines what it filled
    ```
 
 3. In Chrome, open `chrome://extensions`, turn on Developer mode, click **Load
-   unpacked**, and pick this folder's `dist/`.
+   unpacked**, and pick this folder's `dist/`. (Firefox: see below.)
 4. In Folio, open **Personal profile**, fill in your answers, save, then click
    **Show pairing key** under _Browser extension_.
 5. Click the extension icon → Settings, paste the Folio address and the key.
+
+## Firefox
+
+The same code builds as a Firefox add-on in `dist-firefox/` (Firefox 140+), with
+a Gecko ID and no Chrome-only manifest keys.
+
+- **Try it:** `npm run firefox` opens a separate Firefox profile with the add-on
+  loaded and Folio at `http://127.0.0.1:5174`. Or in your own Firefox, open
+  `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on…** → pick
+  `dist-firefox/manifest.json`. Temporary add-ons are removed when Firefox
+  restarts.
+- **Keep it installed:** Firefox only installs signed add-ons permanently.
+  `npm run package:firefox` builds a zip in `web-ext-artifacts/`; sign it as an
+  unlisted add-on on addons.mozilla.org (free, not published) and install the
+  signed `.xpi`.
+- **Site access:** Firefox lets you withhold an add-on's site access. The popup
+  asks for access to Folio and Greenhouse when you click **Save and connect** or
+  **Fill this page**; allow it once.
+- `npm run lint:firefox` runs Mozilla's add-on linter.
 
 ## Choosing what gets filled
 

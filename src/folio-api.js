@@ -1,3 +1,4 @@
+import { ext } from "./ext.js";
 // Talks to the local Folio server. The pairing key is only ever sent to a
 // loopback address the user configured.
 export const DEFAULT_URL = "http://127.0.0.1:5173";
@@ -7,10 +8,10 @@ export async function loadSettings() {
     folioUrl = DEFAULT_URL,
     pairingKey = "",
     resumeId = "",
-  } = await chrome.storage.local.get(["folioUrl", "pairingKey", "resumeId"]);
+  } = await ext.storage.local.get(["folioUrl", "pairingKey", "resumeId"]);
   return { folioUrl, pairingKey, resumeId };
 }
-export const saveSettings = (values) => chrome.storage.local.set(values);
+export const saveSettings = (values) => ext.storage.local.set(values);
 
 export function checkUrl(value) {
   let url;

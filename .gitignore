@@ -3,3 +3,5 @@ dist/
 fixtures/dist/
 *.log
 .DS_Store
+dist-firefox/
+web-ext-artifacts/

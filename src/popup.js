@@ -7,6 +7,7 @@ import {
   saveAnswers,
 } from "./folio-api.js";
 import { summarize } from "./summary.js";
+import { ext, HOSTS, requestHosts } from "./ext.js";
 import {
   OPTION_GROUPS,
   loadDisabled,
@@ -38,7 +39,16 @@ async function connect() {
     data = await fetchApplicant(settings);
   } catch (e) {
     showSettings(true);
-    say(e.message, true);
+    // Firefox may not have granted host access yet; that looks like Folio being down.
+    const granted = await ext.permissions
+      ?.contains({ origins: HOSTS })
+      .catch(() => true);
+    say(
+      granted === false
+        ? "Click Save and connect to allow access to Folio on this computer."
+        : e.message,
+      true,
+    );
     return;
   }
   say("");
@@ -138,7 +148,13 @@ $("settings-toggle").addEventListener("click", () =>
 );
 $("settings").addEventListener("submit", async (event) => {
   event.preventDefault();
+  // Ask before any await so Firefox still sees the click as the user's.
+  const access = requestHosts();
   try {
+    if (!(await access))
+      throw new Error(
+        "Folio Autofill needs access to Folio on this computer. Allow it to continue.",
+      );
     const folioUrl = checkUrl(
       $("folio-url").value || $("folio-url").placeholder,
     );
@@ -159,21 +175,24 @@ $("resume").addEventListener("change", async () => {
 });
 
 $("fill").addEventListener("click", async () => {
+  const access = requestHosts();
   const button = $("fill");
   button.disabled = true;
   say("Filling…");
   try {
-    const [tab] = await chrome.tabs.query({
+    const [tab] = await ext.tabs.query({
       active: true,
       currentWindow: true,
     });
     if (!tab?.id || !/^https?:/.test(tab.url || "https:"))
       throw new Error("Open a job application page first.");
+    if (!(await access))
+      throw new Error("Allow Folio Autofill's site access to fill this page.");
     const fresh = await fetchApplicant(settings);
     const file = await fetchResumeFile(settings, fresh.applicant.resume);
     const target = { tabId: tab.id, allFrames: true };
-    await chrome.scripting.executeScript({ target, files: ["content.js"] });
-    const results = await chrome.scripting.executeScript({
+    await ext.scripting.executeScript({ target, files: ["content.js"] });
+    const results = await ext.scripting.executeScript({
       target,
       func: (applicant, file, options) =>
         globalThis.__folioAutofill?.(applicant, file, options),
@@ -238,15 +257,15 @@ $("capture").addEventListener("click", async () => {
   button.disabled = true;
   say("Reading your answers…");
   try {
-    const [tab] = await chrome.tabs.query({
+    const [tab] = await ext.tabs.query({
       active: true,
       currentWindow: true,
     });
     if (!tab?.id || !/^https?:/.test(tab.url || "https:"))
       throw new Error("Open the application you answered first.");
     const target = { tabId: tab.id, allFrames: true };
-    await chrome.scripting.executeScript({ target, files: ["content.js"] });
-    const frames = await chrome.scripting.executeScript({
+    await ext.scripting.executeScript({ target, files: ["content.js"] });
+    const frames = await ext.scripting.executeScript({
       target,
       func: () => globalThis.__folioCapture?.(),
     });

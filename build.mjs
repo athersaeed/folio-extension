@@ -1,4 +1,5 @@
-// Bundles the extension into dist/ (load it via chrome://extensions → Load unpacked).
+// Bundles the extension into dist/ (Chrome: chrome://extensions → Load unpacked) and
+// dist-firefox/ (Firefox: about:debugging → Load Temporary Add-on, or npm run firefox).
 // --fixture also builds the local Greenhouse-like test form into fixtures/dist/.
 import * as esbuild from "esbuild";
 import {
@@ -14,6 +15,27 @@ const fixture = process.argv.includes("--fixture");
 rmSync("dist", { recursive: true, force: true });
 mkdirSync("dist");
 cpSync("static", "dist", { recursive: true });
+
+// Firefox build: same code, manifest with a Gecko ID and no Chrome-only keys.
+const firefoxManifest = () => {
+  const manifest = JSON.parse(readFileSync("static/manifest.json", "utf8"));
+  delete manifest.minimum_chrome_version;
+  manifest.browser_specific_settings = {
+    gecko: {
+      id: "folio-autofill@folio.local",
+      strict_min_version: "140.0",
+      // Data only goes to the user's own Folio on 127.0.0.1, never to us.
+      data_collection_permissions: { required: ["none"] },
+    },
+    gecko_android: { strict_min_version: "142.0" },
+  };
+  return JSON.stringify(manifest, null, 2);
+};
+const syncFirefox = () => {
+  rmSync("dist-firefox", { recursive: true, force: true });
+  cpSync("dist", "dist-firefox", { recursive: true });
+  writeFileSync("dist-firefox/manifest.json", firefoxManifest());
+};
 
 const builds = [
   {
@@ -31,11 +53,18 @@ if (fixture)
     define: { "process.env.NODE_ENV": '"development"' },
   });
 const common = { bundle: true, target: "chrome116", logLevel: "info" };
+const mirror = {
+  name: "firefox-mirror",
+  setup: (build) => build.onEnd(() => syncFirefox()),
+};
 if (watch) {
   for (const b of builds)
-    await (await esbuild.context({ ...common, ...b })).watch();
+    await (
+      await esbuild.context({ ...common, ...b, plugins: [mirror] })
+    ).watch();
 } else {
   await Promise.all(builds.map((b) => esbuild.build({ ...common, ...b })));
+  syncFirefox();
   if (fixture) {
     cpSync("dist/content.js", "fixtures/dist/content.js");
     // Popup preview: the real popup with chrome.* stubbed (fixtures/chrome-stub.js).
