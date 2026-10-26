@@ -5,3 +5,7 @@ fixtures/dist/
 .DS_Store
 dist-firefox/
 web-ext-artifacts/
+# Mozilla signing keys; never commit.
+.env
+.env.*
+!.env.example

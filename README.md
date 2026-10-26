@@ -33,9 +33,13 @@ a Gecko ID and no Chrome-only manifest keys.
   `dist-firefox/manifest.json`. Temporary add-ons are removed when Firefox
   restarts.
 - **Keep it installed:** Firefox only installs signed add-ons permanently.
-  `npm run package:firefox` builds a zip in `web-ext-artifacts/`; sign it as an
-  unlisted add-on on addons.mozilla.org (free, not published) and install the
-  signed `.xpi`.
+  Signing as an unlisted add-on is free and does not publish it. One-time setup:
+  create an addons.mozilla.org account, generate API credentials at
+  https://addons.mozilla.org/developers/addon/api/key/, copy `.env.example` to
+  `.env` and paste them in. Then `npm run sign:firefox` builds, uploads, waits
+  for Mozilla's signature and saves the signed `.xpi` in `web-ext-artifacts/`.
+  Bump `version` in `static/manifest.json` before signing a new release.
+  (`npm run package:firefox` only builds an unsigned zip, for manual upload.)
 - **Site access:** Firefox lets you withhold an add-on's site access. The popup
   asks for access to Folio and Greenhouse when you click **Save and connect** or
   **Fill this page**; allow it once.

@@ -10,7 +10,8 @@
     "fixture": "node build.mjs --fixture",
     "firefox": "npm run build && web-ext run --source-dir dist-firefox --start-url http://127.0.0.1:5174",
     "lint:firefox": "npm run build && web-ext lint --source-dir dist-firefox",
-    "package:firefox": "npm run build && web-ext build --source-dir dist-firefox --artifacts-dir web-ext-artifacts --overwrite-dest"
+    "package:firefox": "npm run build && web-ext build --source-dir dist-firefox --artifacts-dir web-ext-artifacts --overwrite-dest",
+    "sign:firefox": "npm run build && node --env-file-if-exists=.env node_modules/web-ext/bin/web-ext.js sign --source-dir dist-firefox --artifacts-dir web-ext-artifacts --channel unlisted"
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
