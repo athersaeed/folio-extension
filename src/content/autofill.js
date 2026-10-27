@@ -15,6 +15,7 @@ import {
 } from "./fill.js";
 
 const MARK = "data-folio-autofill";
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function mark(el, status) {
   el.setAttribute(MARK, status);
@@ -35,7 +36,21 @@ export async function autofill(
   const company = bank.length ? detectCompany(doc) : "";
   const report = [];
   const values = applicant.fields || {};
-  for (const field of collectFields(doc)) {
+  // Answers can reveal follow-up questions (race appears after "Hispanic or
+  // Latino? No"), so look again for fields that showed up during the pass.
+  const seen = new Set();
+  for (let pass = 0; pass < 3; pass++) {
+    if (pass) await sleep(150);
+    const fresh = collectFields(doc).filter((f) => !seen.has(f.el));
+    if (!fresh.length) break;
+    for (const field of fresh) {
+      seen.add(field.el);
+      await fillField(field);
+    }
+  }
+  return report;
+
+  async function fillField(field) {
     const profileKey = classify(field);
     const entry = {
       label:
@@ -73,21 +88,21 @@ export async function autofill(
       entry.status = !ok ? "failed" : saved.exact ? "filled" : "check";
       entry.savedQuestion = saved.answer.question;
       mark(target, entry.status === "filled" ? "filled" : "attention");
-      continue;
+      return;
     }
     if (!profileKey) {
       entry.status = "unmatched";
       if (field.required && !hasValue(field)) mark(target, "attention");
-      continue;
+      return;
     }
     // Switched off in the popup's Options tab: leave it, and don't nag.
     if (disabled.has(profileKey)) {
       entry.status = "off";
-      continue;
+      return;
     }
     if (hasValue(field)) {
       entry.status = "kept";
-      continue;
+      return;
     }
     if (profileKey === "resume") {
       entry.status = file
@@ -96,7 +111,7 @@ export async function autofill(
           : "failed"
         : "no-value";
       if (entry.status === "filled") mark(fileTarget(field.el), "filled");
-      continue;
+      return;
     }
     // Start dates are worked out from the notice period at fill time.
     const plan = profileKey === "startDate" ? startPlan(values) : null;
@@ -105,12 +120,12 @@ export async function autofill(
     if (!value) {
       entry.status = "no-value";
       if (field.required) mark(target, "attention");
-      continue;
+      return;
     }
     // Checkboxes are consent/acknowledgement boxes; those stay the user's call.
     if (field.kind === "checkbox") {
       entry.status = "unmatched";
-      continue;
+      return;
     }
     let ok = false;
     try {
@@ -127,7 +142,6 @@ export async function autofill(
     entry.status = ok ? "filled" : "failed";
     mark(target, ok ? "filled" : "attention");
   }
-  return report;
 }
 
 // Dropdowns pick by notice length; date inputs get the date; text boxes get a

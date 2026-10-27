@@ -94,3 +94,23 @@ test("fields switched off are left alone and never flagged", async () => {
   assert.equal(first.status, "off");
   assert.equal(summarize([{ report }]).attention.includes(first), false);
 });
+
+test("fills questions that appear after an earlier answer", async () => {
+  const { window } = new JSDOM(`<form>
+    <label for="hl">Are you Hispanic/Latino?</label>
+    <select id="hl"><option value=""></option><option>Yes</option><option>No</option></select>
+  </form>`);
+  const doc = window.document;
+  doc.getElementById("hl").addEventListener("change", () => {
+    doc.querySelector("form").insertAdjacentHTML(
+      "beforeend",
+      `<label for="race">Please identify your race</label>
+       <select id="race"><option value=""></option><option>Asian</option><option>White</option></select>`,
+    );
+  });
+  const report = await autofill(doc, {
+    fields: { hispanicLatino: "No", race: "Asian" },
+  });
+  assert.equal(doc.getElementById("race").value, "Asian");
+  assert.equal(report.filter((e) => e.key === "race").length, 1);
+});
