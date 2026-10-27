@@ -36,6 +36,7 @@ test("fills empty fields, keeps typed ones, flags required unknowns", async () =
       email: "ada@example.test",
       workAuthorized: "Yes",
       requiresSponsorship: "No",
+      workCountry: "United States",
     },
   });
   assert.equal(doc.getElementById("first_name").value, "Ada");
@@ -113,4 +114,35 @@ test("fills questions that appear after an earlier answer", async () => {
   });
   assert.equal(doc.getElementById("race").value, "Asian");
   assert.equal(report.filter((e) => e.key === "race").length, 1);
+});
+
+test("eligibility answers only fill questions about the user's country", async () => {
+  const { window } = new JSDOM(`<form>
+    <label for="us">Are you legally authorized to work in the US?</label>
+    <select id="us" required><option value=""></option><option>Yes</option><option>No</option></select>
+    <label for="ca">Will you require sponsorship to work for Synthetic Co in Canada?</label>
+    <select id="ca"><option value=""></option><option>Yes</option><option>No</option></select>
+    <label for="any">Are you authorized to work in the country in which this job is located?</label>
+    <select id="any"><option value=""></option><option>Yes</option><option>No</option></select>
+  </form>`);
+  const doc = window.document;
+  const report = await autofill(doc, {
+    fields: {
+      workAuthorized: "Yes",
+      requiresSponsorship: "No",
+      workCountry: "Canada",
+    },
+  });
+  assert.equal(
+    doc.getElementById("us").value,
+    "",
+    "US question left for the user",
+  );
+  assert.equal(
+    doc.getElementById("us").getAttribute("data-folio-autofill"),
+    "attention",
+  );
+  assert.equal(report[0].note, "asks about united states");
+  assert.equal(doc.getElementById("ca").value, "No");
+  assert.equal(doc.getElementById("any").value, "Yes");
 });

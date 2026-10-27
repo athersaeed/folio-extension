@@ -135,6 +135,50 @@ function monthNumber(t) {
   return i + 1;
 }
 
+// The country a question is about, as a canonical name, or null. "US" is
+// matched case-sensitively so "work for us" is not the United States.
+const NAMED_COUNTRIES = [
+  [
+    "united states",
+    /\bU\.?S\.?A?\b|\bunited states\b|\bamerica\b/i,
+    /\bU\.?S\.?A?\b/,
+  ],
+  ["canada", /\bcanad(a|ian)\b/i],
+  [
+    "united kingdom",
+    /\bunited kingdom\b|\bU\.?K\.?\b|\bgreat britain\b|\bbritain\b|\bengland\b/i,
+    /\bU\.?K\.?\b/,
+  ],
+  ["mexico", /\bmexic(o|an)\b/i],
+  ["india", /\bindia\b/i],
+  ["ireland", /\bireland\b/i],
+  ["germany", /\bgermany\b/i],
+  ["france", /\bfrance\b/i],
+  ["netherlands", /\bnetherlands\b/i],
+  ["australia", /\baustralia\b/i],
+  ["singapore", /\bsingapore\b/i],
+  ["japan", /\bjapan\b/i],
+  ["brazil", /\bbrazil\b/i],
+];
+export function countryNamed(text) {
+  const named = NAMED_COUNTRIES.filter(([, re, strict]) => {
+    const t = String(text || "");
+    // Abbreviations count only in capitals; full names in any case.
+    return strict
+      ? strict.test(t) ||
+          re.test(t.replace(/\bU\.?S\.?A?\b|\bU\.?K\.?\b/gi, ""))
+      : re.test(t);
+  });
+  return named.length === 1 ? named[0][0] : null;
+}
+export function sameCountry(a, b) {
+  const canon = (t) => {
+    const g = countryGroup(t);
+    return g >= 0 ? COUNTRY_ALIASES[g][0] : clean(t);
+  };
+  return canon(a) === canon(b);
+}
+
 export function matchOption(options, value, key = "") {
   const wanted = clean(value);
   if (!wanted) return -1;
@@ -152,10 +196,21 @@ export function matchOption(options, value, key = "") {
   if (key === "degree") {
     const level = degreeLevel(wanted);
     if (!level) return -1;
+    // "Accelerated Master's" or "Some college" is a different answer.
+    const QUALIFIED =
+      /\b(accelerated|advanced|partial|incomplete|some|in progress|pursuing|candidate)\b/;
     const hits = list
-      .map((o, n) => (real(n) && degreeLevel(o) === level ? n : -1))
+      .map((o, n) =>
+        real(n) && degreeLevel(o) === level && !QUALIFIED.test(o) ? n : -1,
+      )
       .filter((n) => n >= 0);
-    return hits.length === 1 ? hits[0] : -1;
+    if (hits.length === 1) return hits[0];
+    // "Bachelors" and "Bachelor's Degree" both mean the same thing; a
+    // qualified one ("Accelerated Master's") does not, so pick only plain ones.
+    const plain = hits.filter((n) =>
+      /^(\w+s?)( degree)?$/.test(list[n].replace(/\s+/g, " ")),
+    );
+    return plain.length ? plain[0] : -1;
   }
   if (DECLINE.test(wanted))
     return list.findIndex((o, n) => real(n) && DECLINE.test(o));

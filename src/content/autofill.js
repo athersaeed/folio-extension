@@ -6,6 +6,7 @@ import { collectFields } from "./fields.js";
 import { startPlan, dateForTextField, matchNotice } from "../start-date.js";
 import { findSavedAnswer, detectCompany } from "../answers.js";
 import { assignEntries, entryValue } from "../entries.js";
+import { countryNamed, sameCountry } from "../options.js";
 import {
   hasValue,
   fillText,
@@ -203,6 +204,23 @@ export async function autofill(
       entry.status = "no-value";
       if (field.required) mark(target, "attention");
       return;
+    }
+    // Eligibility answers hold for one country; a question about another
+    // country ("authorized to work in the US?") is the user's to answer.
+    if (
+      profileKey === "workAuthorized" ||
+      profileKey === "requiresSponsorship"
+    ) {
+      const asked = countryNamed(field.label);
+      if (
+        asked &&
+        !(values.workCountry && sameCountry(asked, values.workCountry))
+      ) {
+        entry.status = "no-value";
+        entry.note = `asks about ${asked}`;
+        mark(target, "attention");
+        return;
+      }
     }
     // Checkboxes are consent/acknowledgement boxes; those stay the user's call.
     if (field.kind === "checkbox") {

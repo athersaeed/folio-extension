@@ -176,3 +176,55 @@ test("pronoun answers match by the leading pronoun", () => {
   assert.equal(matchOption(list, "she/her", "pronouns"), 2);
   assert.equal(matchOption(list, "xe", "pronouns"), -1);
 });
+
+test("eligibility questions name a country, or none", async () => {
+  const { countryNamed, sameCountry } = await import("../src/options.js");
+  assert.equal(
+    countryNamed("Are you legally authorized to work in the US?"),
+    "united states",
+  );
+  assert.equal(
+    countryNamed("Are you authorized to work in the United States?"),
+    "united states",
+  );
+  assert.equal(
+    countryNamed("Will you require sponsorship to work for Affirm in Canada?"),
+    "canada",
+  );
+  assert.equal(
+    countryNamed("Are you legally authorized to work for us?"),
+    null,
+  );
+  assert.equal(
+    countryNamed(
+      "Are you authorized to work in the country in which this job is located?",
+    ),
+    null,
+  );
+  assert.equal(
+    countryNamed("Authorized in the US or Canada?"),
+    null,
+    "two countries: unclear",
+  );
+  assert.equal(sameCountry("united states", "USA"), true);
+  assert.equal(sameCountry("canada", "Canada"), true);
+  assert.equal(sameCountry("canada", "United States"), false);
+});
+
+test("several plain degree options of one level pick the first", () => {
+  const list = [
+    "Accelerated Master's",
+    "Advanced Certificate",
+    "Associates",
+    "Associate's Degree",
+    "Bachelors",
+    "Bachelor's Degree",
+    "Certificate",
+  ];
+  assert.equal(matchOption(list, "Bachelor of Science", "degree"), 4);
+  assert.equal(
+    matchOption(["Accelerated Master's", "Master's Degree"], "MSc", "degree"),
+    1,
+  );
+  assert.equal(matchOption(["Accelerated Master's"], "MSc", "degree"), -1);
+});
