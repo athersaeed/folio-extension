@@ -24,7 +24,12 @@ const AUTOCOMPLETE = {
   "tel-national": "phone",
   country: "country",
   "country-name": "country",
-  "address-level2": "location",
+  "street-address": "addressLine1",
+  "address-line1": "addressLine1",
+  "address-line2": "addressLine2",
+  "address-level2": "city",
+  "address-level1": "region",
+  "postal-code": "postalCode",
   url: "website",
 };
 
@@ -88,9 +93,30 @@ const RULES = [
     key: "country",
     re: /^country( of residence)?$|\bcountry of residence\b|\bwhich country\b.*\b(live|reside|based)\b/,
   },
+  // Mailing address parts, before location so a bare "City" box gets just the city.
+  {
+    key: "addressLine2",
+    re: /\baddress (line )?2\b|^(apt|apartment|suite|unit)\b/,
+    guard: OTHER_PERSON,
+  },
+  {
+    key: "addressLine1",
+    re: /\baddress (line )?1\b|^(street |mailing |home |residential )?address$|\bstreet address\b/,
+    guard: OTHER_PERSON,
+  },
+  { key: "city", re: /^(city|town|city town|town city)$/ },
+  {
+    key: "region",
+    re: /^(state|province|region|territory)( ?\/ ?(state|province|region|territory))*( of residence)?$|^state or province$|^province or state$/,
+  },
+  {
+    key: "postalCode",
+    re: /\b(postal|zip|post) ?code\b|^zip$|^postcode$|\bpostcode\b/,
+    guard: OTHER_PERSON,
+  },
   {
     key: "location",
-    re: /^(current )?(location|city)$|\bcurrent (location|city)\b|\bwhere are you (currently )?(based|located|living)\b|\bcity,? state\b|^location city$/,
+    re: /^(current )?location$|^current city$|\bcurrent (location|city)\b|\bwhere are you (currently )?(based|located|living)\b|\bcity,? state\b|^location city$/,
     guard: /prefer|relocat|office|willing/,
   },
   // Voluntary self-identification.

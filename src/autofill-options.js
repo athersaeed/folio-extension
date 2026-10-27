@@ -18,6 +18,16 @@ export const OPTION_GROUPS = [
     ],
   },
   {
+    title: "Mailing address",
+    fields: [
+      ["addressLine1", "Address line 1"],
+      ["addressLine2", "Address line 2"],
+      ["city", "City"],
+      ["region", "Province / state"],
+      ["postalCode", "Postal / ZIP code"],
+    ],
+  },
+  {
     title: "Links",
     fields: [
       ["linkedin", "LinkedIn"],

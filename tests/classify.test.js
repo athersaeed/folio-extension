@@ -23,6 +23,16 @@ const CASES = [
   ["Portfolio", "website"],
   ["Country", "country"],
   ["Location (City)", "location"],
+  ["City", "city"],
+  ["Current city", "location"],
+  ["Address Line 1", "addressLine1"],
+  ["Street address", "addressLine1"],
+  ["Address", "addressLine1"],
+  ["Address Line 2 (Optional)", "addressLine2"],
+  ["Province/State", "region"],
+  ["State", "region"],
+  ["Postal/Zip Code", "postalCode"],
+  ["ZIP", "postalCode"],
   ["Current location", "location"],
   ["Where are you currently based?", "location"],
   [
@@ -53,6 +63,8 @@ const CASES = [
   ["Have you previously applied to this company?", null],
   ["Why do you want to work here?", null],
   ["Reference name", null],
+  ["Company address", null],
+  ["State your reason for applying", null],
   ["Emergency contact phone", null],
   ["Company name", null],
   ["School name", null],
@@ -146,4 +158,11 @@ test("option matching", () => {
     -1,
   );
   assert.equal(matchOption(["Option A", "Option B"], "Something else"), -1);
+});
+
+test("province / state dropdowns accept either spelling", () => {
+  const list = ["Select...", "Nova Scotia", "Ontario", "Quebec"];
+  assert.equal(matchOption(list, "ON", "region"), 2);
+  assert.equal(matchOption(["AB", "ON"], "Ontario", "region"), 1);
+  assert.equal(matchOption(list, "ZZ", "region"), -1);
 });

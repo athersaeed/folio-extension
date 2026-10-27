@@ -18,6 +18,73 @@ const COUNTRY_ALIASES = [
   ["united arab emirates", "uae"],
   ["south korea", "korea, republic of", "republic of korea", "korea"],
 ];
+// Province / state abbreviations, so "ON" picks "Ontario" in a dropdown.
+const REGIONS = Object.entries({
+  ab: "alberta",
+  bc: "british columbia",
+  mb: "manitoba",
+  nb: "new brunswick",
+  nl: "newfoundland and labrador",
+  ns: "nova scotia",
+  nt: "northwest territories",
+  nu: "nunavut",
+  on: "ontario",
+  pe: "prince edward island",
+  qc: "quebec",
+  sk: "saskatchewan",
+  yt: "yukon",
+  al: "alabama",
+  ak: "alaska",
+  az: "arizona",
+  ar: "arkansas",
+  ca: "california",
+  co: "colorado",
+  ct: "connecticut",
+  de: "delaware",
+  dc: "district of columbia",
+  fl: "florida",
+  ga: "georgia",
+  hi: "hawaii",
+  id: "idaho",
+  il: "illinois",
+  in: "indiana",
+  ia: "iowa",
+  ks: "kansas",
+  ky: "kentucky",
+  la: "louisiana",
+  me: "maine",
+  md: "maryland",
+  ma: "massachusetts",
+  mi: "michigan",
+  mn: "minnesota",
+  ms: "mississippi",
+  mo: "missouri",
+  mt: "montana",
+  ne: "nebraska",
+  nv: "nevada",
+  nh: "new hampshire",
+  nj: "new jersey",
+  nm: "new mexico",
+  ny: "new york",
+  nc: "north carolina",
+  nd: "north dakota",
+  oh: "ohio",
+  ok: "oklahoma",
+  or: "oregon",
+  pa: "pennsylvania",
+  ri: "rhode island",
+  sc: "south carolina",
+  sd: "south dakota",
+  tn: "tennessee",
+  tx: "texas",
+  ut: "utah",
+  vt: "vermont",
+  va: "virginia",
+  wa: "washington",
+  wv: "west virginia",
+  wi: "wisconsin",
+  wy: "wyoming",
+});
 const clean = (s) =>
   normalize(s)
     .replace(/[.,'’]/g, "")
@@ -47,6 +114,15 @@ export function matchOption(options, value, key = "") {
     );
     // Several "Yes, ..." variants means the question needs a human decision.
     return hits.length === 1 ? list.indexOf(hits[0]) : -1;
+  }
+  if (key === "region") {
+    // Both spellings of one place; a code shared by two countries ("CA") picks
+    // whichever of them the list actually offers.
+    const names = new Set([wanted]);
+    for (const [code, name] of REGIONS)
+      if (code === wanted || name === wanted) names.add(code).add(name);
+    i = list.findIndex((o, n) => real(n) && names.has(o));
+    if (i >= 0) return i;
   }
   if (key === "location") {
     i = matchLocation(options, value);
