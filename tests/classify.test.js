@@ -269,3 +269,63 @@ test("demographic answers across wordings", () => {
   ];
   assert.equal(matchOption(federal, "I am not a veteran", "veteranStatus"), 0);
 });
+
+test("race answers match by meaning, falling back to the broader group", () => {
+  const races = [
+    "Black or of African descent",
+    "East Asian",
+    "Hispanic, Latinx or of Spanish Origin",
+    "Indigenous, American Indian or Alaska Native",
+    "Middle Eastern or North African",
+    "Native Hawaiian or Pacific Islander",
+    "South Asian",
+    "Southeast Asian",
+    "White",
+    "I don't wish to answer",
+  ];
+  assert.equal(
+    matchOption(races, "Asian", "race"),
+    -1,
+    "broad answer never narrows",
+  );
+  assert.equal(matchOption(races, "South Asian", "race"), 6);
+  assert.equal(matchOption(races, "Southeast Asian", "race"), 7);
+  assert.equal(matchOption(races, "Black or African American", "race"), 0);
+  assert.equal(
+    matchOption(races, "Middle Eastern or North African", "race"),
+    4,
+  );
+  assert.equal(
+    matchOption(races, "American Indian or Alaska Native", "race"),
+    3,
+  );
+  assert.equal(
+    matchOption(races, "Native Hawaiian or Other Pacific Islander", "race"),
+    5,
+  );
+  assert.equal(matchOption(races, "Decline to self-identify", "race"), 9);
+  const federal = [
+    "American Indian or Alaska Native",
+    "Asian",
+    "Black or African American",
+    "White",
+    "Two or More Races",
+  ];
+  assert.equal(
+    matchOption(federal, "South Asian", "race"),
+    1,
+    "falls back to Asian",
+  );
+  assert.equal(
+    matchOption(federal, "Middle Eastern or North African", "race"),
+    -1,
+    "no fallback for MENA",
+  );
+  const vets = [
+    "Yes, I am a veteran, active member or reservist",
+    "No, I am not a veteran, active member or reservist",
+    "I prefer to self-describe",
+    "I don't wish to answer",
+  ];
+  assert.equal(matchOption(vets, "I am not a veteran", "veteranStatus"), 1);
+});

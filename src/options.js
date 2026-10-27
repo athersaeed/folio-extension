@@ -90,6 +90,27 @@ const GENDERS = [
   ["female", "woman", "cis woman", "cisgender woman"],
   ["non binary", "nonbinary", "genderqueer/non binary"],
 ];
+// Race and ethnicity by meaning, most specific first, so forms worded
+// differently still match. A specific answer falls back to its broader group
+// ("South Asian" picks "Asian" when the form has no South Asian option); a
+// broad answer never narrows ("Asian" does not pick "East Asian").
+const RACES = [
+  ["mena", /\bmiddle eastern\b|\bnorth african\b|\bmena\b/],
+  ["southeastAsian", /\bsouth ?east asian\b/, "asian"],
+  ["southAsian", /\bsouth asian\b/, "asian"],
+  ["eastAsian", /\beast asian\b/, "asian"],
+  ["asian", /\basian\b/],
+  ["multiple", /\btwo or more\b|\bmulti ?racial\b|\bmixed\b/],
+  ["hispanic", /\bhispanic\b|\blatin(o|a|x|e)\b|\bspanish origin\b/],
+  [
+    "indigenous",
+    /\bindigenous\b|\bamerican indian\b|\balaska(n)? native\b|\bfirst nations?\b|\bnative american\b/,
+  ],
+  ["pacific", /\bhawaiian\b|\bpacific islander\b/],
+  ["black", /\bblack\b|\bafrican\b/],
+  ["white", /\bwhite\b|\bcaucasian\b/],
+];
+const raceOf = (t) => RACES.find(([, re]) => re.test(t)) || null;
 const clean = (s) =>
   normalize(s)
     .replace(/[.,'’]/g, "")
@@ -216,6 +237,18 @@ export function matchOption(options, value, key = "") {
       /^(\w+s?)( degree)?$/.test(list[n].replace(/\s+/g, " ")),
     );
     return plain.length ? plain[0] : -1;
+  }
+  if (key === "race" && !DECLINE.test(wanted)) {
+    const race = raceOf(wanted);
+    if (!race) return -1;
+    const pick = (code) => {
+      const hits = list
+        .map((o, n) => (real(n) && raceOf(o)?.[0] === code ? n : -1))
+        .filter((n) => n >= 0);
+      return hits.length === 1 ? hits[0] : -1;
+    };
+    i = pick(race[0]);
+    return i >= 0 || !race[2] ? i : pick(race[2]);
   }
   // Same answer, different wording: "Male" ↔ "Man".
   if (key === "gender") {
