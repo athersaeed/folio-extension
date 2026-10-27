@@ -17,7 +17,12 @@ window.chrome = {
       set: async (values) => Object.assign(store, values),
     },
   },
-  tabs: { query: async () => [{ id: 1, url: "https://job-boards.example.test/apply" }] },
+  // ?tab=<url> previews the popup as if that page were the active tab.
+  tabs: {
+    query: async () => [
+      { id: 1, url: new URLSearchParams(location.search).get("tab") || "https://job-boards.example.test/apply" },
+    ],
+  },
   scripting: {
     executeScript: async ({ func }) =>
       !func ? [] : String(func).includes("__folioCapture") ? [{ result: CAPTURED }] : [{ result: { report: [] } }],

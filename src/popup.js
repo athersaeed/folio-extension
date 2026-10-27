@@ -7,6 +7,7 @@ import {
   saveAnswers,
 } from "./folio-api.js";
 import { summarize } from "./summary.js";
+import { isFolioPage } from "./pages.js";
 import { ext, HOSTS, requestHosts } from "./ext.js";
 import {
   OPTION_GROUPS,
@@ -17,7 +18,8 @@ import {
 const $ = (id) => document.getElementById(id);
 let settings,
   data,
-  disabled = new Set();
+  disabled = new Set(),
+  onFolio = false;
 
 function say(text, isError = false) {
   $("message").textContent = text;
@@ -70,6 +72,13 @@ async function connect() {
     `${count} profile answer${count === 1 ? "" : "s"}` +
     (bank ? ` and ${bank} saved from past forms` : "") +
     " ready.";
+  // On Folio's own tab there is nothing to fill or save.
+  const [tab] = await ext.tabs
+    .query({ active: true, currentWindow: true })
+    .catch(() => []);
+  onFolio = isFolioPage(tab?.url, settings.folioUrl);
+  for (const id of ["fill", "fill-hint", "capture"]) $(id).hidden = onFolio;
+  $("on-folio").hidden = !onFolio;
   $("main").hidden = false;
   renderOptions();
 }
@@ -175,6 +184,7 @@ $("resume").addEventListener("change", async () => {
 });
 
 $("fill").addEventListener("click", async () => {
+  if (onFolio) return;
   const access = requestHosts();
   const button = $("fill");
   button.disabled = true;
@@ -253,6 +263,7 @@ function render({ filled, attention, skipped }) {
 // --- Saving answers from the page -------------------------------------------
 let captured = [];
 $("capture").addEventListener("click", async () => {
+  if (onFolio) return;
   const button = $("capture");
   button.disabled = true;
   say("Reading your answers…");
