@@ -189,6 +189,151 @@ function NativeSelect({ id, label, options }) {
   );
 }
 
+// Education and employment, as on job-boards.greenhouse.io: one block per entry
+// with "--n" / "-n" ids, and an "Add another" button that appends a block.
+// Schools come from a search (like Greenhouse's /education/schools?term=).
+const SCHOOLS = [
+  "Synthetic University",
+  "Synthetic University - North Campus",
+  "Example College",
+];
+const DEGREES = [
+  "Associate's Degree",
+  "Bachelor's Degree",
+  "Doctor of Philosophy (Ph.D.)",
+  "High School",
+  "Master of Business Administration (M.B.A.)",
+  "Master's Degree",
+  "Other",
+];
+const DISCIPLINES = ["Biology", "Computer Science", "Mathematics", "Other"];
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+function School({ id }) {
+  const [options, setOptions] = useState([]);
+  return (
+    <GhSelect
+      id={id}
+      label="School"
+      options={options}
+      onInputChange={(text) => {
+        const t = text.toLowerCase().trim();
+        setTimeout(
+          () =>
+            setOptions(
+              t ? SCHOOLS.filter((s) => s.toLowerCase().includes(t)) : [],
+            ),
+          250,
+        );
+      }}
+    />
+  );
+}
+function Education() {
+  const [count, setCount] = useState(1);
+  return (
+    <fieldset className="education">
+      <legend>Education</legend>
+      {Array.from({ length: count }, (_, n) => (
+        <div key={n} className="education--entry">
+          <School id={`school--${n}`} />
+          <GhSelect id={`degree--${n}`} label="Degree" options={DEGREES} />
+          <GhSelect
+            id={`discipline--${n}`}
+            label="Discipline"
+            options={DISCIPLINES}
+          />
+          <GhSelect
+            id={`start-month--${n}`}
+            label="Start date month"
+            options={MONTHS}
+          />
+          <Text id={`start-year--${n}`} label="Start date year" />
+          <GhSelect
+            id={`end-month--${n}`}
+            label="End date month"
+            options={MONTHS}
+          />
+          <Text id={`end-year--${n}`} label="End date year" />
+        </div>
+      ))}
+      <button
+        className="add-another-button"
+        type="button"
+        onClick={() => setCount(count + 1)}
+      >
+        Add another
+      </button>
+    </fieldset>
+  );
+}
+function Job({ n }) {
+  const [current, setCurrent] = useState(false);
+  state[`current-role-${n}`] = current;
+  return (
+    <div className="employment--entry">
+      <Text id={`company-name-${n}`} label="Company name" />
+      <Text id={`title-${n}`} label="Title" />
+      <GhSelect
+        id={`start-date-month-${n}`}
+        label="Start date month"
+        options={MONTHS}
+      />
+      <Text id={`start-date-year-${n}`} label="Start date year" />
+      {!current && (
+        <>
+          <GhSelect
+            id={`end-date-month-${n}`}
+            label="End date month"
+            options={MONTHS}
+          />
+          <Text id={`end-date-year-${n}`} label="End date year" />
+        </>
+      )}
+      <label htmlFor={`current-role-${n}_1`}>
+        <input
+          type="checkbox"
+          id={`current-role-${n}_1`}
+          name={`current-role-${n}`}
+          checked={current}
+          onChange={(e) => setCurrent(e.currentTarget.checked)}
+        />
+        Current role
+      </label>
+    </div>
+  );
+}
+function Employment() {
+  const [count, setCount] = useState(1);
+  return (
+    <fieldset className="employment">
+      <legend>Employment</legend>
+      {Array.from({ length: count }, (_, n) => (
+        <Job key={n} n={n} />
+      ))}
+      <button
+        className="add-another-button"
+        type="button"
+        onClick={() => setCount(count + 1)}
+      >
+        Add another
+      </button>
+    </fieldset>
+  );
+}
+
 const YES_NO = ["Yes", "No"];
 function App() {
   return (
@@ -211,6 +356,8 @@ function App() {
       <Text id="phone" label="Phone" type="tel" />
       <GhLocation />
       <Upload />
+      <Employment />
+      <Education />
       <Text id="question_1001" label="LinkedIn Profile" />
       <Text id="question_1002" label="Website" />
       <GhSelect

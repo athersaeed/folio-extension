@@ -84,6 +84,7 @@ const RULES = [
   {
     key: "startDate",
     re: /\bstart date\b|\bwhen can you start\b|\bnotice period\b|\bearliest (possible )?(start|availability)\b|\bavailable to start\b/,
+    guard: /\b(month|year)$/,
   },
   {
     key: "howHeard",
@@ -91,7 +92,7 @@ const RULES = [
   },
   {
     key: "country",
-    re: /^country( of residence)?$|\bcountry of residence\b|\bwhich country\b.*\b(live|reside|based)\b/,
+    re: /^country( of residence)?$|\bcountry of residence\b|\b(which|the) country\b.*\b(live|reside|based|located)\b|\bcountry (do|where) you (currently )?(live|reside)\b/,
   },
   // Mailing address parts, before location so a bare "City" box gets just the city.
   {

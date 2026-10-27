@@ -5,6 +5,7 @@ import { classify } from "../classify.js";
 import { collectFields } from "./fields.js";
 import { startPlan, dateForTextField, matchNotice } from "../start-date.js";
 import { findSavedAnswer, detectCompany } from "../answers.js";
+import { assignEntries, entryValue } from "../entries.js";
 import {
   hasValue,
   fillText,
@@ -36,19 +37,106 @@ export async function autofill(
   const company = bank.length ? detectCompany(doc) : "";
   const report = [];
   const values = applicant.fields || {};
+  const SECTIONS = ["education", "experience"];
+  const wanted = Object.fromEntries(
+    SECTIONS.map((s) => [s, disabled.has(s) ? 0 : applicant[s]?.length || 0]),
+  );
+  const bad = new Set(); // "section:index" entries with a field that failed
+  const added = { education: 0, experience: 0 };
   // Answers can reveal follow-up questions (race appears after "Hispanic or
-  // Latino? No"), so look again for fields that showed up during the pass.
+  // Latino? No"), and "Add another" adds a resume entry, so look again for
+  // fields that showed up during the pass.
   const seen = new Set();
-  for (let pass = 0; pass < 3; pass++) {
+  const passes = 3 + wanted.education + wanted.experience;
+  for (let pass = 0; pass < passes; pass++) {
     if (pass) await sleep(150);
-    const fresh = collectFields(doc).filter((f) => !seen.has(f.el));
+    const all = collectFields(doc);
+    const { entries } = assignEntries(all);
+    const fresh = all.filter((f) => !seen.has(f.el));
     if (!fresh.length) break;
     for (const field of fresh) {
       seen.add(field.el);
-      await fillField(field);
+      const slot = entries.get(field);
+      if (slot) await fillEntryField(field, slot);
+      else await fillField(field);
     }
+    for (const section of SECTIONS) addEntry(section);
   }
   return report;
+
+  // Clicks the section's "Add another" when the resume has more entries than
+  // the form shows, but only after every earlier entry filled cleanly, at most
+  // once per pass, and never more than the resume needs.
+  function addEntry(section) {
+    const all = collectFields(doc);
+    const { entries, count } = assignEntries(all);
+    const have = count[section];
+    if (
+      !have ||
+      have >= wanted[section] ||
+      added[section] >= wanted[section] - 1
+    )
+      return;
+    for (let i = 0; i < have; i++) if (bad.has(`${section}:${i}`)) return;
+    const last = all.filter((f) => entries.get(f)?.section === section).pop();
+    const button = addButtonAfter(last.el);
+    if (!button) return;
+    button.click();
+    added[section]++;
+  }
+
+  async function fillEntryField(field, slot) {
+    const { section, index, key } = slot;
+    const entry = {
+      label: `${field.label.slice(0, 100) || key} (${section} ${index + 1})`,
+      key: `${section}.${key}`,
+      kind: field.kind,
+      required: field.required,
+    };
+    report.push(entry);
+    const target = targetOf(field);
+    const fail = () => bad.add(`${section}:${index}`);
+    if (disabled.has(section)) {
+      entry.status = "off";
+      return;
+    }
+    const value = entryValue(applicant, slot);
+    if (key === "current") {
+      // Only ever ticks the box for a role the resume says is ongoing.
+      if (field.kind !== "checkbox" || !value || field.el.checked) {
+        entry.status = field.el.checked ? "kept" : "no-value";
+        return;
+      }
+      field.el.click();
+      entry.status = field.el.checked ? "filled" : "failed";
+      if (!field.el.checked) fail();
+      mark(target, field.el.checked ? "filled" : "attention");
+      return;
+    }
+    if (hasValue(field)) {
+      entry.status = "kept";
+      return;
+    }
+    if (!value) {
+      entry.status = "no-value";
+      if (field.required) mark(target, "attention");
+      return;
+    }
+    let ok = false;
+    try {
+      if (field.kind === "select") ok = fillSelect(field.el, value, key);
+      else if (field.kind === "radio") ok = fillRadio(field, value, key);
+      else if (field.kind === "combobox")
+        ok = await fillCombobox(field.el, value, key);
+      else if (field.kind === "checkbox") ok = false;
+      else ok = fillText(field.el, textForEntry(key, value));
+    } catch (e) {
+      entry.error = String(e?.message || e);
+    }
+    entry.status = ok ? "filled" : "failed";
+    if (!ok) fail();
+    mark(target, ok ? "filled" : "attention");
+  }
 
   async function fillField(field) {
     const profileKey = classify(field);
@@ -60,13 +148,7 @@ export async function autofill(
       required: field.required,
     };
     report.push(entry);
-    const target =
-      field.kind === "radio"
-        ? field.options[0].el.closest("fieldset, [role=radiogroup]") ||
-          field.options[0].el
-        : field.kind === "combobox"
-          ? field.el.closest('[class*="control"]') || field.el
-          : field.el;
+    const target = targetOf(field);
     // Not a profile question: try the answers the user saved from past forms.
     const saved =
       !profileKey &&
@@ -164,6 +246,50 @@ function fillSaved(field, text) {
   if (kind === "radio") return fillRadio(field, text, "");
   if (kind === "combobox") return fillCombobox(el, text, "");
   return fillText(el, text);
+}
+
+function targetOf(field) {
+  if (field.kind === "radio")
+    return (
+      field.options[0].el.closest("fieldset, [role=radiogroup]") ||
+      field.options[0].el
+    );
+  if (field.kind === "combobox")
+    return field.el.closest('[class*="control"]') || field.el;
+  return field.el;
+}
+
+// Typed month boxes get "09" rather than "September".
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+function textForEntry(key, value) {
+  if (key !== "startMonth" && key !== "endMonth") return value;
+  return String(MONTHS.indexOf(value) + 1).padStart(2, "0");
+}
+
+// The first "Add another" style control after the section's last field.
+const ADD =
+  /^\+?\s*add (another|more|education|employment|experience|school|position|job|role)\b/i;
+function addButtonAfter(el) {
+  const doc = el.ownerDocument;
+  const after = el.ownerDocument.defaultView.Node.DOCUMENT_POSITION_FOLLOWING;
+  return [...doc.querySelectorAll("button, a, [role=button]")].find(
+    (b) =>
+      ADD.test(b.textContent.replace(/\s+/g, " ").trim()) &&
+      el.compareDocumentPosition(b) & after,
+  );
 }
 
 // Hidden upload inputs: outline the visible group instead.

@@ -97,6 +97,44 @@ function countryGroup(text) {
   );
 }
 
+// Degree level, so "Bachelor of Science" picks "Bachelor's Degree". MBA, JD and
+// MD are checked before the broader master's / doctorate levels.
+const DEGREES = [
+  ["mba", /\bm ?b ?a\b|\bmaster of business administration\b/],
+  ["jd", /\bj ?d\b|\bjuris doctor\b/],
+  ["md", /\bm ?d\b|\bdoctor of medicine\b/],
+  ["phd", /\bph ?d\b|\bdoctor(ate)? of philosophy\b|\bdoctorate\b/],
+  ["master", /\bmasters?\b|\bm ?sc?\b|\bm ?eng\b|\bm ?a\b/],
+  [
+    "bachelor",
+    /\bbachelors?\b|\bb ?sc?\b|\bb ?eng\b|\bb ?a\b|\bb ?comm?\b|\bb ?tech\b|\bundergrad/,
+  ],
+  ["associate", /\bassociates?\b|\ba ?a ?s?\b/],
+  ["highschool", /\bhigh school\b|\bsecondary\b|\bged\b|\bdiploma\b/],
+];
+const degreeLevel = (t) => DEGREES.find(([, re]) => re.test(t))?.[0] || null;
+const MONTH_NAMES = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+];
+// "September" ↔ "Sep" ↔ "09" ↔ "9".
+function monthNumber(t) {
+  if (/^\d{1,2}$/.test(t))
+    return Number(t) >= 1 && Number(t) <= 12 ? Number(t) : 0;
+  const i = MONTH_NAMES.findIndex((m) => t.length >= 3 && m.startsWith(t));
+  return i + 1;
+}
+
 export function matchOption(options, value, key = "") {
   const wanted = clean(value);
   if (!wanted) return -1;
@@ -105,6 +143,20 @@ export function matchOption(options, value, key = "") {
     list[i] && !/^(select|choose|please select|--)/.test(list[i]);
   let i = list.findIndex((o, n) => real(n) && o === wanted);
   if (i >= 0) return i;
+  // A near-miss school is a different school: exact names only.
+  if (key === "school" || key === "startYear" || key === "endYear") return -1;
+  if (key === "startMonth" || key === "endMonth") {
+    const m = monthNumber(wanted);
+    return m ? list.findIndex((o, n) => real(n) && monthNumber(o) === m) : -1;
+  }
+  if (key === "degree") {
+    const level = degreeLevel(wanted);
+    if (!level) return -1;
+    const hits = list
+      .map((o, n) => (real(n) && degreeLevel(o) === level ? n : -1))
+      .filter((n) => n >= 0);
+    return hits.length === 1 ? hits[0] : -1;
+  }
   if (DECLINE.test(wanted))
     return list.findIndex((o, n) => real(n) && DECLINE.test(o));
   if (/^(yes|no)\b/.test(wanted)) {

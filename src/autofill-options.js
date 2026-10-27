@@ -37,6 +37,13 @@ export const OPTION_GROUPS = [
   },
   { title: "Documents", fields: [["resume", "Resume upload"]] },
   {
+    title: "From your resume",
+    fields: [
+      ["education", "Education (school, degree, dates)"],
+      ["experience", "Work experience (company, title, dates)"],
+    ],
+  },
+  {
     title: "Work eligibility",
     fields: [
       ["workAuthorized", "Authorized to work"],
