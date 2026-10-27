@@ -114,12 +114,20 @@ function comboboxRoot(el) {
     if (node.matches(ROOT)) return node;
   return el.parentElement;
 }
+// Single selects show one value; multi selects (pronouns) show a chip per pick.
 function comboboxValue(el) {
   const root = comboboxRoot(el);
-  return (
-    root?.querySelector('[class*="single-value"], [class*="singleValue"]')
-      ?.textContent || ""
-  ).trim();
+  const single = root?.querySelector(
+    '[class*="single-value"], [class*="singleValue"]',
+  );
+  if (single) return single.textContent.trim();
+  const chips = root?.querySelectorAll(
+    '[class*="multi-value__label"], [class*="multiValueLabel"]',
+  );
+  return [...(chips || [])]
+    .map((c) => c.textContent.trim())
+    .filter(Boolean)
+    .join(", ");
 }
 function listOptions(el) {
   const doc = el.ownerDocument;

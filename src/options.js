@@ -115,6 +115,14 @@ export function matchOption(options, value, key = "") {
     // Several "Yes, ..." variants means the question needs a human decision.
     return hits.length === 1 ? list.indexOf(hits[0]) : -1;
   }
+  if (key === "pronouns") {
+    // "he" or "he/him" picks "He/him/his": the leading pronoun decides.
+    const lead = (t) => t.split(/[\s/]+/)[0];
+    const hits = list
+      .map((o, n) => (real(n) && lead(o) === lead(wanted) ? n : -1))
+      .filter((n) => n >= 0);
+    if (hits.length === 1) return hits[0];
+  }
   if (key === "region") {
     // Both spellings of one place; a code shared by two countries ("CA") picks
     // whichever of them the list actually offers.

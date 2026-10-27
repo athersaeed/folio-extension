@@ -31,6 +31,8 @@ const CASES = [
   ["Address Line 2 (Optional)", "addressLine2"],
   ["Province/State", "region"],
   ["State", "region"],
+  ["Which U.S. State or Canadian Province do you reside in?", "region"],
+  ["What province do you live in?", "region"],
   ["Postal/Zip Code", "postalCode"],
   ["ZIP", "postalCode"],
   ["Current location", "location"],
@@ -65,6 +67,7 @@ const CASES = [
   ["Reference name", null],
   ["Company address", null],
   ["State your reason for applying", null],
+  ["Please state the city you live in", null],
   ["Emergency contact phone", null],
   ["Company name", null],
   ["School name", null],
@@ -165,4 +168,11 @@ test("province / state dropdowns accept either spelling", () => {
   assert.equal(matchOption(list, "ON", "region"), 2);
   assert.equal(matchOption(["AB", "ON"], "Ontario", "region"), 1);
   assert.equal(matchOption(list, "ZZ", "region"), -1);
+});
+
+test("pronoun answers match by the leading pronoun", () => {
+  const list = ["Select...", "He/him/his", "She/her/hers", "They/them/theirs"];
+  assert.equal(matchOption(list, "he", "pronouns"), 1);
+  assert.equal(matchOption(list, "she/her", "pronouns"), 2);
+  assert.equal(matchOption(list, "xe", "pronouns"), -1);
 });
