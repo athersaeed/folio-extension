@@ -124,7 +124,10 @@ const RULES = [
   },
   // Voluntary self-identification.
   { key: "hispanicLatino", re: /\bhispanic\b|\blatin[oax]\b/ },
-  { key: "race", re: /\brace\b|\bethnicity\b/ },
+  {
+    key: "race",
+    re: /\brace\b|\bethnicity\b|\bracial\b|\bethnic (background|identity|origin)\b/,
+  },
   {
     key: "gender",
     re: /\bgender\b|^sex$/,

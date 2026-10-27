@@ -85,6 +85,11 @@ const REGIONS = Object.entries({
   wi: "wisconsin",
   wy: "wyoming",
 });
+const GENDERS = [
+  ["male", "man", "cis man", "cisgender man"],
+  ["female", "woman", "cis woman", "cisgender woman"],
+  ["non binary", "nonbinary", "genderqueer/non binary"],
+];
 const clean = (s) =>
   normalize(s)
     .replace(/[.,'’]/g, "")
@@ -211,6 +216,29 @@ export function matchOption(options, value, key = "") {
       /^(\w+s?)( degree)?$/.test(list[n].replace(/\s+/g, " ")),
     );
     return plain.length ? plain[0] : -1;
+  }
+  // Same answer, different wording: "Male" ↔ "Man".
+  if (key === "gender") {
+    const group = GENDERS.find((g) => g.includes(wanted));
+    if (group) {
+      const hits = list
+        .map((o, n) => (real(n) && group.includes(o) ? n : -1))
+        .filter((n) => n >= 0);
+      if (hits.length === 1) return hits[0];
+    }
+  }
+  // "I am not a veteran" answers both the federal list ("...not a protected
+  // veteran") and plain yes/no questions. "Not a *protected* veteran" alone
+  // does not say "No" to "Are you a veteran?", so that stays the user's call.
+  if (key === "veteranStatus" && wanted === "i am not a veteran") {
+    const hits = list
+      .map((o, n) =>
+        real(n) && (/^no\b/.test(o) || /\bnot a (protected )?veteran\b/.test(o))
+          ? n
+          : -1,
+      )
+      .filter((n) => n >= 0);
+    return hits.length === 1 ? hits[0] : -1;
   }
   if (DECLINE.test(wanted))
     return list.findIndex((o, n) => real(n) && DECLINE.test(o));

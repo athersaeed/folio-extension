@@ -58,6 +58,15 @@ const CASES = [
   ["Gender", "gender"],
   ["Are you Hispanic/Latino?", "hispanicLatino"],
   ["Race", "race"],
+  [
+    "How would you describe your racial/ethnic background? (mark all that apply)",
+    "race",
+  ],
+  ["How would you describe your gender identity?", "gender"],
+  [
+    "Are you a veteran, active member or reservist of the United States Armed Forces?",
+    "veteranStatus",
+  ],
   ["Veteran Status", "veteranStatus"],
   ["Disability Status", "disabilityStatus"],
   ["Pronouns", "pronouns"],
@@ -227,4 +236,36 @@ test("several plain degree options of one level pick the first", () => {
     1,
   );
   assert.equal(matchOption(["Accelerated Master's"], "MSc", "degree"), -1);
+});
+
+test("demographic answers across wordings", () => {
+  const genders = [
+    "Select...",
+    "Man",
+    "Woman",
+    "Non-binary",
+    "Transgender man",
+    "I don't wish to answer",
+  ];
+  assert.equal(matchOption(genders, "Male", "gender"), 1);
+  assert.equal(matchOption(genders, "Female", "gender"), 2);
+  assert.equal(matchOption(genders, "Non-binary", "gender"), 3);
+  const races = ["East Asian", "South Asian", "Southeast Asian", "White"];
+  assert.equal(
+    matchOption(races, "Asian", "race"),
+    -1,
+    "several Asian options: user picks",
+  );
+  const yesNo = ["Yes", "No", "I don't wish to answer"];
+  assert.equal(matchOption(yesNo, "I am not a veteran", "veteranStatus"), 1);
+  assert.equal(
+    matchOption(yesNo, "I am not a protected veteran", "veteranStatus"),
+    -1,
+  );
+  const federal = [
+    "I am not a protected veteran",
+    "I identify as one or more of the classifications of protected veteran",
+    "I don't wish to answer",
+  ];
+  assert.equal(matchOption(federal, "I am not a veteran", "veteranStatus"), 0);
 });
