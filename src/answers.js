@@ -65,11 +65,16 @@ export function detectCompany(doc) {
   const title = (doc.title || "").split(" | ")[0];
   const m = /\bapplication for .+ at (.+)$/i.exec(title);
   if (m) return m[1].trim();
+  const { hostname, pathname } = doc.location || {};
+  // Ashby: "<role> @ <company>". Lever: "<company> - <role>".
+  const ashby = /^.+ @ (.+)$/.exec(title);
+  if (ashby && /ashbyhq\.com$/.test(hostname || "")) return ashby[1].trim();
+  const lever = /^(.+?) - .+$/.exec(title);
+  if (lever && /lever\.co$/.test(hostname || "")) return lever[1].trim();
   const site = doc
     .querySelector('meta[property="og:site_name"]')
     ?.getAttribute("content");
   if (site && !/greenhouse|lever|ashby|workday/i.test(site)) return site.trim();
-  const { hostname, pathname } = doc.location || {};
   if (/greenhouse\.io|lever\.co|ashbyhq\.com/.test(hostname || "")) {
     const slug = (pathname || "").split("/").filter(Boolean)[0];
     if (slug) return slug.replace(/[-_]+/g, " ");

@@ -1,6 +1,7 @@
 // Bundles the extension into dist/ (Chrome: chrome://extensions → Load unpacked) and
 // dist-firefox/ (Firefox: about:debugging → Load Temporary Add-on, or npm run firefox).
-// --fixture also builds the local Greenhouse-like test form into fixtures/dist/.
+// --fixture also builds the local Greenhouse- and Ashby-like test forms into
+// fixtures/dist/ (fixtures/lever.html is plain HTML).
 import * as esbuild from "esbuild";
 import {
   cpSync,
@@ -46,12 +47,13 @@ const builds = [
   { entryPoints: ["src/popup.js"], outfile: "dist/popup.js", format: "esm" },
 ];
 if (fixture)
-  builds.push({
-    entryPoints: ["fixtures/greenhouse.jsx"],
-    outfile: "fixtures/dist/greenhouse.js",
-    format: "iife",
-    define: { "process.env.NODE_ENV": '"development"' },
-  });
+  for (const site of ["greenhouse", "ashby"])
+    builds.push({
+      entryPoints: [`fixtures/${site}.jsx`],
+      outfile: `fixtures/dist/${site}.js`,
+      format: "iife",
+      define: { "process.env.NODE_ENV": '"development"' },
+    });
 const common = { bundle: true, target: "chrome116", logLevel: "info" };
 const mirror = {
   name: "firefox-mirror",

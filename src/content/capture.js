@@ -20,16 +20,19 @@ export function captureAnswers(doc) {
   for (const field of collectFields(doc)) {
     // Files, consent boxes and profile questions (name, email, …) are not
     // answer-bank material; the profile already covers the latter.
-    if (field.kind === "file" || field.kind === "checkbox") continue;
+    // "Select all that apply" lists hold several answers; leave those out too.
+    if (["file", "checkbox", "checkboxes"].includes(field.kind)) continue;
     if (classify(field)) continue;
-    const question = field.label.replace(/\s*\*\s*$/, "").trim();
+    const question = field.label.replace(/\s*[*✱]\s*$/, "").trim();
     if (question.length < 3 || SENSITIVE.test(question)) continue;
     const answer = readValue(field).trim();
     if (!answer) continue;
     const key = question.toLowerCase();
     if (seen.has(key)) continue;
     seen.add(key);
-    const choice = ["select", "radio", "combobox"].includes(field.kind);
+    const choice = ["select", "radio", "combobox", "buttons"].includes(
+      field.kind,
+    );
     const kind = choice
       ? "choice"
       : answer.length > 200 || (field.kind === "textarea" && answer.length > 80)

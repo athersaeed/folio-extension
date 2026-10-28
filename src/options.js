@@ -110,7 +110,14 @@ const RACES = [
   ["black", /\bblack\b|\bafrican\b/],
   ["white", /\bwhite\b|\bcaucasian\b/],
 ];
-const raceOf = (t) => RACES.find(([, re]) => re.test(t)) || null;
+// "White (Not Hispanic or Latino)" is White: the qualifier names no race.
+const raceOf = (t) => {
+  const bare = t.replace(
+    /\bnot (hispanic|latin[oaxe])( or latin[oaxe])?\b/g,
+    "",
+  );
+  return RACES.find(([, re]) => re.test(bare)) || null;
+};
 const clean = (s) =>
   normalize(s)
     .replace(/[.,'’]/g, "")

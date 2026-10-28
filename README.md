@@ -1,7 +1,7 @@
 # Folio Autofill (browser extension)
 
 Fills job applications from your local Folio workspace when you click **Fill this
-page**. It reads your saved profile answers and a reviewed resume from the Folio
+page** on a Greenhouse, Lever or Ashby application. It reads your saved profile answers and a reviewed resume from the Folio
 server on your computer, fills **empty** fields only, outlines what it filled
 (green) and what still needs you (amber), and **never submits**.
 
@@ -41,7 +41,7 @@ a Gecko ID and no Chrome-only manifest keys.
   Bump `version` in `static/manifest.json` before signing a new release.
   (`npm run package:firefox` only builds an unsigned zip, for manual upload.)
 - **Site access:** Firefox lets you withhold an add-on's site access. The popup
-  asks for access to Folio and Greenhouse when you click **Save and connect** or
+  asks for access to Folio and the job sites (Greenhouse, Lever, Ashby) when you click **Save and connect** or
   **Fill this page**; allow it once.
 - `npm run lint:firefox` runs Mozilla's add-on linter.
 
@@ -89,12 +89,13 @@ popup (Fill)  ──fetch, X-Folio-Extension-Key──▶  Folio /api/ext/applic
 - `src/options.js`: picks the option meaning the same as your saved answer
   (Yes/No, "decline" variants, country aliases); unsure → leaves it.
 - `src/content/fields.js`: finds controls and their labels (label[for],
-  aria-labelledby, legends, upload groups).
+  aria-labelledby, legends, upload groups, Lever/Ashby question titles).
 - `src/content/fill.js`: React-safe setters, native selects, radios,
-  react-select comboboxes, file upload through `DataTransfer`.
+  checkbox lists, Yes/No buttons, react-select and Ashby comboboxes, Lever's
+  location box, file upload through `DataTransfer`.
 - Only `activeTab` + `scripting`: nothing runs on a page until you click Fill.
-  Greenhouse iframes embedded on company sites are covered by the
-  `*.greenhouse.io` host permission.
+  Job-site iframes embedded on company sites are covered by the
+  `*.greenhouse.io`, `*.lever.co` and `*.ashbyhq.com` host permissions.
 
 ### Greenhouse quirk
 
@@ -104,23 +105,51 @@ components). React-select's own `mousedown` / `openMenu()` paths do nothing
 there. `fillCombobox` sends ArrowDown keydown+keyup first, then a full mouse
 sequence, then types to filter for async lists.
 
+### Lever and Ashby
+
+- **Lever** (`jobs.lever.co`) wraps each question's title _and_ its control in
+  one `<label>`, so the label's text would include a select's options; the
+  `.application-label` title is used instead, without the ✱. Custom questions
+  put the title beside their radios/checkboxes. The location box only keeps a
+  suggestion picked from its dropdown (typed text is cleared on blur), so it is
+  typed, then the matching suggestion is clicked.
+- **Ashby** (`jobs.ashbyhq.com`) titles fields with a `<label for>` that often
+  points at nothing, asks Yes/No questions with two `aria-pressed` buttons over
+  a hidden checkbox, and renders its location suggestions in a listbox at the end
+  of `<body>`. Its "select all that apply" checkboxes are named after their
+  options ("Email"), so those lists are classified by their title only.
+- Both: a "select all that apply" list ticks at most the one option that means
+  your answer. SMS/WhatsApp consent radios are never touched.
+
 ## Test
 
 ```bash
 npm test                 # classifier, option matching, jsdom autofill
-npm run fixture          # builds fixtures/dist: the test form, plus the real popup
+npm run fixture          # builds fixtures/dist: the test forms, plus the real popup
                          # with chrome.* stubbed at fixtures/dist/popup/index.html
 ```
 
 `fixtures/greenhouse.html` is a synthetic Greenhouse-like form built with real
-React + react-select and the same open/close wiring as the live site. Serve the
+React + react-select and the same open/close wiring as the live site;
+`fixtures/lever.html` (plain HTML) and `fixtures/ashby.html` (React) do the same
+for Lever and Ashby. Serve the
 `fixtures/` folder on localhost and call
 `window.__folioAutofill(applicant, file)` in its console; `window.formState`
 shows what React actually registered. Only use synthetic data, and never
 automate real company application forms in tests.
 
-## Not yet
+## Roadmap
 
-- Workday, Lever, Ashby adapters (Workday is multi-step; do it last).
-- Application tracking on submit (M6), AI answers for free-text questions (M7).
-- A labelled field-mapping eval set from saved real forms, with a held-out split.
+| Stage | What                                                           | Status                |
+| ----- | -------------------------------------------------------------- | --------------------- |
+| M0    | Profile schema in Folio (the answers the extension fills from) | Done                  |
+| M1    | Extension skeleton: pairing with Folio, popup, fill on click   | Done                  |
+| M3    | Greenhouse                                                     | Done                  |
+| M4    | Lever and Ashby                                                | Done (fixture-tested) |
+| M5    | Workday (multi-step, so last)                                  | Not started           |
+| M6    | Track an application when you submit it                        | Not started           |
+| M7    | AI answers for free-text questions, with your approval         | Not started           |
+
+Also not yet: Ashby's education entries and date pickers, filling Lever's
+"Current company" from the resume, and a labelled field-mapping eval set from
+saved real forms with a held-out split.

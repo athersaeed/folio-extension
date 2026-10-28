@@ -13,6 +13,9 @@ import {
   fillSelect,
   fillRadio,
   fillCombobox,
+  fillButtons,
+  fillCheckboxes,
+  fillSuggest,
   attachFile,
 } from "./fill.js";
 
@@ -129,7 +132,10 @@ export async function autofill(
       else if (field.kind === "radio") ok = fillRadio(field, value, key);
       else if (field.kind === "combobox")
         ok = await fillCombobox(field.el, value, key);
-      else if (field.kind === "checkbox") ok = false;
+      else if (field.kind === "buttons")
+        ok = await fillButtons(field, value, key);
+      else if (field.kind === "checkbox" || field.kind === "checkboxes")
+        ok = false;
       else ok = fillText(field.el, textForEntry(key, value));
     } catch (e) {
       entry.error = String(e?.message || e);
@@ -154,8 +160,7 @@ export async function autofill(
     const saved =
       !profileKey &&
       bank.length &&
-      field.kind !== "checkbox" &&
-      field.kind !== "file" &&
+      !["checkbox", "checkboxes", "file"].includes(field.kind) &&
       !hasValue(field)
         ? findSavedAnswer(bank, field.label, company)
         : null;
@@ -233,8 +238,14 @@ export async function autofill(
       else if (field.kind === "select")
         ok = fillSelect(field.el, value, profileKey);
       else if (field.kind === "radio") ok = fillRadio(field, value, profileKey);
+      else if (field.kind === "checkboxes")
+        ok = fillCheckboxes(field, value, profileKey);
+      else if (field.kind === "buttons")
+        ok = await fillButtons(field, value, profileKey);
       else if (field.kind === "combobox")
         ok = await fillCombobox(field.el, value, profileKey);
+      else if (field.kind === "suggest")
+        ok = await fillSuggest(field.el, value, profileKey);
       else ok = fillText(field.el, value);
     } catch (e) {
       entry.error = String(e?.message || e);
@@ -251,6 +262,10 @@ async function fillStartDate(field, plan) {
   const { el, kind } = field;
   if (kind === "select") return fillSelect(el, plan.notice, "startDate", pick);
   if (kind === "radio") return fillRadio(field, plan.notice, "startDate", pick);
+  if (kind === "buttons")
+    return fillButtons(field, plan.notice, "startDate", pick);
+  if (kind === "checkboxes")
+    return fillCheckboxes(field, plan.notice, "startDate", pick);
   if (kind === "combobox")
     return fillCombobox(el, plan.notice, "startDate", pick);
   if (el.type === "date") return fillText(el, plan.iso);
@@ -262,14 +277,16 @@ function fillSaved(field, text) {
   const { el, kind } = field;
   if (kind === "select") return fillSelect(el, text, "");
   if (kind === "radio") return fillRadio(field, text, "");
+  if (kind === "buttons") return fillButtons(field, text, "");
   if (kind === "combobox") return fillCombobox(el, text, "");
+  if (kind === "suggest") return fillSuggest(el, text, "");
   return fillText(el, text);
 }
 
 function targetOf(field) {
-  if (field.kind === "radio")
+  if (field.kind === "radio" || field.kind === "checkboxes")
     return (
-      field.options[0].el.closest("fieldset, [role=radiogroup]") ||
+      field.options[0].el.closest("fieldset, [role=radiogroup], ul") ||
       field.options[0].el
     );
   if (field.kind === "combobox")

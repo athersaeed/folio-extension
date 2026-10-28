@@ -6,7 +6,7 @@ export function normalize(text) {
   return String(text || "")
     .replace(/([a-z])([A-Z])/g, "$1 $2")
     .toLowerCase()
-    .replace(/[_\-*:?()[\]]+/g, " ")
+    .replace(/[_\-*✱:?()[\]]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }

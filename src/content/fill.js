@@ -28,13 +28,18 @@ function setNativeValue(el, value) {
   Object.getOwnPropertyDescriptor(proto, "value").set.call(el, value);
 }
 
+const pressed = (b) => b.getAttribute("aria-pressed") === "true";
+
 export function hasValue(field) {
   const { el, kind } = field;
-  if (kind === "radio") return field.options.some((o) => o.el.checked);
+  if (kind === "radio" || kind === "checkboxes")
+    return field.options.some((o) => o.el.checked);
+  if (kind === "buttons") return field.options.some((o) => pressed(o.el));
   if (kind === "checkbox") return el.checked;
   if (kind === "file") return el.files?.length > 0;
   if (kind === "select") return el.selectedIndex > 0 && !!el.value;
-  if (kind === "combobox") return !!comboboxValue(el);
+  // Ashby's autocomplete keeps the picked value in the input itself.
+  if (kind === "combobox") return !!comboboxValue(el) || !!el.value.trim();
   return !!el.value.trim();
 }
 
@@ -43,9 +48,16 @@ export function readValue(field) {
   const { el, kind } = field;
   if (kind === "radio")
     return field.options.find((o) => o.el.checked)?.label || "";
+  if (kind === "checkboxes")
+    return field.options
+      .filter((o) => o.el.checked)
+      .map((o) => o.label)
+      .join(", ");
+  if (kind === "buttons")
+    return field.options.find((o) => pressed(o.el))?.label || "";
   if (kind === "select")
     return el.value ? el.selectedOptions[0]?.textContent.trim() || "" : "";
-  if (kind === "combobox") return comboboxValue(el);
+  if (kind === "combobox") return comboboxValue(el) || el.value || "";
   return el.value || "";
 }
 
@@ -102,6 +114,72 @@ export function fillRadio(
   return input.checked;
 }
 
+// "Select all that apply" lists: ticks the one option that means the answer.
+export function fillCheckboxes(
+  field,
+  value,
+  profileKey,
+  pick = byWording(value, profileKey),
+) {
+  const i = pick(field.options.map((o) => o.label));
+  if (i < 0) return false;
+  const input = field.options[i].el;
+  input.click();
+  return input.checked;
+}
+
+// Ashby's Yes/No buttons.
+export async function fillButtons(
+  field,
+  value,
+  profileKey,
+  pick = byWording(value, profileKey),
+) {
+  const i = pick(field.options.map((o) => o.label));
+  if (i < 0) return false;
+  const button = field.options[i].el;
+  button.click();
+  await sleep(50);
+  return pressed(button);
+}
+
+// Lever's location box: type, wait for its suggestions, pick one. Leaving the
+// box with only typed text makes Lever clear it, so a miss empties it here.
+export async function fillSuggest(
+  el,
+  value,
+  profileKey,
+  pick = byWording(value, profileKey),
+) {
+  const scope = el.closest(".application-field") || el.parentElement;
+  const results = () => [
+    ...scope.querySelectorAll('.dropdown-location, [role="option"]'),
+  ];
+  el.focus();
+  setNativeValue(el, value);
+  fire(el, "input");
+  key(el, "keydown", "a");
+  key(el, "keyup", "a");
+  let options = [];
+  for (let t = 0; t < 4000 && !options.length; t += 100) {
+    await sleep(100);
+    options = results();
+  }
+  const i = pick(options.map((o) => o.textContent));
+  if (i < 0) {
+    setNativeValue(el, "");
+    fire(el, "input");
+    el.blur();
+    return false;
+  }
+  mouse(options[i], "mousedown");
+  mouse(options[i], "mouseup");
+  mouse(options[i], "click");
+  await sleep(50);
+  el.blur();
+  return !!el.value.trim();
+}
+
 // --- react-select style comboboxes (Greenhouse, Ashby, Lever) ---------------
 const ROOT =
   '.select-shell, [class*="container"]:not([class*="input-container"]):not([class*="value-container"]):not([class*="indicators"])';
@@ -143,7 +221,15 @@ function listOptions(el) {
     if (byId.length) return byId;
     scope = comboboxRoot(el);
   }
-  return [...(scope?.querySelectorAll('[role="option"]') || [])];
+  const options = [...(scope?.querySelectorAll('[role="option"]') || [])];
+  if (options.length || owned) return options;
+  // Popups rendered at the end of <body> (Ashby): use the one open listbox.
+  const open = [...doc.querySelectorAll('[role="listbox"]')].filter((l) =>
+    l.querySelector('[role="option"]'),
+  );
+  return open.length === 1
+    ? [...open[0].querySelectorAll('[role="option"]')]
+    : [];
 }
 async function waitForOptions(el, ms = 1500) {
   for (let t = 0; t < ms; t += 50) {
