@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Folio Autofill",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Fills job applications from your local Folio workspace when you click Fill. Never submits.",
   "icons": {
     "16": "icons/icon-16.png",
