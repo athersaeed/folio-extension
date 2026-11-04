@@ -15,6 +15,19 @@ export function normalize(text) {
 const OTHER_PERSON =
   /\b(reference|referr(er|al)|emergency|manager|supervisor|recruiter|parent|spouse|contact person|company|employer|school|university|college|institution|hiring)\b/;
 
+// Follow-up boxes that explain an earlier answer ("If yes, please list the
+// type of sponsorship you need") rather than ask the question itself.
+const FOLLOW_UP =
+  /^if\b|\b(please )?(list|describe|explain|specify|elaborate)\b|\bwhat (type|kind|sponsorship)\b|\b(what|which) countries\b|\btell us\b/;
+
+// Opt-ins that mention a contact channel ("receive updates by email or SMS?").
+const OPT_IN =
+  /\b(would you like|receive|opt (in|out)|subscribe|newsletter|alerts?|updates|email me)\b/;
+
+// One question about two things ("based within 50 miles, or able to relocate
+// before your start date?"); none of its parts is the whole answer.
+const COMPOUND = /\bcommut|\bwithin \d+ (miles|km)\b/;
+
 const AUTOCOMPLETE = {
   "given-name": "firstName",
   "family-name": "lastName",
@@ -36,7 +49,9 @@ const AUTOCOMPLETE = {
 const RULES = [
   {
     key: "preferredName",
-    re: /\b(preferred|chosen) (first )?name\b|\bnick ?name\b/,
+    re: /\b(preferred|chosen) (first |full )?name\b|\bnick ?name\b|\bname (you|you'd|you would|would you) prefer\b/,
+    // "Share your preferred name and pronouns" is one box for both.
+    guard: /\bpronouns?\b/,
   },
   {
     key: "firstName",
@@ -53,12 +68,18 @@ const RULES = [
     re: /^(your |legal |full |candidate |applicant )?(full )?name$|\bfull (legal )?name\b|\blegal name\b/,
     guard: OTHER_PERSON,
   },
-  { key: "pronouns", re: /\bpronouns?\b/ },
-  { key: "email", re: /\be ?mail\b/, guard: OTHER_PERSON },
+  { key: "pronouns", re: /\bpronouns?\b/, guard: /\bname and pronouns\b/ },
+  {
+    key: "email",
+    re: /\be ?mail\b/,
+    guard: new RegExp(`${OTHER_PERSON.source}|${OPT_IN.source}`),
+  },
   {
     key: "phone",
     re: /\b(phone|mobile|telephone|cell)( number)?\b/,
-    guard: /\b(type|extension|ext)\b|emergency|reference/,
+    guard: new RegExp(
+      `\\b(type|extension|ext)\\b|emergency|reference|${OPT_IN.source}`,
+    ),
   },
   { key: "linkedin", re: /\blinked ?in\b/ },
   { key: "github", re: /\bgit ?hub\b/ },
@@ -71,28 +92,34 @@ const RULES = [
   {
     key: "requiresSponsorship",
     re: /\bsponsor(ship)?\b|\bvisa\b.*\b(need|require)|\b(need|require)\b.*\bvisa\b/,
+    guard: FOLLOW_UP,
   },
   {
     key: "workAuthorized",
     re: /\b(legally )?(authori[sz]ed|eligible|permitted|entitled)\b.*\bwork\b|\bright to work\b|\bwork (authori[sz]ation|permit)\b/,
+    guard: FOLLOW_UP,
   },
-  { key: "willingToRelocate", re: /\breloca/ },
+  {
+    key: "willingToRelocate",
+    re: /\breloca/,
+    guard: new RegExp(`${FOLLOW_UP.source}|${COMPOUND.source}|\\bplans?\\b`),
+  },
   {
     key: "salaryExpectation",
     re: /\bsalary\b|\b(desired|expected) (pay|compensation)\b|\bcompensation expectations?\b/,
   },
   {
     key: "startDate",
-    re: /\bstart date\b|\bwhen can you start\b|\bnotice period\b|\bearliest (possible )?(start|availability)\b|\bavailable to start\b/,
-    guard: /\b(month|year)$/,
+    re: /\bstart date\b|\bwhen can you start\b|\bnotice period\b|\bearliest (possible )?(start|availability)\b|\bearliest\b.*\bstart\b|\bavailable to start\b/,
+    guard: new RegExp(`\\b(month|year)$|${COMPOUND.source}`),
   },
   {
     key: "howHeard",
-    re: /\bhow did you (\w+ )?(hear|find out|learn|find|come across)\b|\bwhere did you (\w+ )?(hear|find|see)\b|\breferral source\b/,
+    re: /\bhow did (you|your) (\w+ )?(hear|find out|learn|find|come across)\b|\bwhere (did|have) you (\w+ )?(hear|heard|find|found|see|seen|learn|learned)\b|\breferral source\b/,
   },
   {
     key: "country",
-    re: /^country( of residence)?$|\bcountry of residence\b|\b(which|the) country\b.*\b(live|reside|based|located)\b|\bcountry (do|where) you (currently )?(live|reside)\b/,
+    re: /^country( of residence)?$|\bcountry of residence\b|\b(which|the) country\b.*\b(live|reside|based|located)\b|\bcountry (do|where) you (currently )?(live|reside)\b|\bcountry are you (currently )?(based|located|living)\b|\b(based|located|live|reside) in (any of )?(these|the following) countries\b/,
   },
   // Mailing address parts, before location so a bare "City" box gets just the city.
   {
@@ -119,21 +146,24 @@ const RULES = [
   },
   {
     key: "location",
-    re: /^(current )?location$|^current city$|\bcurrent (location|city)\b|\bwhere are you (currently )?(based|located|living)\b|\bcity,? state\b|^location city$/,
+    re: /^(current )?location$|^current city$|\bcurrent (location|city)\b|\bwhere are you (currently )?(based|located|living)\b|\bcity,? (and )?state\b|^location city$|\bwhere do you (currently )?(live|reside)\b/,
     guard: /prefer|relocat|office|willing/,
   },
   // Voluntary self-identification.
   { key: "hispanicLatino", re: /\bhispanic\b|\blatin[oax]\b/ },
   {
     key: "race",
-    re: /\brace\b|\bethnicity\b|\bracial\b|\bethnic (background|identity|origin)\b/,
+    re: /\brace\b|\bethnicit(y|ies)\b|\bracial\b|\bethnic (background|identity|origin)\b/,
   },
   {
     key: "gender",
-    re: /\bgender\b|^sex$/,
+    re: /\bgender\b|\bsex\b/,
     guard: /\btransgender\b|\bidentity\b.*\bdiffer/,
   },
-  { key: "veteranStatus", re: /\bveteran\b/ },
+  {
+    key: "veteranStatus",
+    re: /\bveteran\b|\bmilitary (status|service)\b|\bserved in the (military|armed forces)\b/,
+  },
   { key: "disabilityStatus", re: /\bdisabilit(y|ies)\b/ },
 ];
 

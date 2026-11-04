@@ -101,3 +101,16 @@ node --env-file="../../../folio parser llm/.env" compare.mjs practice
 `compare.mjs` sends only labels, field types and option text (never profile
 values), asks providers not to keep data, and stops at `BUDGET_USD` ($1).
 Results land in `results/`.
+
+## Follow-up: rule fixes (same day)
+
+`src/classify.js` now covers the missed wordings above and guards follow-up
+"please list / explain" boxes, email or SMS opt-ins, and two-part questions
+("within 50 miles, or able to relocate before your start date?").
+
+- Practice: **344/345, 1 wrong** (was 329/345, 9 wrong). The remaining one is
+  "Please identify your ethnicity." with Hispanic / Not Hispanic options, which
+  needs option-aware classification.
+- Held-out was **not** re-scored: several fixes target wordings first seen in
+  held-out (preferred name, military status, country), so its score would no
+  longer be a fair measure. A fresh held-out needs new companies.

@@ -70,6 +70,41 @@ const CASES = [
   ["Veteran Status", "veteranStatus"],
   ["Disability Status", "disabilityStatus"],
   ["Pronouns", "pronouns"],
+  // Wordings from the field-mapping eval (experiments/field-map), paraphrased.
+  ["What name would you prefer we use while you interview?", "preferredName"],
+  ["What's the name you'd prefer us to use?", "preferredName"],
+  ["Preferred Full Name (optional)", "preferredName"],
+  ["How did your hear about this role?", "howHeard"],
+  ["Where have you learned about us? Select all that apply.", "howHeard"],
+  ["Please identify your sex.", "gender"],
+  ["Select up to 2 ethnicities you identify with.", "race"],
+  ["What is your military status?", "veteranStatus"],
+  ["What country are you based in?", "country"],
+  ["Are you currently based in any of these countries?", "country"],
+  ["Where do you currently live?", "location"],
+  ["In what city and state is your primary residence?", "location"],
+  ["When is the earliest you could start working with us?", "startDate"],
+  // Follow-ups, opt-ins and two-part questions: no single profile answer fits.
+  [
+    "If you do require sponsorship, please list the type of support you need.",
+    null,
+  ],
+  [
+    "If you're not authorized to work there, what sponsorship would you need?",
+    null,
+  ],
+  ["In what countries do you have the unrestricted right to work?", null],
+  ["Please email me about future job openings", null],
+  [
+    "Would you like to receive updates by SMS to the phone number provided?",
+    null,
+  ],
+  [
+    "Are you based within 50 miles of the office, or able to relocate before your start date?",
+    null,
+  ],
+  ["If not, tell us about your relocation plans", null],
+  ["Feel free to share your preferred name and pronouns.", null],
   // Must stay unmatched: guessing these would put wrong answers on applications.
   ["Have you previously applied to this company?", null],
   ["Why do you want to work here?", null],
