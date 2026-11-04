@@ -9,6 +9,15 @@ const CAPTURED = {
     { question: "Why do you want to work here?", answer: "I like building tools that save people from repetitive work, and this team does exactly that.", kind: "draft", company: "Synthetic Co" },
   ],
 };
+// A long fill report, so the results list can be checked at full height.
+const REPORT = [
+  ...["First name", "Last name", "Email", "Phone", "LinkedIn", "Country", "City", "Postal code", "Gender", "Race", "Veteran status", "Disability status"].map((label) => ({ label, status: "filled" })),
+  { label: "Are you legally authorized to work in this country?", status: "check", required: true },
+  { label: "What is your preferred office location?", status: "unmatched", required: true },
+  { label: "Desired salary", status: "no-value", required: true },
+  { label: "Cover letter", status: "unmatched" },
+  { label: "Twitter", status: "unmatched" },
+];
 window.posted = [];
 window.chrome = {
   storage: {
@@ -25,7 +34,7 @@ window.chrome = {
   },
   scripting: {
     executeScript: async ({ func }) =>
-      !func ? [] : String(func).includes("__folioCapture") ? [{ result: CAPTURED }] : [{ result: { report: [] } }],
+      !func ? [] : String(func).includes("__folioCapture") ? [{ result: CAPTURED }] : [{ result: { report: REPORT } }],
   },
 };
 const json = (value) => new Response(JSON.stringify(value), { headers: { "Content-Type": "application/json" } });
@@ -39,7 +48,10 @@ window.fetch = async (url, init = {}) => {
     resumes: [{ id: "r1", name: "Synthetic resume", original: { filename: "cv.pdf", size: 1 } }],
     applicant: {
       resume: { id: "r1", name: "Synthetic resume", original: { filename: "cv.pdf", size: 1 } },
-      fields: { firstName: "Testy", lastName: "McTestface", email: "t@example.test", workAuthorized: "Yes", gender: "Female" },
+      fields: { firstName: "Testy", lastName: "McTestface", email: "t@example.test", phone: "+1 555 0100", linkedin: "https://linkedin.example.test/in/testy", city: "Springfield", country: "Canada", workAuthorized: "Yes", gender: "Female", noticePeriod: "2 weeks" },
+      experience: [{ company: "Example Corp", title: "Software Developer", location: "Springfield", startDate: "May 2023", endDate: "Present", description: "Built internal tools.\nCut report time by half." }],
+      education: [{ school: "Example University", degree: "BSc", fieldOfStudy: "Computer Science", startDate: "2019", endDate: "2023" }],
+      skills: "JavaScript, Python, SQL",
     },
     answers: window.posted,
   });

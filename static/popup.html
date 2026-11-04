@@ -64,6 +64,14 @@
         >
           Options
         </button>
+        <button
+          id="tab-profile"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-profile"
+        >
+          Profile
+        </button>
       </div>
       <section id="panel-fill" role="tabpanel" aria-labelledby="tab-fill">
         <label>
@@ -101,6 +109,22 @@
           Choose what Folio may fill. Switched-off fields are left for you.
         </p>
         <div id="options-list"></div>
+      </section>
+      <section
+        id="panel-profile"
+        role="tabpanel"
+        aria-labelledby="tab-profile"
+        hidden
+      >
+        <input
+          id="profile-search"
+          type="search"
+          placeholder="Search your answers"
+          aria-label="Search your answers"
+          spellcheck="false"
+        />
+        <p class="hint">Click an answer to copy it.</p>
+        <div id="profile-list"></div>
       </section>
     </main>
 

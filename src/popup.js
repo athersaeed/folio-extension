@@ -7,6 +7,7 @@ import {
   saveAnswers,
 } from "./folio-api.js";
 import { summarize } from "./summary.js";
+import { profileSections } from "./profile.js";
 import { isFolioPage } from "./pages.js";
 import { ext, HOSTS, requestHosts } from "./ext.js";
 import {
@@ -81,18 +82,99 @@ async function connect() {
   $("on-folio").hidden = !onFolio;
   $("main").hidden = false;
   renderOptions();
+  renderProfile();
 }
 
 // --- Options tab -------------------------------------------------------------
 function showTab(name) {
-  for (const tab of ["fill", "options"]) {
+  for (const tab of ["fill", "options", "profile"]) {
     $(`tab-${tab}`).setAttribute("aria-selected", String(tab === name));
     $(`panel-${tab}`).hidden = tab !== name;
   }
   $("results").hidden = name !== "fill" || !$("results-list").children.length;
+  if (name === "profile") $("profile-search").focus();
 }
-$("tab-fill").addEventListener("click", () => showTab("fill"));
-$("tab-options").addEventListener("click", () => showTab("options"));
+for (const tab of ["fill", "options", "profile"])
+  $(`tab-${tab}`).addEventListener("click", () => showTab(tab));
+
+// --- Profile tab: click to copy what autofill left blank ---------------------
+function renderProfile() {
+  const query = $("profile-search").value.trim().toLowerCase();
+  const sections = profileSections(data?.applicant, data?.answers);
+  const nodes = [];
+  for (const section of sections) {
+    const rows = section.rows.filter(
+      (r) =>
+        !query ||
+        `${section.title} ${r.label} ${r.value}`.toLowerCase().includes(query),
+    );
+    if (!rows.length) continue;
+    const h = document.createElement("h3");
+    h.textContent = section.title;
+    nodes.push(h);
+    let entry = "";
+    for (const r of rows) {
+      // One heading per job or school, even when search hides its first row.
+      if (r.entry && r.entry !== entry) {
+        entry = r.entry;
+        const e = document.createElement("p");
+        e.className = "entry";
+        e.textContent = r.entry;
+        nodes.push(e);
+      }
+      nodes.push(copyRow(r));
+    }
+  }
+  if (!nodes.length) {
+    const p = document.createElement("p");
+    p.className = "hint";
+    p.textContent = query
+      ? "No saved answer matches that."
+      : "Nothing saved in Folio yet. Fill in Personal profile first.";
+    nodes.push(p);
+  }
+  $("profile-list").replaceChildren(...nodes);
+}
+function copyRow({ label, value }) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "copy";
+  button.title = value;
+  const k = document.createElement("span");
+  k.className = "k";
+  k.textContent = label;
+  const v = document.createElement("span");
+  v.className = "v";
+  v.textContent = value;
+  const done = document.createElement("span");
+  done.className = "done";
+  button.append(k, v, done);
+  button.addEventListener("click", async () => {
+    try {
+      await copyText(value);
+      done.textContent = "Copied";
+    } catch {
+      done.textContent = "Couldn't copy";
+    }
+    setTimeout(() => (done.textContent = ""), 1500);
+  });
+  return button;
+}
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    // Older Firefox popups: fall back to a selected textarea.
+    const area = document.createElement("textarea");
+    area.value = text;
+    document.body.append(area);
+    area.select();
+    const ok = document.execCommand("copy");
+    area.remove();
+    if (!ok) throw new Error("copy failed");
+  }
+}
+$("profile-search").addEventListener("input", renderProfile);
 
 function renderOptions() {
   const saved = data?.applicant.fields || {};
@@ -235,6 +317,7 @@ function render({ filled, attention, skipped }) {
     t.className = "tag";
     t.textContent = tag;
     const label = document.createElement("span");
+    label.className = "label";
     label.textContent = entry.label;
     li.append(t, label);
     return li;

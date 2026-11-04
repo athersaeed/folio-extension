@@ -23,7 +23,7 @@
   box-sizing: border-box;
 }
 body {
-  width: 340px;
+  width: 400px;
   margin: 0;
   padding: 14px 16px 16px;
   font:
@@ -231,4 +231,66 @@ button.wide {
 }
 #review-cancel {
   margin-left: 10px;
+}
+/* Browsers cap popups at about 600px tall; give the fill report most of it. */
+#results-list {
+  max-height: 440px;
+}
+#results-list li .label {
+  overflow-wrap: anywhere;
+}
+#profile-search {
+  margin: 0;
+}
+#profile-list {
+  max-height: 440px;
+  overflow: auto;
+}
+#profile-list h3 {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin: 12px 0 4px;
+}
+#profile-list .entry {
+  font-size: 11px;
+  font-weight: 600;
+  margin: 8px 0 2px;
+}
+.copy {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0 8px;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  padding: 6px 2px;
+}
+.copy:hover,
+.copy:focus-visible {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+.copy .k {
+  font-size: 10px;
+  color: var(--muted);
+}
+.copy .v {
+  grid-column: 1;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.copy .done {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  align-self: center;
+  font-size: 10px;
+  color: var(--accent);
 }
