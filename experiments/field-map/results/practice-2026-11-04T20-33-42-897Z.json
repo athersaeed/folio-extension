@@ -1,0 +1,1866 @@
+{
+ "split": "practice",
+ "prompt": "You map job application form fields to an applicant profile.\nFor each field, answer with the one profile key whose saved answer would correctly fill it, or \"none\".\nAnswer \"none\" when no key fits exactly: cover letters, essays, \"why us\", skills or experience questions,\nschool, degree, current employer or title, consent and privacy checkboxes, \"have you worked here before\",\nquestions about someone other than the applicant, follow-up \"please explain\" boxes, and yes/no questions\nabout one specific place (e.g. \"Are you based in Japan?\"). A wrong key is worse than \"none\".\n\nProfile keys:\n- firstName: applicant's first / given name\n- lastName: applicant's last / family name\n- preferredName: name the applicant prefers to be called\n- name: applicant's full or legal name in one box\n- pronouns: applicant's pronouns\n- email: applicant's email address\n- phone: applicant's phone number\n- location: where the applicant lives, as free text (city, or city and state)\n- country: country the applicant lives in\n- addressLine1: street address\n- addressLine2: apartment / suite / unit\n- city: city, as its own address field\n- region: state or province the applicant lives in\n- postalCode: postal or ZIP code\n- linkedin: LinkedIn profile URL\n- github: GitHub profile URL\n- website: personal website or portfolio URL\n- resume: resume / CV file upload\n- workAuthorized: is the applicant legally authorized to work (yes/no)\n- requiresSponsorship: does the applicant need visa / immigration sponsorship, now or in future (yes/no)\n- salaryExpectation: expected or desired salary / compensation\n- startDate: earliest date the applicant can start\n- willingToRelocate: is the applicant willing to relocate (yes/no)\n- howHeard: how the applicant heard about the job or company\n- gender: gender or sex (voluntary self-identification)\n- hispanicLatino: is the applicant Hispanic or Latino (yes/no), asked separately from race\n- race: race or ethnicity (voluntary self-identification)\n- veteranStatus: veteran or military status\n- disabilityStatus: disability status",
+ "rows": [
+  {
+   "approach": "rules only",
+   "right": 329,
+   "wrong": 9,
+   "missed": 7,
+   "medianMs": 0,
+   "cost": 0,
+   "failed": 0
+  },
+  {
+   "approach": "rules + google/gemma-4-26b-a4b-it on blanks",
+   "right": 330,
+   "wrong": 15,
+   "missed": 0,
+   "medianMs": 307,
+   "cost": 0.0028143735,
+   "failed": 0
+  },
+  {
+   "approach": "google/gemma-4-26b-a4b-it on every field",
+   "right": 337,
+   "wrong": 8,
+   "missed": 0,
+   "medianMs": 307,
+   "cost": 0.0028143735,
+   "failed": 0
+  },
+  {
+   "approach": "google/gemma-4-26b-a4b-it agree (model fills blanks)",
+   "right": 336,
+   "wrong": 7,
+   "missed": 2,
+   "medianMs": 307,
+   "cost": 0.0028143735,
+   "failed": 0
+  },
+  {
+   "approach": "google/gemma-4-26b-a4b-it strict agree",
+   "right": 335,
+   "wrong": 1,
+   "missed": 9,
+   "medianMs": 307,
+   "cost": 0.0028143735,
+   "failed": 0
+  },
+  {
+   "approach": "rules + anthropic/claude-haiku-5.5 on blanks",
+   "right": 333,
+   "wrong": 11,
+   "missed": 1,
+   "medianMs": 785,
+   "cost": 0.0065883,
+   "failed": 0
+  },
+  {
+   "approach": "anthropic/claude-haiku-5.5 on every field",
+   "right": 338,
+   "wrong": 5,
+   "missed": 2,
+   "medianMs": 785,
+   "cost": 0.0065883,
+   "failed": 0
+  },
+  {
+   "approach": "anthropic/claude-haiku-5.5 agree (model fills blanks)",
+   "right": 338,
+   "wrong": 3,
+   "missed": 4,
+   "medianMs": 785,
+   "cost": 0.0065883,
+   "failed": 0
+  },
+  {
+   "approach": "anthropic/claude-haiku-5.5 strict agree",
+   "right": 334,
+   "wrong": 1,
+   "missed": 10,
+   "medianMs": 785,
+   "cost": 0.0065883,
+   "failed": 0
+  },
+  {
+   "approach": "rules + mistralai/ministral-8b-2512 on blanks",
+   "right": 330,
+   "wrong": 14,
+   "missed": 1,
+   "medianMs": 495,
+   "cost": 0.0038142000000000007,
+   "failed": 0
+  },
+  {
+   "approach": "mistralai/ministral-8b-2512 on every field",
+   "right": 338,
+   "wrong": 5,
+   "missed": 2,
+   "medianMs": 495,
+   "cost": 0.0038142000000000007,
+   "failed": 0
+  },
+  {
+   "approach": "mistralai/ministral-8b-2512 agree (model fills blanks)",
+   "right": 336,
+   "wrong": 5,
+   "missed": 4,
+   "medianMs": 495,
+   "cost": 0.0038142000000000007,
+   "failed": 0
+  },
+  {
+   "approach": "mistralai/ministral-8b-2512 strict agree",
+   "right": 335,
+   "wrong": 0,
+   "missed": 10,
+   "medianMs": 495,
+   "cost": 0.0038142000000000007,
+   "failed": 0
+  }
+ ],
+ "detail": {
+  "google/gemma-4-26b-a4b-it": {
+   "stats": {
+    "calls": 14,
+    "failed": 0,
+    "ms": [
+     172,
+     183,
+     186,
+     211,
+     227,
+     229,
+     231,
+     307,
+     322,
+     452,
+     544,
+     649,
+     770,
+     933
+    ],
+    "cost": 0.0028143735,
+    "errors": []
+   },
+   "answers": {
+    "p75": "workAuthorized",
+    "p76": "region",
+    "p77": "requiresSponsorship",
+    "p78": "none",
+    "p79": "gender",
+    "p80": "none",
+    "p81": "race",
+    "p82": "veteranStatus",
+    "p83": "requiresSponsorship",
+    "p84": "none",
+    "p85": "none",
+    "p86": "region",
+    "p87": "workAuthorized",
+    "p88": "requiresSponsorship",
+    "p89": "none",
+    "p90": "race",
+    "p91": "none",
+    "p92": "willingToRelocate",
+    "p93": "workAuthorized",
+    "p94": "requiresSponsorship",
+    "p95": "none",
+    "p96": "none",
+    "p97": "none",
+    "p98": "howHeard",
+    "p99": "none",
+    "p0": "firstName",
+    "p1": "lastName",
+    "p2": "email",
+    "p3": "phone",
+    "p4": "resume",
+    "p5": "none",
+    "p6": "none",
+    "p7": "none",
+    "p8": "none",
+    "p9": "none",
+    "p10": "none",
+    "p11": "none",
+    "p12": "gender",
+    "p13": "workAuthorized",
+    "p14": "requiresSponsorship",
+    "p15": "none",
+    "p16": "none",
+    "p17": "none",
+    "p18": "location",
+    "p19": "linkedin",
+    "p20": "howHeard",
+    "p21": "workAuthorized",
+    "p22": "none",
+    "p23": "website",
+    "p24": "none",
+    "p100": "none",
+    "p101": "gender",
+    "p102": "race",
+    "p103": "none",
+    "p104": "none",
+    "p105": "disabilityStatus",
+    "p106": "veteranStatus",
+    "p107": "preferredName",
+    "p108": "none",
+    "p109": "none",
+    "p110": "website",
+    "p111": "pronouns",
+    "p112": "pronouns",
+    "p113": "requiresSponsorship",
+    "p114": "none",
+    "p115": "none",
+    "p116": "none",
+    "p117": "none",
+    "p118": "none",
+    "p119": "gender",
+    "p120": "gender",
+    "p121": "race",
+    "p122": "hispanicLatino",
+    "p123": "veteranStatus",
+    "p124": "location",
+    "p125": "location",
+    "p126": "none",
+    "p127": "requiresSponsorship",
+    "p128": "none",
+    "p129": "none",
+    "p130": "none",
+    "p131": "none",
+    "p132": "none",
+    "p133": "none",
+    "p134": "none",
+    "p135": "none",
+    "p136": "none",
+    "p137": "none",
+    "p138": "race",
+    "p139": "none",
+    "p140": "workAuthorized",
+    "p141": "none",
+    "p142": "preferredName",
+    "p143": "none",
+    "p144": "requiresSponsorship",
+    "p145": "requiresSponsorship",
+    "p146": "region",
+    "p147": "howHeard",
+    "p148": "github",
+    "p149": "none",
+    "p50": "none",
+    "p51": "none",
+    "p52": "workAuthorized",
+    "p53": "requiresSponsorship",
+    "p54": "none",
+    "p55": "workAuthorized",
+    "p56": "none",
+    "p57": "none",
+    "p58": "gender",
+    "p59": "none",
+    "p60": "none",
+    "p61": "disabilityStatus",
+    "p62": "veteranStatus",
+    "p63": "race",
+    "p64": "workAuthorized",
+    "p65": "requiresSponsorship",
+    "p66": "none",
+    "p67": "none",
+    "p68": "none",
+    "p69": "none",
+    "p70": "none",
+    "p71": "none",
+    "p72": "none",
+    "p73": "none",
+    "p74": "linkedin",
+    "p175": "none",
+    "p176": "gender",
+    "p177": "none",
+    "p178": "none",
+    "p179": "veteranStatus",
+    "p180": "disabilityStatus",
+    "p181": "race",
+    "p182": "lastName",
+    "p183": "none",
+    "p184": "requiresSponsorship",
+    "p185": "none",
+    "p186": "none",
+    "p187": "workAuthorized",
+    "p188": "postalCode",
+    "p189": "none",
+    "p190": "none",
+    "p191": "howHeard",
+    "p192": "howHeard",
+    "p193": "none",
+    "p194": "none",
+    "p195": "race",
+    "p196": "veteranStatus",
+    "p197": "disabilityStatus",
+    "p198": "preferredName",
+    "p199": "pronouns",
+    "p25": "pronouns",
+    "p26": "none",
+    "p27": "location",
+    "p28": "preferredName",
+    "p29": "workAuthorized",
+    "p30": "none",
+    "p31": "veteranStatus",
+    "p32": "race",
+    "p33": "gender",
+    "p34": "none",
+    "p35": "website",
+    "p36": "howHeard",
+    "p37": "workAuthorized",
+    "p38": "none",
+    "p39": "willingToRelocate",
+    "p40": "none",
+    "p41": "none",
+    "p42": "race",
+    "p43": "veteranStatus",
+    "p44": "disabilityStatus",
+    "p45": "gender",
+    "p46": "race",
+    "p47": "none",
+    "p48": "none",
+    "p49": "none",
+    "p150": "website",
+    "p151": "website",
+    "p152": "none",
+    "p153": "gender",
+    "p154": "race",
+    "p155": "postalCode",
+    "p156": "howHeard",
+    "p157": "workAuthorized",
+    "p158": "requiresSponsorship",
+    "p159": "none",
+    "p160": "none",
+    "p161": "none",
+    "p162": "none",
+    "p163": "none",
+    "p164": "gender",
+    "p165": "none",
+    "p166": "none",
+    "p167": "race",
+    "p168": "veteranStatus",
+    "p169": "disabilityStatus",
+    "p170": "none",
+    "p171": "country",
+    "p172": "workAuthorized",
+    "p173": "requiresSponsorship",
+    "p174": "none",
+    "p225": "none",
+    "p226": "none",
+    "p227": "none",
+    "p228": "linkedin",
+    "p229": "howHeard",
+    "p230": "workAuthorized",
+    "p231": "requiresSponsorship",
+    "p232": "none",
+    "p233": "none",
+    "p234": "none",
+    "p235": "gender",
+    "p236": "race",
+    "p237": "veteranStatus",
+    "p238": "none",
+    "p239": "name",
+    "p240": "none",
+    "p241": "none",
+    "p242": "none",
+    "p243": "workAuthorized",
+    "p244": "requiresSponsorship",
+    "p245": "startDate",
+    "p246": "howHeard",
+    "p247": "none",
+    "p248": "none",
+    "p249": "none",
+    "p250": "none",
+    "p251": "none",
+    "p252": "none",
+    "p253": "none",
+    "p254": "none",
+    "p255": "none",
+    "p256": "gender",
+    "p257": "disabilityStatus",
+    "p258": "veteranStatus",
+    "p259": "startDate",
+    "p260": "workAuthorized",
+    "p261": "requiresSponsorship",
+    "p262": "none",
+    "p263": "postalCode",
+    "p264": "race",
+    "p265": "howHeard",
+    "p266": "none",
+    "p267": "requiresSponsorship",
+    "p268": "workAuthorized",
+    "p269": "none",
+    "p270": "gender",
+    "p271": "race",
+    "p272": "veteranStatus",
+    "p273": "none",
+    "p274": "none",
+    "p275": "startDate",
+    "p276": "none",
+    "p277": "none",
+    "p278": "none",
+    "p279": "requiresSponsorship",
+    "p280": "requiresSponsorship",
+    "p281": "willingToRelocate",
+    "p282": "location",
+    "p283": "none",
+    "p284": "none",
+    "p285": "none",
+    "p286": "willingToRelocate",
+    "p287": "none",
+    "p288": "none",
+    "p289": "none",
+    "p290": "none",
+    "p291": "none",
+    "p292": "none",
+    "p293": "howHeard",
+    "p294": "none",
+    "p295": "none",
+    "p296": "none",
+    "p297": "workAuthorized",
+    "p298": "requiresSponsorship",
+    "p299": "none",
+    "p325": "none",
+    "p326": "addressLine1",
+    "p327": "gender",
+    "p328": "workAuthorized",
+    "p329": "requiresSponsorship",
+    "p330": "none",
+    "p331": "none",
+    "p332": "none",
+    "p333": "none",
+    "p334": "none",
+    "p335": "none",
+    "p336": "none",
+    "p337": "none",
+    "p338": "none",
+    "p339": "none",
+    "p340": "none",
+    "p341": "none",
+    "p342": "disabilityStatus",
+    "p343": "workAuthorized",
+    "p344": "none",
+    "p200": "none",
+    "p201": "none",
+    "p202": "none",
+    "p203": "requiresSponsorship",
+    "p204": "none",
+    "p205": "willingToRelocate",
+    "p206": "none",
+    "p207": "none",
+    "p208": "howHeard",
+    "p209": "none",
+    "p210": "none",
+    "p211": "none",
+    "p212": "gender",
+    "p213": "hispanicLatino",
+    "p214": "requiresSponsorship",
+    "p215": "none",
+    "p216": "none",
+    "p217": "gender",
+    "p218": "requiresSponsorship",
+    "p219": "workAuthorized",
+    "p220": "pronouns",
+    "p221": "none",
+    "p222": "none",
+    "p223": "none",
+    "p224": "none",
+    "p300": "none",
+    "p301": "none",
+    "p302": "none",
+    "p303": "none",
+    "p304": "requiresSponsorship",
+    "p305": "requiresSponsorship",
+    "p306": "none",
+    "p307": "none",
+    "p308": "none",
+    "p309": "gender",
+    "p310": "race",
+    "p311": "disabilityStatus",
+    "p312": "workAuthorized",
+    "p313": "requiresSponsorship",
+    "p314": "none",
+    "p315": "none",
+    "p316": "howHeard",
+    "p317": "none",
+    "p318": "workAuthorized",
+    "p319": "requiresSponsorship",
+    "p320": "none",
+    "p321": "location",
+    "p322": "none",
+    "p323": "none",
+    "p324": "none"
+   },
+   "agree": {
+    "wrongs": [
+     [
+      "p92",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p151",
+      "website",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p205",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p342",
+      "disabilityStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p343",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ]
+    ]
+   },
+   "strict": {
+    "wrongs": [
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p20",
+     "p63",
+     "p107",
+     "p120",
+     "p122",
+     "p124",
+     "p192",
+     "p275",
+     "p321"
+    ]
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p51",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p89",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p92",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p107",
+      "lastName",
+      [
+       "preferredName"
+      ]
+     ],
+     [
+      "p122",
+      "race",
+      [
+       "hispanicLatino"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p151",
+      "website",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p205",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "willingToRelocate",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p308",
+      "email",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p342",
+      "disabilityStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p343",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": []
+   },
+   "all": {
+    "wrongs": [
+     [
+      "p92",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p151",
+      "website",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p205",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "location",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p342",
+      "disabilityStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p343",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": []
+   }
+  },
+  "anthropic/claude-haiku-5.5": {
+   "stats": {
+    "calls": 14,
+    "failed": 0,
+    "ms": [
+     420,
+     450,
+     505,
+     549,
+     729,
+     732,
+     747,
+     785,
+     791,
+     983,
+     1041,
+     1044,
+     1082,
+     1422
+    ],
+    "cost": 0.0065883,
+    "errors": []
+   },
+   "answers": {
+    "p50": "location",
+    "p51": "none",
+    "p52": "workAuthorized",
+    "p53": "requiresSponsorship",
+    "p54": "none",
+    "p55": "workAuthorized",
+    "p56": "none",
+    "p57": "none",
+    "p58": "gender",
+    "p59": "none",
+    "p60": "none",
+    "p61": "disabilityStatus",
+    "p62": "veteranStatus",
+    "p63": "race",
+    "p64": "workAuthorized",
+    "p65": "requiresSponsorship",
+    "p66": "none",
+    "p67": "none",
+    "p68": "none",
+    "p69": "none",
+    "p70": "none",
+    "p71": "none",
+    "p72": "none",
+    "p73": "none",
+    "p74": "linkedin",
+    "p75": "workAuthorized",
+    "p76": "region",
+    "p77": "requiresSponsorship",
+    "p78": "none",
+    "p79": "gender",
+    "p80": "none",
+    "p81": "race",
+    "p82": "veteranStatus",
+    "p83": "requiresSponsorship",
+    "p84": "none",
+    "p85": "none",
+    "p86": "region",
+    "p87": "workAuthorized",
+    "p88": "requiresSponsorship",
+    "p89": "none",
+    "p90": "race",
+    "p91": "preferredName",
+    "p92": "none",
+    "p93": "workAuthorized",
+    "p94": "requiresSponsorship",
+    "p95": "none",
+    "p96": "none",
+    "p97": "none",
+    "p98": "howHeard",
+    "p99": "none",
+    "p0": "firstName",
+    "p1": "lastName",
+    "p2": "email",
+    "p3": "phone",
+    "p4": "resume",
+    "p5": "none",
+    "p6": "none",
+    "p7": "none",
+    "p8": "none",
+    "p9": "none",
+    "p10": "none",
+    "p11": "none",
+    "p12": "gender",
+    "p13": "workAuthorized",
+    "p14": "requiresSponsorship",
+    "p15": "none",
+    "p16": "none",
+    "p17": "none",
+    "p18": "location",
+    "p19": "linkedin",
+    "p20": "howHeard",
+    "p21": "none",
+    "p22": "none",
+    "p23": "website",
+    "p24": "none",
+    "p25": "pronouns",
+    "p26": "none",
+    "p27": "location",
+    "p28": "preferredName",
+    "p29": "workAuthorized",
+    "p30": "none",
+    "p31": "veteranStatus",
+    "p32": "race",
+    "p33": "gender",
+    "p34": "none",
+    "p35": "website",
+    "p36": "howHeard",
+    "p37": "workAuthorized",
+    "p38": "none",
+    "p39": "none",
+    "p40": "none",
+    "p41": "none",
+    "p42": "race",
+    "p43": "veteranStatus",
+    "p44": "disabilityStatus",
+    "p45": "gender",
+    "p46": "race",
+    "p47": "none",
+    "p48": "none",
+    "p49": "none",
+    "p125": "none",
+    "p126": "none",
+    "p127": "requiresSponsorship",
+    "p128": "none",
+    "p129": "none",
+    "p130": "none",
+    "p131": "none",
+    "p132": "none",
+    "p133": "none",
+    "p134": "none",
+    "p135": "none",
+    "p136": "none",
+    "p137": "none",
+    "p138": "race",
+    "p139": "none",
+    "p140": "workAuthorized",
+    "p141": "none",
+    "p142": "preferredName",
+    "p143": "none",
+    "p144": "requiresSponsorship",
+    "p145": "requiresSponsorship",
+    "p146": "region",
+    "p147": "howHeard",
+    "p148": "github",
+    "p149": "none",
+    "p100": "none",
+    "p101": "gender",
+    "p102": "race",
+    "p103": "none",
+    "p104": "none",
+    "p105": "disabilityStatus",
+    "p106": "veteranStatus",
+    "p107": "preferredName",
+    "p108": "none",
+    "p109": "none",
+    "p110": "website",
+    "p111": "pronouns",
+    "p112": "pronouns",
+    "p113": "requiresSponsorship",
+    "p114": "none",
+    "p115": "none",
+    "p116": "none",
+    "p117": "none",
+    "p118": "none",
+    "p119": "gender",
+    "p120": "gender",
+    "p121": "race",
+    "p122": "hispanicLatino",
+    "p123": "veteranStatus",
+    "p124": "location",
+    "p150": "website",
+    "p151": "none",
+    "p152": "none",
+    "p153": "gender",
+    "p154": "race",
+    "p155": "postalCode",
+    "p156": "howHeard",
+    "p157": "workAuthorized",
+    "p158": "requiresSponsorship",
+    "p159": "none",
+    "p160": "none",
+    "p161": "none",
+    "p162": "none",
+    "p163": "none",
+    "p164": "gender",
+    "p165": "none",
+    "p166": "none",
+    "p167": "race",
+    "p168": "veteranStatus",
+    "p169": "disabilityStatus",
+    "p170": "none",
+    "p171": "country",
+    "p172": "workAuthorized",
+    "p173": "requiresSponsorship",
+    "p174": "none",
+    "p175": "none",
+    "p176": "gender",
+    "p177": "none",
+    "p178": "none",
+    "p179": "veteranStatus",
+    "p180": "disabilityStatus",
+    "p181": "race",
+    "p182": "lastName",
+    "p183": "none",
+    "p184": "requiresSponsorship",
+    "p185": "preferredName",
+    "p186": "none",
+    "p187": "workAuthorized",
+    "p188": "postalCode",
+    "p189": "none",
+    "p190": "none",
+    "p191": "howHeard",
+    "p192": "howHeard",
+    "p193": "none",
+    "p194": "none",
+    "p195": "race",
+    "p196": "veteranStatus",
+    "p197": "disabilityStatus",
+    "p198": "preferredName",
+    "p199": "pronouns",
+    "p200": "none",
+    "p201": "none",
+    "p202": "none",
+    "p203": "requiresSponsorship",
+    "p204": "none",
+    "p205": "none",
+    "p206": "none",
+    "p207": "none",
+    "p208": "howHeard",
+    "p209": "none",
+    "p210": "none",
+    "p211": "none",
+    "p212": "gender",
+    "p213": "hispanicLatino",
+    "p214": "requiresSponsorship",
+    "p215": "none",
+    "p216": "none",
+    "p217": "gender",
+    "p218": "requiresSponsorship",
+    "p219": "none",
+    "p220": "pronouns",
+    "p221": "none",
+    "p222": "none",
+    "p223": "none",
+    "p224": "none",
+    "p275": "none",
+    "p276": "none",
+    "p277": "none",
+    "p278": "none",
+    "p279": "requiresSponsorship",
+    "p280": "requiresSponsorship",
+    "p281": "willingToRelocate",
+    "p282": "location",
+    "p283": "none",
+    "p284": "none",
+    "p285": "none",
+    "p286": "none",
+    "p287": "none",
+    "p288": "none",
+    "p289": "startDate",
+    "p290": "none",
+    "p291": "none",
+    "p292": "none",
+    "p293": "howHeard",
+    "p294": "none",
+    "p295": "none",
+    "p296": "none",
+    "p297": "workAuthorized",
+    "p298": "requiresSponsorship",
+    "p299": "none",
+    "p225": "none",
+    "p226": "none",
+    "p227": "none",
+    "p228": "linkedin",
+    "p229": "howHeard",
+    "p230": "workAuthorized",
+    "p231": "requiresSponsorship",
+    "p232": "none",
+    "p233": "none",
+    "p234": "none",
+    "p235": "gender",
+    "p236": "race",
+    "p237": "veteranStatus",
+    "p238": "none",
+    "p239": "name",
+    "p240": "none",
+    "p241": "none",
+    "p242": "none",
+    "p243": "workAuthorized",
+    "p244": "requiresSponsorship",
+    "p245": "startDate",
+    "p246": "howHeard",
+    "p247": "none",
+    "p248": "none",
+    "p249": "none",
+    "p250": "none",
+    "p251": "none",
+    "p252": "none",
+    "p253": "none",
+    "p254": "none",
+    "p255": "none",
+    "p256": "gender",
+    "p257": "disabilityStatus",
+    "p258": "veteranStatus",
+    "p259": "startDate",
+    "p260": "workAuthorized",
+    "p261": "requiresSponsorship",
+    "p262": "none",
+    "p263": "postalCode",
+    "p264": "race",
+    "p265": "howHeard",
+    "p266": "none",
+    "p267": "requiresSponsorship",
+    "p268": "workAuthorized",
+    "p269": "none",
+    "p270": "gender",
+    "p271": "race",
+    "p272": "veteranStatus",
+    "p273": "none",
+    "p274": "none",
+    "p300": "none",
+    "p301": "none",
+    "p302": "none",
+    "p303": "none",
+    "p304": "requiresSponsorship",
+    "p305": "requiresSponsorship",
+    "p306": "none",
+    "p307": "none",
+    "p308": "none",
+    "p309": "gender",
+    "p310": "race",
+    "p311": "disabilityStatus",
+    "p312": "workAuthorized",
+    "p313": "requiresSponsorship",
+    "p314": "none",
+    "p315": "none",
+    "p316": "howHeard",
+    "p317": "none",
+    "p318": "workAuthorized",
+    "p319": "requiresSponsorship",
+    "p320": "none",
+    "p321": "location",
+    "p322": "none",
+    "p323": "none",
+    "p324": "none",
+    "p325": "none",
+    "p326": "addressLine1",
+    "p327": "gender",
+    "p328": "workAuthorized",
+    "p329": "requiresSponsorship",
+    "p330": "none",
+    "p331": "none",
+    "p332": "none",
+    "p333": "none",
+    "p334": "none",
+    "p335": "none",
+    "p336": "none",
+    "p337": "none",
+    "p338": "none",
+    "p339": "none",
+    "p340": "none",
+    "p341": "none",
+    "p342": "none",
+    "p343": "none",
+    "p344": "none"
+   },
+   "agree": {
+    "wrongs": [
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p289",
+      "startDate",
+      [
+       "none"
+      ]
+     ]
+    ]
+   },
+   "strict": {
+    "wrongs": [
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p20",
+     "p21",
+     "p63",
+     "p107",
+     "p120",
+     "p122",
+     "p124",
+     "p192",
+     "p275",
+     "p321"
+    ]
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p51",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p89",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p107",
+      "lastName",
+      [
+       "preferredName"
+      ]
+     ],
+     [
+      "p122",
+      "race",
+      [
+       "hispanicLatino"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "willingToRelocate",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p289",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p308",
+      "email",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p275"
+    ]
+   },
+   "all": {
+    "wrongs": [
+     [
+      "p50",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "location",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p289",
+      "startDate",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p21",
+     "p275"
+    ]
+   }
+  },
+  "mistralai/ministral-8b-2512": {
+   "stats": {
+    "calls": 14,
+    "failed": 0,
+    "ms": [
+     441,
+     451,
+     468,
+     469,
+     481,
+     491,
+     491,
+     495,
+     514,
+     515,
+     539,
+     544,
+     547,
+     572
+    ],
+    "cost": 0.0038142000000000007,
+    "errors": []
+   },
+   "answers": {
+    "p0": "firstName",
+    "p1": "lastName",
+    "p2": "email",
+    "p3": "phone",
+    "p4": "resume",
+    "p5": "none",
+    "p6": "none",
+    "p7": "none",
+    "p8": "none",
+    "p9": "none",
+    "p10": "none",
+    "p11": "none",
+    "p12": "gender",
+    "p13": "workAuthorized",
+    "p14": "requiresSponsorship",
+    "p15": "none",
+    "p16": "none",
+    "p17": "none",
+    "p18": "location",
+    "p19": "linkedin",
+    "p20": "howHeard",
+    "p21": "workAuthorized",
+    "p22": "none",
+    "p23": "website",
+    "p24": "none",
+    "p50": "none",
+    "p51": "none",
+    "p52": "workAuthorized",
+    "p53": "requiresSponsorship",
+    "p54": "none",
+    "p55": "workAuthorized",
+    "p56": "none",
+    "p57": "none",
+    "p58": "gender",
+    "p59": "none",
+    "p60": "none",
+    "p61": "disabilityStatus",
+    "p62": "veteranStatus",
+    "p63": "race",
+    "p64": "workAuthorized",
+    "p65": "requiresSponsorship",
+    "p66": "none",
+    "p67": "none",
+    "p68": "none",
+    "p69": "none",
+    "p70": "none",
+    "p71": "none",
+    "p72": "none",
+    "p73": "none",
+    "p74": "linkedin",
+    "p25": "pronouns",
+    "p26": "none",
+    "p27": "location",
+    "p28": "preferredName",
+    "p29": "workAuthorized",
+    "p30": "none",
+    "p31": "veteranStatus",
+    "p32": "race",
+    "p33": "gender",
+    "p34": "none",
+    "p35": "website",
+    "p36": "howHeard",
+    "p37": "workAuthorized",
+    "p38": "none",
+    "p39": "willingToRelocate",
+    "p40": "none",
+    "p41": "none",
+    "p42": "race",
+    "p43": "veteranStatus",
+    "p44": "disabilityStatus",
+    "p45": "none",
+    "p46": "race",
+    "p47": "none",
+    "p48": "none",
+    "p49": "none",
+    "p75": "workAuthorized",
+    "p76": "region",
+    "p77": "requiresSponsorship",
+    "p78": "none",
+    "p79": "gender",
+    "p80": "none",
+    "p81": "race",
+    "p82": "veteranStatus",
+    "p83": "requiresSponsorship",
+    "p84": "none",
+    "p85": "none",
+    "p86": "region",
+    "p87": "workAuthorized",
+    "p88": "requiresSponsorship",
+    "p89": "none",
+    "p90": "race",
+    "p91": "preferredName",
+    "p92": "none",
+    "p93": "workAuthorized",
+    "p94": "requiresSponsorship",
+    "p95": "none",
+    "p96": "none",
+    "p97": "none",
+    "p98": "howHeard",
+    "p99": "none",
+    "p100": "none",
+    "p101": "gender",
+    "p102": "race",
+    "p103": "none",
+    "p104": "none",
+    "p105": "disabilityStatus",
+    "p106": "veteranStatus",
+    "p107": "preferredName",
+    "p108": "none",
+    "p109": "none",
+    "p110": "website",
+    "p111": "pronouns",
+    "p112": "pronouns",
+    "p113": "requiresSponsorship",
+    "p114": "none",
+    "p115": "none",
+    "p116": "none",
+    "p117": "none",
+    "p118": "none",
+    "p119": "gender",
+    "p120": "none",
+    "p121": "race",
+    "p122": "hispanicLatino",
+    "p123": "veteranStatus",
+    "p124": "location",
+    "p125": "location",
+    "p126": "none",
+    "p127": "requiresSponsorship",
+    "p128": "none",
+    "p129": "none",
+    "p130": "none",
+    "p131": "none",
+    "p132": "none",
+    "p133": "none",
+    "p134": "none",
+    "p135": "none",
+    "p136": "none",
+    "p137": "none",
+    "p138": "race",
+    "p139": "none",
+    "p140": "workAuthorized",
+    "p141": "none",
+    "p142": "preferredName",
+    "p143": "none",
+    "p144": "requiresSponsorship",
+    "p145": "requiresSponsorship",
+    "p146": "region",
+    "p147": "howHeard",
+    "p148": "github",
+    "p149": "none",
+    "p150": "website",
+    "p151": "none",
+    "p152": "none",
+    "p153": "gender",
+    "p154": "race",
+    "p155": "postalCode",
+    "p156": "howHeard",
+    "p157": "workAuthorized",
+    "p158": "requiresSponsorship",
+    "p159": "none",
+    "p160": "none",
+    "p161": "none",
+    "p162": "none",
+    "p163": "none",
+    "p164": "gender",
+    "p165": "none",
+    "p166": "none",
+    "p167": "race",
+    "p168": "veteranStatus",
+    "p169": "disabilityStatus",
+    "p170": "none",
+    "p171": "country",
+    "p172": "workAuthorized",
+    "p173": "requiresSponsorship",
+    "p174": "none",
+    "p175": "none",
+    "p176": "gender",
+    "p177": "none",
+    "p178": "none",
+    "p179": "veteranStatus",
+    "p180": "disabilityStatus",
+    "p181": "race",
+    "p182": "lastName",
+    "p183": "none",
+    "p184": "requiresSponsorship",
+    "p185": "none",
+    "p186": "none",
+    "p187": "workAuthorized",
+    "p188": "postalCode",
+    "p189": "none",
+    "p190": "none",
+    "p191": "howHeard",
+    "p192": "howHeard",
+    "p193": "none",
+    "p194": "none",
+    "p195": "race",
+    "p196": "veteranStatus",
+    "p197": "disabilityStatus",
+    "p198": "preferredName",
+    "p199": "pronouns",
+    "p200": "none",
+    "p201": "none",
+    "p202": "none",
+    "p203": "requiresSponsorship",
+    "p204": "none",
+    "p205": "none",
+    "p206": "none",
+    "p207": "none",
+    "p208": "howHeard",
+    "p209": "none",
+    "p210": "none",
+    "p211": "none",
+    "p212": "gender",
+    "p213": "hispanicLatino",
+    "p214": "requiresSponsorship",
+    "p215": "none",
+    "p216": "none",
+    "p217": "gender",
+    "p218": "requiresSponsorship",
+    "p219": "none",
+    "p220": "pronouns",
+    "p221": "none",
+    "p222": "none",
+    "p223": "none",
+    "p224": "none",
+    "p250": "none",
+    "p251": "none",
+    "p252": "none",
+    "p253": "none",
+    "p254": "none",
+    "p255": "none",
+    "p256": "gender",
+    "p257": "disabilityStatus",
+    "p258": "veteranStatus",
+    "p259": "startDate",
+    "p260": "workAuthorized",
+    "p261": "requiresSponsorship",
+    "p262": "none",
+    "p263": "postalCode",
+    "p264": "race",
+    "p265": "howHeard",
+    "p266": "none",
+    "p267": "requiresSponsorship",
+    "p268": "workAuthorized",
+    "p269": "none",
+    "p270": "gender",
+    "p271": "race",
+    "p272": "veteranStatus",
+    "p273": "none",
+    "p274": "none",
+    "p225": "none",
+    "p226": "none",
+    "p227": "none",
+    "p228": "linkedin",
+    "p229": "howHeard",
+    "p230": "workAuthorized",
+    "p231": "requiresSponsorship",
+    "p232": "none",
+    "p233": "none",
+    "p234": "none",
+    "p235": "gender",
+    "p236": "race",
+    "p237": "veteranStatus",
+    "p238": "none",
+    "p239": "name",
+    "p240": "none",
+    "p241": "none",
+    "p242": "none",
+    "p243": "workAuthorized",
+    "p244": "requiresSponsorship",
+    "p245": "startDate",
+    "p246": "howHeard",
+    "p247": "none",
+    "p248": "none",
+    "p249": "none",
+    "p275": "startDate",
+    "p276": "none",
+    "p277": "none",
+    "p278": "none",
+    "p279": "requiresSponsorship",
+    "p280": "requiresSponsorship",
+    "p281": "willingToRelocate",
+    "p282": "addressLine1",
+    "p283": "none",
+    "p284": "none",
+    "p285": "none",
+    "p286": "willingToRelocate",
+    "p287": "none",
+    "p288": "none",
+    "p289": "startDate",
+    "p290": "none",
+    "p291": "none",
+    "p292": "none",
+    "p293": "howHeard",
+    "p294": "none",
+    "p295": "none",
+    "p296": "none",
+    "p297": "workAuthorized",
+    "p298": "requiresSponsorship",
+    "p299": "none",
+    "p325": "none",
+    "p326": "addressLine1",
+    "p327": "gender",
+    "p328": "workAuthorized",
+    "p329": "requiresSponsorship",
+    "p330": "none",
+    "p331": "none",
+    "p332": "none",
+    "p333": "none",
+    "p334": "none",
+    "p335": "none",
+    "p336": "none",
+    "p337": "none",
+    "p338": "none",
+    "p339": "none",
+    "p340": "none",
+    "p341": "none",
+    "p342": "none",
+    "p343": "none",
+    "p344": "none",
+    "p300": "none",
+    "p301": "none",
+    "p302": "none",
+    "p303": "startDate",
+    "p304": "requiresSponsorship",
+    "p305": "requiresSponsorship",
+    "p306": "none",
+    "p307": "none",
+    "p308": "none",
+    "p309": "gender",
+    "p310": "race",
+    "p311": "disabilityStatus",
+    "p312": "workAuthorized",
+    "p313": "requiresSponsorship",
+    "p314": "none",
+    "p315": "none",
+    "p316": "howHeard",
+    "p317": "howHeard",
+    "p318": "workAuthorized",
+    "p319": "requiresSponsorship",
+    "p320": "none",
+    "p321": "location",
+    "p322": "none",
+    "p323": "none",
+    "p324": "none"
+   },
+   "agree": {
+    "wrongs": [
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p289",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p303",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p317",
+      "howHeard",
+      [
+       "none"
+      ]
+     ]
+    ]
+   },
+   "strict": {
+    "wrongs": [],
+    "misses": [
+     "p20",
+     "p45",
+     "p63",
+     "p107",
+     "p120",
+     "p122",
+     "p124",
+     "p192",
+     "p275",
+     "p321"
+    ]
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p51",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p89",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p107",
+      "lastName",
+      [
+       "preferredName"
+      ]
+     ],
+     [
+      "p122",
+      "race",
+      [
+       "hispanicLatino"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "willingToRelocate",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p289",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p303",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p308",
+      "email",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p317",
+      "howHeard",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p120"
+    ]
+   },
+   "all": {
+    "wrongs": [
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p289",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p303",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p317",
+      "howHeard",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p45",
+     "p120"
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,1987 @@
+{
+ "split": "practice",
+ "prompt": "You map job application form fields to an applicant profile.\nFor each field, answer with the one profile key whose saved answer would correctly fill it, or \"none\".\nAnswer \"none\" when no key fits exactly: cover letters, essays, \"why us\", skills or experience questions,\nschool, degree, current employer or title, consent and privacy checkboxes, \"have you worked here before\",\nquestions about someone other than the applicant, follow-up \"please explain\" boxes, and yes/no questions\nabout one specific place (e.g. \"Are you based in Japan?\"). A wrong key is worse than \"none\".\n\nProfile keys:\n- firstName: applicant's first / given name\n- lastName: applicant's last / family name\n- preferredName: name the applicant prefers to be called\n- name: applicant's full or legal name in one box\n- pronouns: applicant's pronouns\n- email: applicant's email address\n- phone: applicant's phone number\n- location: where the applicant lives, as free text (city, or city and state)\n- country: country the applicant lives in\n- addressLine1: street address\n- addressLine2: apartment / suite / unit\n- city: city, as its own address field\n- region: state or province the applicant lives in\n- postalCode: postal or ZIP code\n- linkedin: LinkedIn profile URL\n- github: GitHub profile URL\n- website: personal website or portfolio URL\n- resume: resume / CV file upload\n- workAuthorized: is the applicant legally authorized to work (yes/no)\n- requiresSponsorship: does the applicant need visa / immigration sponsorship, now or in future (yes/no)\n- salaryExpectation: expected or desired salary / compensation\n- startDate: earliest date the applicant can start\n- willingToRelocate: is the applicant willing to relocate (yes/no)\n- howHeard: how the applicant heard about the job or company\n- gender: gender or sex (voluntary self-identification)\n- hispanicLatino: is the applicant Hispanic or Latino (yes/no), asked separately from race\n- race: race or ethnicity (voluntary self-identification)\n- veteranStatus: veteran or military status\n- disabilityStatus: disability status",
+ "rows": [
+  {
+   "approach": "rules only",
+   "right": 329,
+   "wrong": 9,
+   "missed": 7,
+   "medianMs": 0,
+   "cost": 0,
+   "failed": 0
+  },
+  {
+   "approach": "rules + google/gemma-4-26b-a4b-it on blanks",
+   "right": 329,
+   "wrong": 16,
+   "missed": 0,
+   "medianMs": 296,
+   "cost": 0.0028359985,
+   "failed": 0
+  },
+  {
+   "approach": "google/gemma-4-26b-a4b-it on every field",
+   "right": 335,
+   "wrong": 9,
+   "missed": 1,
+   "medianMs": 296,
+   "cost": 0.0028359985,
+   "failed": 0
+  },
+  {
+   "approach": "rules + anthropic/claude-haiku-5.5 on blanks",
+   "right": 333,
+   "wrong": 11,
+   "missed": 1,
+   "medianMs": 999,
+   "cost": 0.0065883,
+   "failed": 0
+  },
+  {
+   "approach": "anthropic/claude-haiku-5.5 on every field",
+   "right": 338,
+   "wrong": 5,
+   "missed": 2,
+   "medianMs": 999,
+   "cost": 0.0065883,
+   "failed": 0
+  },
+  {
+   "approach": "rules + mistralai/ministral-8b-2512 on blanks",
+   "right": 330,
+   "wrong": 14,
+   "missed": 1,
+   "medianMs": 543,
+   "cost": 0.004076625,
+   "failed": 0
+  },
+  {
+   "approach": "mistralai/ministral-8b-2512 on every field",
+   "right": 335,
+   "wrong": 6,
+   "missed": 4,
+   "medianMs": 543,
+   "cost": 0.004076625,
+   "failed": 0
+  },
+  {
+   "approach": "rules + mistralai/ministral-3b-2512 on blanks",
+   "right": 328,
+   "wrong": 15,
+   "missed": 2,
+   "medianMs": 479,
+   "cost": 0.0026277599999999994,
+   "failed": 0
+  },
+  {
+   "approach": "mistralai/ministral-3b-2512 on every field",
+   "right": 324,
+   "wrong": 9,
+   "missed": 12,
+   "medianMs": 479,
+   "cost": 0.0026277599999999994,
+   "failed": 0
+  },
+  {
+   "approach": "rules + nvidia/nemotron-3.5-lightning on blanks",
+   "right": 317,
+   "wrong": 26,
+   "missed": 2,
+   "medianMs": 244,
+   "cost": 0.0019412491000000002,
+   "failed": 1
+  },
+  {
+   "approach": "nvidia/nemotron-3.5-lightning on every field",
+   "right": 318,
+   "wrong": 19,
+   "missed": 8,
+   "medianMs": 244,
+   "cost": 0.0019412491000000002,
+   "failed": 1
+  },
+  {
+   "approach": "rules + nvidia/nemotron-3-nano-30b-a3b on blanks",
+   "right": 323,
+   "wrong": 19,
+   "missed": 3,
+   "medianMs": 453,
+   "cost": 0.0030511799999999997,
+   "failed": 0
+  },
+  {
+   "approach": "nvidia/nemotron-3-nano-30b-a3b on every field",
+   "right": 314,
+   "wrong": 16,
+   "missed": 15,
+   "medianMs": 453,
+   "cost": 0.0030511799999999997,
+   "failed": 0
+  },
+  {
+   "approach": "rules + inference-net/schematron-v2-turbo on blanks",
+   "right": 319,
+   "wrong": 20,
+   "missed": 6,
+   "medianMs": 299,
+   "cost": 0.00179157,
+   "failed": 0
+  },
+  {
+   "approach": "inference-net/schematron-v2-turbo on every field",
+   "right": 190,
+   "wrong": 12,
+   "missed": 143,
+   "medianMs": 299,
+   "cost": 0.00179157,
+   "failed": 0
+  }
+ ],
+ "detail": {
+  "google/gemma-4-26b-a4b-it": {
+   "stats": {
+    "calls": 14,
+    "failed": 0,
+    "ms": [
+     153,
+     162,
+     167,
+     168,
+     170,
+     201,
+     227,
+     296,
+     297,
+     335,
+     455,
+     825,
+     866,
+     1367
+    ],
+    "cost": 0.0028359985,
+    "errors": []
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p51",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p89",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p92",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p107",
+      "lastName",
+      [
+       "preferredName"
+      ]
+     ],
+     [
+      "p122",
+      "race",
+      [
+       "hispanicLatino"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p151",
+      "website",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p205",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "willingToRelocate",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p303",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p308",
+      "email",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p342",
+      "disabilityStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p343",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": []
+   },
+   "all": {
+    "wrongs": [
+     [
+      "p92",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p151",
+      "website",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p205",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "location",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p303",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p342",
+      "disabilityStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p343",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p21"
+    ]
+   }
+  },
+  "anthropic/claude-haiku-5.5": {
+   "stats": {
+    "calls": 14,
+    "failed": 0,
+    "ms": [
+     576,
+     583,
+     782,
+     898,
+     913,
+     955,
+     956,
+     999,
+     1079,
+     1086,
+     1207,
+     1488,
+     1698,
+     1699
+    ],
+    "cost": 0.0065883,
+    "errors": []
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p51",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p89",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p107",
+      "lastName",
+      [
+       "preferredName"
+      ]
+     ],
+     [
+      "p122",
+      "race",
+      [
+       "hispanicLatino"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "willingToRelocate",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p289",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p308",
+      "email",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p275"
+    ]
+   },
+   "all": {
+    "wrongs": [
+     [
+      "p50",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "location",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p289",
+      "startDate",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p21",
+     "p275"
+    ]
+   }
+  },
+  "mistralai/ministral-8b-2512": {
+   "stats": {
+    "calls": 14,
+    "failed": 0,
+    "ms": [
+     412,
+     426,
+     427,
+     470,
+     530,
+     532,
+     537,
+     543,
+     553,
+     699,
+     1175,
+     1509,
+     1717,
+     2308
+    ],
+    "cost": 0.004076625,
+    "errors": []
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p51",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p89",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p107",
+      "lastName",
+      [
+       "preferredName"
+      ]
+     ],
+     [
+      "p122",
+      "race",
+      [
+       "hispanicLatino"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "willingToRelocate",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p289",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p303",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p308",
+      "email",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p317",
+      "howHeard",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p120"
+    ]
+   },
+   "all": {
+    "wrongs": [
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "location",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p289",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p303",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p317",
+      "howHeard",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p45",
+     "p46",
+     "p120",
+     "p218"
+    ]
+   }
+  },
+  "mistralai/ministral-3b-2512": {
+   "stats": {
+    "calls": 14,
+    "failed": 0,
+    "ms": [
+     430,
+     434,
+     435,
+     444,
+     450,
+     453,
+     472,
+     479,
+     481,
+     554,
+     574,
+     584,
+     653,
+     1104
+    ],
+    "cost": 0.0026277599999999994,
+    "errors": []
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "p49",
+      "name",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p51",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p89",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p107",
+      "lastName",
+      [
+       "preferredName"
+      ]
+     ],
+     [
+      "p122",
+      "race",
+      [
+       "hispanicLatino"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p274",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "willingToRelocate",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p303",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p308",
+      "email",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p321",
+      "city",
+      [
+       "location"
+      ]
+     ],
+     [
+      "p342",
+      "disabilityStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p343",
+      "city",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p120",
+     "p192"
+    ]
+   },
+   "all": {
+    "wrongs": [
+     [
+      "p49",
+      "name",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p182",
+      "preferredName",
+      [
+       "none",
+       "lastName"
+      ]
+     ],
+     [
+      "p185",
+      "pronouns",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "country",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p274",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p303",
+      "startDate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p321",
+      "city",
+      [
+       "location"
+      ]
+     ],
+     [
+      "p342",
+      "disabilityStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p343",
+      "city",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p21",
+     "p45",
+     "p55",
+     "p101",
+     "p102",
+     "p105",
+     "p106",
+     "p110",
+     "p119",
+     "p120",
+     "p150",
+     "p192"
+    ]
+   }
+  },
+  "nvidia/nemotron-3.5-lightning": {
+   "stats": {
+    "calls": 13,
+    "failed": 1,
+    "ms": [
+     169,
+     175,
+     177,
+     200,
+     212,
+     220,
+     244,
+     361,
+     424,
+     444,
+     503,
+     532,
+     611
+    ],
+    "cost": 0.0019412491000000002,
+    "errors": [
+     "Unterminated string in JSON at position 4954 (line 1 column 4955)"
+    ]
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "p38",
+      "country",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p51",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p80",
+      "hispanicLatino",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p89",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p91",
+      "pronouns",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p103",
+      "hispanicLatino",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p107",
+      "lastName",
+      [
+       "preferredName"
+      ]
+     ],
+     [
+      "p122",
+      "race",
+      [
+       "hispanicLatino"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p126",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p128",
+      "hispanicLatino",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p143",
+      "pronouns",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p250",
+      "phone",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p251",
+      "phone",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p252",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p253",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p254",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p255",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p262",
+      "linkedin",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p269",
+      "veteranStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p274",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "willingToRelocate",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p308",
+      "email",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p63",
+     "p192"
+    ]
+   },
+   "all": {
+    "wrongs": [
+     [
+      "p38",
+      "country",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p80",
+      "hispanicLatino",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p91",
+      "pronouns",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p103",
+      "hispanicLatino",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p125",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p126",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p128",
+      "hispanicLatino",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p143",
+      "pronouns",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "country",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p250",
+      "phone",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p251",
+      "phone",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p252",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p253",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p254",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p255",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p262",
+      "linkedin",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p269",
+      "veteranStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p274",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "location",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p63",
+     "p150",
+     "p192",
+     "p293",
+     "p326",
+     "p327",
+     "p328",
+     "p329"
+    ]
+   }
+  },
+  "nvidia/nemotron-3-nano-30b-a3b": {
+   "stats": {
+    "calls": 14,
+    "failed": 0,
+    "ms": [
+     351,
+     358,
+     369,
+     379,
+     382,
+     406,
+     450,
+     453,
+     474,
+     488,
+     538,
+     541,
+     616,
+     1367
+    ],
+    "cost": 0.0030511799999999997,
+    "errors": []
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "p38",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p47",
+      "gender",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p48",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p49",
+      "addressLine1",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p51",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p89",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p107",
+      "lastName",
+      [
+       "preferredName"
+      ]
+     ],
+     [
+      "p122",
+      "race",
+      [
+       "hispanicLatino"
+      ]
+     ],
+     [
+      "p126",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p274",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "willingToRelocate",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p308",
+      "email",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p315",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p332",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p343",
+      "city",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p63",
+     "p120",
+     "p192"
+    ]
+   },
+   "all": {
+    "wrongs": [
+     [
+      "p38",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p47",
+      "gender",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p48",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p49",
+      "addressLine1",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p91",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p126",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p146",
+      "location",
+      [
+       "region"
+      ]
+     ],
+     [
+      "p182",
+      "preferredName",
+      [
+       "none",
+       "lastName"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p218",
+      "workAuthorized",
+      [
+       "requiresSponsorship"
+      ]
+     ],
+     [
+      "p219",
+      "country",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p274",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p315",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p332",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p343",
+      "city",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p12",
+     "p29",
+     "p32",
+     "p43",
+     "p63",
+     "p81",
+     "p90",
+     "p119",
+     "p120",
+     "p121",
+     "p122",
+     "p123",
+     "p138",
+     "p192",
+     "p208"
+    ]
+   }
+  },
+  "inference-net/schematron-v2-turbo": {
+   "stats": {
+    "calls": 14,
+    "failed": 0,
+    "ms": [
+     192,
+     195,
+     196,
+     269,
+     275,
+     280,
+     289,
+     299,
+     390,
+     444,
+     541,
+     860,
+     893,
+     983
+    ],
+    "cost": 0.00179157,
+    "errors": []
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "p6",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p7",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p8",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p9",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p10",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p11",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p15",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p16",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p17",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p22",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p24",
+      "website",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p50",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p51",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p89",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p107",
+      "lastName",
+      [
+       "preferredName"
+      ]
+     ],
+     [
+      "p122",
+      "race",
+      [
+       "hispanicLatino"
+      ]
+     ],
+     [
+      "p185",
+      "preferredName",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p219",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p282",
+      "willingToRelocate",
+      [
+       "addressLine1",
+       "none"
+      ]
+     ],
+     [
+      "p308",
+      "email",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p63",
+     "p120",
+     "p124",
+     "p192",
+     "p275",
+     "p321"
+    ]
+   },
+   "all": {
+    "wrongs": [
+     [
+      "p6",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p7",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p8",
+      "resume",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p9",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p10",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p11",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p14",
+      "workAuthorized",
+      [
+       "requiresSponsorship"
+      ]
+     ],
+     [
+      "p15",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p16",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p17",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p22",
+      "workAuthorized",
+      [
+       "none"
+      ]
+     ],
+     [
+      "p24",
+      "website",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "p25",
+     "p28",
+     "p29",
+     "p31",
+     "p32",
+     "p33",
+     "p35",
+     "p36",
+     "p37",
+     "p42",
+     "p43",
+     "p44",
+     "p45",
+     "p46",
+     "p52",
+     "p53",
+     "p55",
+     "p58",
+     "p61",
+     "p62",
+     "p63",
+     "p64",
+     "p65",
+     "p74",
+     "p75",
+     "p76",
+     "p77",
+     "p79",
+     "p81",
+     "p82",
+     "p83",
+     "p86",
+     "p87",
+     "p88",
+     "p90",
+     "p93",
+     "p94",
+     "p98",
+     "p101",
+     "p102",
+     "p105",
+     "p106",
+     "p107",
+     "p110",
+     "p111",
+     "p113",
+     "p119",
+     "p120",
+     "p121",
+     "p122",
+     "p123",
+     "p124",
+     "p127",
+     "p138",
+     "p140",
+     "p142",
+     "p144",
+     "p145",
+     "p146",
+     "p147",
+     "p148",
+     "p150",
+     "p153",
+     "p154",
+     "p155",
+     "p156",
+     "p157",
+     "p158",
+     "p164",
+     "p167",
+     "p168",
+     "p169",
+     "p171",
+     "p172",
+     "p173",
+     "p176",
+     "p179",
+     "p180",
+     "p181",
+     "p184",
+     "p187",
+     "p188",
+     "p191",
+     "p192",
+     "p195",
+     "p196",
+     "p197",
+     "p198",
+     "p199",
+     "p203",
+     "p208",
+     "p212",
+     "p213",
+     "p214",
+     "p217",
+     "p218",
+     "p220",
+     "p228",
+     "p229",
+     "p230",
+     "p231",
+     "p235",
+     "p236",
+     "p237",
+     "p239",
+     "p243",
+     "p244",
+     "p246",
+     "p256",
+     "p257",
+     "p258",
+     "p260",
+     "p261",
+     "p263",
+     "p264",
+     "p265",
+     "p267",
+     "p268",
+     "p270",
+     "p271",
+     "p272",
+     "p275",
+     "p279",
+     "p280",
+     "p281",
+     "p293",
+     "p297",
+     "p298",
+     "p304",
+     "p305",
+     "p309",
+     "p310",
+     "p311",
+     "p312",
+     "p313",
+     "p316",
+     "p318",
+     "p319",
+     "p321",
+     "p326",
+     "p327",
+     "p328",
+     "p329"
+    ]
+   }
+  }
+ }
+}

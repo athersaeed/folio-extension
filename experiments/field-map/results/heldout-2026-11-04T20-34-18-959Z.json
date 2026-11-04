@@ -1,0 +1,900 @@
+{
+ "split": "heldout",
+ "prompt": "You map job application form fields to an applicant profile.\nFor each field, answer with the one profile key whose saved answer would correctly fill it, or \"none\".\nAnswer \"none\" when no key fits exactly: cover letters, essays, \"why us\", skills or experience questions,\nschool, degree, current employer or title, consent and privacy checkboxes, \"have you worked here before\",\nquestions about someone other than the applicant, follow-up \"please explain\" boxes, and yes/no questions\nabout one specific place (e.g. \"Are you based in Japan?\"). A wrong key is worse than \"none\".\n\nProfile keys:\n- firstName: applicant's first / given name\n- lastName: applicant's last / family name\n- preferredName: name the applicant prefers to be called\n- name: applicant's full or legal name in one box\n- pronouns: applicant's pronouns\n- email: applicant's email address\n- phone: applicant's phone number\n- location: where the applicant lives, as free text (city, or city and state)\n- country: country the applicant lives in\n- addressLine1: street address\n- addressLine2: apartment / suite / unit\n- city: city, as its own address field\n- region: state or province the applicant lives in\n- postalCode: postal or ZIP code\n- linkedin: LinkedIn profile URL\n- github: GitHub profile URL\n- website: personal website or portfolio URL\n- resume: resume / CV file upload\n- workAuthorized: is the applicant legally authorized to work (yes/no)\n- requiresSponsorship: does the applicant need visa / immigration sponsorship, now or in future (yes/no)\n- salaryExpectation: expected or desired salary / compensation\n- startDate: earliest date the applicant can start\n- willingToRelocate: is the applicant willing to relocate (yes/no)\n- howHeard: how the applicant heard about the job or company\n- gender: gender or sex (voluntary self-identification)\n- hispanicLatino: is the applicant Hispanic or Latino (yes/no), asked separately from race\n- race: race or ethnicity (voluntary self-identification)\n- veteranStatus: veteran or military status\n- disabilityStatus: disability status",
+ "rows": [
+  {
+   "approach": "rules only",
+   "right": 119,
+   "wrong": 2,
+   "missed": 5,
+   "medianMs": 0,
+   "cost": 0,
+   "failed": 0
+  },
+  {
+   "approach": "rules + google/gemma-4-26b-a4b-it on blanks",
+   "right": 120,
+   "wrong": 6,
+   "missed": 0,
+   "medianMs": 422,
+   "cost": 0.0009883515000000001,
+   "failed": 0
+  },
+  {
+   "approach": "google/gemma-4-26b-a4b-it on every field",
+   "right": 121,
+   "wrong": 5,
+   "missed": 0,
+   "medianMs": 422,
+   "cost": 0.0009883515000000001,
+   "failed": 0
+  },
+  {
+   "approach": "google/gemma-4-26b-a4b-it agree (model fills blanks)",
+   "right": 120,
+   "wrong": 5,
+   "missed": 1,
+   "medianMs": 422,
+   "cost": 0.0009883515000000001,
+   "failed": 0
+  },
+  {
+   "approach": "google/gemma-4-26b-a4b-it strict agree",
+   "right": 119,
+   "wrong": 1,
+   "missed": 6,
+   "medianMs": 422,
+   "cost": 0.0009883515000000001,
+   "failed": 0
+  },
+  {
+   "approach": "rules + anthropic/claude-haiku-5.5 on blanks",
+   "right": 123,
+   "wrong": 3,
+   "missed": 0,
+   "medianMs": 881,
+   "cost": 0.0025999,
+   "failed": 0
+  },
+  {
+   "approach": "anthropic/claude-haiku-5.5 on every field",
+   "right": 121,
+   "wrong": 2,
+   "missed": 3,
+   "medianMs": 881,
+   "cost": 0.0025999,
+   "failed": 0
+  },
+  {
+   "approach": "anthropic/claude-haiku-5.5 agree (model fills blanks)",
+   "right": 120,
+   "wrong": 2,
+   "missed": 4,
+   "medianMs": 881,
+   "cost": 0.0025999,
+   "failed": 0
+  },
+  {
+   "approach": "anthropic/claude-haiku-5.5 strict agree",
+   "right": 116,
+   "wrong": 1,
+   "missed": 9,
+   "medianMs": 881,
+   "cost": 0.0025999,
+   "failed": 0
+  },
+  {
+   "approach": "rules + mistralai/ministral-8b-2512 on blanks",
+   "right": 121,
+   "wrong": 4,
+   "missed": 1,
+   "medianMs": 454,
+   "cost": 0.001446975,
+   "failed": 0
+  },
+  {
+   "approach": "mistralai/ministral-8b-2512 on every field",
+   "right": 121,
+   "wrong": 3,
+   "missed": 2,
+   "medianMs": 454,
+   "cost": 0.001446975,
+   "failed": 0
+  },
+  {
+   "approach": "mistralai/ministral-8b-2512 agree (model fills blanks)",
+   "right": 120,
+   "wrong": 3,
+   "missed": 3,
+   "medianMs": 454,
+   "cost": 0.001446975,
+   "failed": 0
+  },
+  {
+   "approach": "mistralai/ministral-8b-2512 strict agree",
+   "right": 118,
+   "wrong": 1,
+   "missed": 7,
+   "medianMs": 454,
+   "cost": 0.001446975,
+   "failed": 0
+  }
+ ],
+ "detail": {
+  "google/gemma-4-26b-a4b-it": {
+   "stats": {
+    "calls": 6,
+    "failed": 0,
+    "ms": [
+     234,
+     420,
+     421,
+     422,
+     446,
+     699
+    ],
+    "cost": 0.0009883515000000001,
+    "errors": []
+   },
+   "answers": {
+    "h75": "none",
+    "h76": "none",
+    "h77": "none",
+    "h78": "none",
+    "h79": "workAuthorized",
+    "h80": "requiresSponsorship",
+    "h81": "none",
+    "h82": "none",
+    "h83": "none",
+    "h84": "none",
+    "h85": "none",
+    "h86": "none",
+    "h87": "none",
+    "h88": "none",
+    "h89": "none",
+    "h90": "none",
+    "h91": "none",
+    "h92": "country",
+    "h93": "requiresSponsorship",
+    "h94": "workAuthorized",
+    "h95": "none",
+    "h96": "howHeard",
+    "h97": "none",
+    "h98": "none",
+    "h99": "disabilityStatus",
+    "h50": "workAuthorized",
+    "h51": "location",
+    "h52": "none",
+    "h53": "gender",
+    "h54": "disabilityStatus",
+    "h55": "workAuthorized",
+    "h56": "none",
+    "h57": "pronouns",
+    "h58": "none",
+    "h59": "none",
+    "h60": "postalCode",
+    "h61": "willingToRelocate",
+    "h62": "none",
+    "h63": "none",
+    "h64": "none",
+    "h65": "none",
+    "h66": "willingToRelocate",
+    "h67": "website",
+    "h68": "pronouns",
+    "h69": "howHeard",
+    "h70": "none",
+    "h71": "country",
+    "h72": "workAuthorized",
+    "h73": "requiresSponsorship",
+    "h74": "willingToRelocate",
+    "h0": "preferredName",
+    "h1": "country",
+    "h2": "none",
+    "h3": "none",
+    "h4": "requiresSponsorship",
+    "h5": "none",
+    "h6": "country",
+    "h7": "none",
+    "h8": "none",
+    "h9": "country",
+    "h10": "none",
+    "h11": "workAuthorized",
+    "h12": "requiresSponsorship",
+    "h13": "none",
+    "h14": "workAuthorized",
+    "h15": "requiresSponsorship",
+    "h16": "none",
+    "h17": "willingToRelocate",
+    "h18": "none",
+    "h19": "none",
+    "h20": "none",
+    "h21": "none",
+    "h22": "none",
+    "h23": "race",
+    "h24": "veteranStatus",
+    "h25": "disabilityStatus",
+    "h26": "none",
+    "h27": "none",
+    "h28": "none",
+    "h29": "firstName",
+    "h30": "pronouns",
+    "h31": "location",
+    "h32": "postalCode",
+    "h33": "requiresSponsorship",
+    "h34": "howHeard",
+    "h35": "none",
+    "h36": "none",
+    "h37": "none",
+    "h38": "none",
+    "h39": "none",
+    "h40": "none",
+    "h41": "workAuthorized",
+    "h42": "none",
+    "h43": "name",
+    "h44": "none",
+    "h45": "requiresSponsorship",
+    "h46": "none",
+    "h47": "requiresSponsorship",
+    "h48": "none",
+    "h49": "none",
+    "h125": "lastName",
+    "h100": "workAuthorized",
+    "h101": "region",
+    "h102": "none",
+    "h103": "none",
+    "h104": "howHeard",
+    "h105": "none",
+    "h106": "race",
+    "h107": "gender",
+    "h108": "veteranStatus",
+    "h109": "disabilityStatus",
+    "h110": "none",
+    "h111": "none",
+    "h112": "none",
+    "h113": "workAuthorized",
+    "h114": "requiresSponsorship",
+    "h115": "none",
+    "h116": "none",
+    "h117": "none",
+    "h118": "none",
+    "h119": "location",
+    "h120": "none",
+    "h121": "none",
+    "h122": "howHeard",
+    "h123": "none",
+    "h124": "firstName"
+   },
+   "agree": {
+    "wrongs": [
+     [
+      "h17",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h51",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h54",
+      "disabilityStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h119",
+      "location",
+      [
+       "none"
+      ]
+     ]
+    ]
+   },
+   "strict": {
+    "wrongs": [
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "h0",
+     "h24",
+     "h67",
+     "h71",
+     "h92",
+     "h106"
+    ]
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "h17",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h36",
+      "email",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h51",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h54",
+      "disabilityStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h119",
+      "location",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": []
+   },
+   "all": {
+    "wrongs": [
+     [
+      "h17",
+      "willingToRelocate",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h51",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h54",
+      "disabilityStatus",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h119",
+      "location",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": []
+   }
+  },
+  "anthropic/claude-haiku-5.5": {
+   "stats": {
+    "calls": 6,
+    "failed": 0,
+    "ms": [
+     543,
+     759,
+     861,
+     881,
+     1228,
+     1261
+    ],
+    "cost": 0.0025999,
+    "errors": []
+   },
+   "answers": {
+    "h50": "workAuthorized",
+    "h51": "none",
+    "h52": "none",
+    "h53": "gender",
+    "h54": "none",
+    "h55": "workAuthorized",
+    "h56": "none",
+    "h57": "pronouns",
+    "h58": "none",
+    "h59": "none",
+    "h60": "postalCode",
+    "h61": "willingToRelocate",
+    "h62": "none",
+    "h63": "none",
+    "h64": "none",
+    "h65": "none",
+    "h66": "willingToRelocate",
+    "h67": "website",
+    "h68": "pronouns",
+    "h69": "howHeard",
+    "h70": "none",
+    "h71": "country",
+    "h72": "workAuthorized",
+    "h73": "requiresSponsorship",
+    "h74": "willingToRelocate",
+    "h75": "none",
+    "h76": "none",
+    "h77": "none",
+    "h78": "none",
+    "h79": "workAuthorized",
+    "h80": "requiresSponsorship",
+    "h81": "none",
+    "h82": "none",
+    "h83": "none",
+    "h84": "none",
+    "h85": "none",
+    "h86": "none",
+    "h87": "none",
+    "h88": "none",
+    "h89": "none",
+    "h90": "none",
+    "h91": "none",
+    "h92": "country",
+    "h93": "requiresSponsorship",
+    "h94": "none",
+    "h95": "none",
+    "h96": "howHeard",
+    "h97": "none",
+    "h98": "none",
+    "h99": "disabilityStatus",
+    "h25": "disabilityStatus",
+    "h26": "none",
+    "h27": "none",
+    "h28": "none",
+    "h29": "firstName",
+    "h30": "pronouns",
+    "h31": "location",
+    "h32": "postalCode",
+    "h33": "requiresSponsorship",
+    "h34": "howHeard",
+    "h35": "none",
+    "h36": "none",
+    "h37": "none",
+    "h38": "none",
+    "h39": "none",
+    "h40": "none",
+    "h41": "workAuthorized",
+    "h42": "none",
+    "h43": "name",
+    "h44": "website",
+    "h45": "requiresSponsorship",
+    "h46": "none",
+    "h47": "none",
+    "h48": "none",
+    "h49": "none",
+    "h0": "preferredName",
+    "h1": "country",
+    "h2": "none",
+    "h3": "none",
+    "h4": "requiresSponsorship",
+    "h5": "none",
+    "h6": "country",
+    "h7": "none",
+    "h8": "none",
+    "h9": "country",
+    "h10": "none",
+    "h11": "workAuthorized",
+    "h12": "requiresSponsorship",
+    "h13": "none",
+    "h14": "workAuthorized",
+    "h15": "requiresSponsorship",
+    "h16": "none",
+    "h17": "none",
+    "h18": "none",
+    "h19": "none",
+    "h20": "none",
+    "h21": "none",
+    "h22": "none",
+    "h23": "none",
+    "h24": "veteranStatus",
+    "h125": "lastName",
+    "h100": "workAuthorized",
+    "h101": "region",
+    "h102": "none",
+    "h103": "none",
+    "h104": "howHeard",
+    "h105": "none",
+    "h106": "race",
+    "h107": "gender",
+    "h108": "veteranStatus",
+    "h109": "disabilityStatus",
+    "h110": "none",
+    "h111": "none",
+    "h112": "none",
+    "h113": "workAuthorized",
+    "h114": "requiresSponsorship",
+    "h115": "none",
+    "h116": "none",
+    "h117": "none",
+    "h118": "none",
+    "h119": "location",
+    "h120": "none",
+    "h121": "none",
+    "h122": "howHeard",
+    "h123": "none",
+    "h124": "firstName"
+   },
+   "agree": {
+    "wrongs": [
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h119",
+      "location",
+      [
+       "none"
+      ]
+     ]
+    ]
+   },
+   "strict": {
+    "wrongs": [
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "h0",
+     "h23",
+     "h24",
+     "h47",
+     "h67",
+     "h71",
+     "h92",
+     "h94",
+     "h106"
+    ]
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "h36",
+      "email",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h119",
+      "location",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": []
+   },
+   "all": {
+    "wrongs": [
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h119",
+      "location",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "h23",
+     "h47",
+     "h94"
+    ]
+   }
+  },
+  "mistralai/ministral-8b-2512": {
+   "stats": {
+    "calls": 6,
+    "failed": 0,
+    "ms": [
+     432,
+     435,
+     439,
+     454,
+     466,
+     879
+    ],
+    "cost": 0.001446975,
+    "errors": []
+   },
+   "answers": {
+    "h50": "workAuthorized",
+    "h51": "none",
+    "h52": "none",
+    "h53": "gender",
+    "h54": "none",
+    "h55": "workAuthorized",
+    "h56": "none",
+    "h57": "pronouns",
+    "h58": "none",
+    "h59": "none",
+    "h60": "postalCode",
+    "h61": "willingToRelocate",
+    "h62": "none",
+    "h63": "none",
+    "h64": "none",
+    "h65": "none",
+    "h66": "willingToRelocate",
+    "h67": "website",
+    "h68": "pronouns",
+    "h69": "howHeard",
+    "h70": "none",
+    "h71": "country",
+    "h72": "workAuthorized",
+    "h73": "requiresSponsorship",
+    "h74": "willingToRelocate",
+    "h75": "none",
+    "h76": "none",
+    "h77": "none",
+    "h78": "none",
+    "h79": "workAuthorized",
+    "h80": "requiresSponsorship",
+    "h81": "none",
+    "h82": "none",
+    "h83": "none",
+    "h84": "none",
+    "h85": "none",
+    "h86": "none",
+    "h87": "none",
+    "h88": "none",
+    "h89": "none",
+    "h90": "none",
+    "h91": "none",
+    "h92": "none",
+    "h93": "requiresSponsorship",
+    "h94": "workAuthorized",
+    "h95": "none",
+    "h96": "howHeard",
+    "h97": "none",
+    "h98": "none",
+    "h99": "disabilityStatus",
+    "h125": "lastName",
+    "h25": "disabilityStatus",
+    "h26": "none",
+    "h27": "none",
+    "h28": "location",
+    "h29": "firstName",
+    "h30": "pronouns",
+    "h31": "location",
+    "h32": "postalCode",
+    "h33": "requiresSponsorship",
+    "h34": "howHeard",
+    "h35": "none",
+    "h36": "none",
+    "h37": "none",
+    "h38": "none",
+    "h39": "none",
+    "h40": "none",
+    "h41": "workAuthorized",
+    "h42": "none",
+    "h43": "name",
+    "h44": "none",
+    "h45": "requiresSponsorship",
+    "h46": "none",
+    "h47": "requiresSponsorship",
+    "h48": "none",
+    "h49": "none",
+    "h100": "workAuthorized",
+    "h101": "region",
+    "h102": "none",
+    "h103": "none",
+    "h104": "howHeard",
+    "h105": "none",
+    "h106": "race",
+    "h107": "gender",
+    "h108": "veteranStatus",
+    "h109": "disabilityStatus",
+    "h110": "none",
+    "h111": "none",
+    "h112": "none",
+    "h113": "workAuthorized",
+    "h114": "requiresSponsorship",
+    "h115": "none",
+    "h116": "none",
+    "h117": "none",
+    "h118": "none",
+    "h119": "location",
+    "h120": "none",
+    "h121": "none",
+    "h122": "howHeard",
+    "h123": "none",
+    "h124": "firstName",
+    "h0": "preferredName",
+    "h1": "none",
+    "h2": "none",
+    "h3": "none",
+    "h4": "requiresSponsorship",
+    "h5": "none",
+    "h6": "country",
+    "h7": "none",
+    "h8": "none",
+    "h9": "country",
+    "h10": "none",
+    "h11": "workAuthorized",
+    "h12": "requiresSponsorship",
+    "h13": "none",
+    "h14": "workAuthorized",
+    "h15": "requiresSponsorship",
+    "h16": "none",
+    "h17": "none",
+    "h18": "none",
+    "h19": "none",
+    "h20": "none",
+    "h21": "none",
+    "h22": "none",
+    "h23": "race",
+    "h24": "veteranStatus"
+   },
+   "agree": {
+    "wrongs": [
+     [
+      "h28",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h119",
+      "location",
+      [
+       "none"
+      ]
+     ]
+    ]
+   },
+   "strict": {
+    "wrongs": [
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "h0",
+     "h1",
+     "h24",
+     "h67",
+     "h71",
+     "h92",
+     "h106"
+    ]
+   },
+   "hybrid": {
+    "wrongs": [
+     [
+      "h28",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h36",
+      "email",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h119",
+      "location",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "h92"
+    ]
+   },
+   "all": {
+    "wrongs": [
+     [
+      "h28",
+      "location",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h73",
+      "requiresSponsorship",
+      [
+       "none"
+      ]
+     ],
+     [
+      "h119",
+      "location",
+      [
+       "none"
+      ]
+     ]
+    ],
+    "misses": [
+     "h1",
+     "h92"
+    ]
+   }
+  }
+ }
+}

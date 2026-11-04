@@ -1,0 +1,1998 @@
+[
+ {
+  "id": "h0",
+  "label": "What's the name you'd prefer us to use throughout the interview process?",
+  "type": "input_text",
+  "name": "question_37369957002",
+  "options": []
+ },
+ {
+  "id": "h1",
+  "label": "Please choose the country in which you are located.",
+  "type": "multi_value_single_select",
+  "name": "question_37369958002",
+  "options": [
+   "Afghanistan",
+   "Albania",
+   "Algeria",
+   "Andorra",
+   "Angola",
+   "Antigua and Barbuda",
+   "Argentina",
+   "Armenia",
+   "Australia",
+   "Austria",
+   "Azerbaijan",
+   "Bahamas",
+   "Bahrain",
+   "Bangladesh",
+   "Barbados",
+   "Belarus",
+   "Belgium",
+   "Belize",
+   "Benin",
+   "Bhutan",
+   "Bolivia",
+   "Bosnia and Herzegovina",
+   "Botswana",
+   "Brazil",
+   "Brunei",
+   "Bulgaria",
+   "Burkina Faso",
+   "Burundi",
+   "Cabo Verde",
+   "Cambodia",
+   "Cameroon",
+   "Canada",
+   "Central African Republic",
+   "Chad",
+   "Chile",
+   "China",
+   "Colombia",
+   "Comoros",
+   "Crimea",
+   "Democratic Republic of the Congo",
+   "Republic of the Congo",
+   "Costa Rica",
+   "Cote d'Ivoire",
+   "Croatia",
+   "Cuba",
+   "Cyprus",
+   "Czech Republic",
+   "Denmark",
+   "Djibouti",
+   "Dominica",
+   "Dominican Republic",
+   "Ecuador",
+   "Egypt",
+   "El Salvador",
+   "Equatorial Guinea",
+   "Eritrea",
+   "Estonia",
+   "Eswatini",
+   "Ethiopia",
+   "Fiji",
+   "Finland",
+   "France",
+   "Gabon",
+   "Gambia",
+   "Georgia",
+   "Germany",
+   "Ghana",
+   "Greece",
+   "Grenada",
+   "Guatemala",
+   "Guinea",
+   "Guinea-Bissau",
+   "Guyana",
+   "Haiti",
+   "Honduras",
+   "Hungary",
+   "Iceland",
+   "India",
+   "Indonesia",
+   "Iran",
+   "Iraq",
+   "Ireland",
+   "Israel",
+   "Italy",
+   "Jamaica",
+   "Japan",
+   "Jordan",
+   "Kazakhstan",
+   "Kenya",
+   "Kiribati",
+   "Kosovo",
+   "Kuwait",
+   "Kyrgyzstan",
+   "Laos",
+   "Latvia",
+   "Lebanon",
+   "Lesotho",
+   "Liberia",
+   "Libya",
+   "Liechtenstein",
+   "Lithuania",
+   "Luxembourg",
+   "Macedonia",
+   "Madagascar",
+   "Malawi",
+   "Malaysia",
+   "Maldives",
+   "Mali",
+   "Malta",
+   "Marshall Islands",
+   "Mauritania",
+   "Mauritius",
+   "Mexico",
+   "Micronesia",
+   "Moldova",
+   "Monaco",
+   "Mongolia",
+   "Montenegro",
+   "Morocco",
+   "Mozambique",
+   "Myanmar",
+   "Namibia",
+   "Nauru",
+   "Nepal",
+   "Netherlands",
+   "New Zealand",
+   "Nicaragua",
+   "Niger",
+   "Nigeria",
+   "North Korea",
+   "Norway",
+   "Oman",
+   "Pakistan",
+   "Palau",
+   "Palestine",
+   "Panama",
+   "Papua New Guinea",
+   "Paraguay",
+   "Peru",
+   "Philippines",
+   "Poland",
+   "Portugal",
+   "Qatar",
+   "Romania",
+   "Russia",
+   "Rwanda",
+   "Saint Kitts and Nevis",
+   "Saint Lucia",
+   "Saint Vincent and the Grenadines",
+   "Samoa",
+   "San Marino",
+   "Sao Tome and Principe",
+   "Saudi Arabia",
+   "Senegal",
+   "Serbia",
+   "Seychelles",
+   "Sierra Leone",
+   "Singapore",
+   "Slovakia",
+   "Slovenia",
+   "Solomon Islands",
+   "Somalia",
+   "South Africa",
+   "South Korea",
+   "South Sudan",
+   "Spain",
+   "Sri Lanka",
+   "Sudan",
+   "Suriname",
+   "Sweden",
+   "Switzerland",
+   "Syria",
+   "Taiwan",
+   "Tajikistan",
+   "Tanzania",
+   "Thailand",
+   "Timor-Leste",
+   "Togo",
+   "Tonga",
+   "Trinidad and Tobago",
+   "Tunisia",
+   "Turkey",
+   "Turkmenistan",
+   "Tuvalu",
+   "Uganda",
+   "Ukraine",
+   "United Arab Emirates",
+   "United Kingdom",
+   "United States of America",
+   "Uruguay",
+   "Uzbekistan",
+   "Vanuatu",
+   "Vatican City",
+   "Venezuela",
+   "Vietnam",
+   "Yemen",
+   "Zambia",
+   "Zimbabwe"
+  ]
+ },
+ {
+  "id": "h2",
+  "label": "Are you subject to any employment agreements and/or post-employment restrictions with your current employer or a past employer?",
+  "type": "multi_value_single_select",
+  "name": "question_37369959002",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h3",
+  "label": "It is important to us to create an accessible and inclusive interview experience. Please let us know if there are any adjustments we can make to assist you during the hiring and interview process.",
+  "type": "input_text",
+  "name": "question_37369960002",
+  "options": []
+ },
+ {
+  "id": "h4",
+  "label": "Will you now or in the future require sponsorship for a visa to remain in your current location?",
+  "type": "multi_value_single_select",
+  "name": "question_37369961002",
+  "options": [
+   "No",
+   "Yes, Netherlands Highly Skilled Migrant Visa",
+   "Yes, Ireland Highly Skilled Worker Visa",
+   "Yes, EU Blue Card",
+   "Yes, USMCA Professional (TN) Visa (USA)",
+   "Yes, F-1 Visa OPT (USA)",
+   "Yes, but not one of the visas listed here"
+  ]
+ },
+ {
+  "id": "h5",
+  "label": "Have you previously worked at or consulted for GitLab?",
+  "type": "multi_value_single_select",
+  "name": "question_37369962002",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h6",
+  "label": "What is your current country of residence?",
+  "type": "multi_value_single_select",
+  "name": "question_37369963002",
+  "options": [
+   "Afghanistan",
+   "Albania",
+   "Algeria",
+   "Andorra",
+   "Angola",
+   "Antigua and Barbuda",
+   "Argentina",
+   "Armenia",
+   "Australia",
+   "Austria",
+   "Azerbaijan",
+   "Bahamas",
+   "Bahrain",
+   "Bangladesh",
+   "Barbados",
+   "Belarus",
+   "Belgium",
+   "Belize",
+   "Benin",
+   "Bhutan",
+   "Bolivia",
+   "Bosnia and Herzegovina",
+   "Botswana",
+   "Brazil",
+   "Brunei",
+   "Bulgaria",
+   "Burkina Faso",
+   "Burundi",
+   "Cabo Verde",
+   "Cambodia",
+   "Cameroon",
+   "Canada",
+   "Central African Republic",
+   "Chad",
+   "Chile",
+   "China",
+   "Colombia",
+   "Comoros",
+   "Crimea",
+   "Democratic Republic of the Congo",
+   "Republic of the Congo",
+   "Costa Rica",
+   "Cote d'Ivoire",
+   "Croatia",
+   "Cuba",
+   "Cyprus",
+   "Czech Republic",
+   "Denmark",
+   "Djibouti",
+   "Dominica",
+   "Dominican Republic",
+   "Ecuador",
+   "Egypt",
+   "El Salvador",
+   "Equatorial Guinea",
+   "Eritrea",
+   "Estonia",
+   "Eswatini",
+   "Ethiopia",
+   "Fiji",
+   "Finland",
+   "France",
+   "Gabon",
+   "Gambia",
+   "Georgia",
+   "Germany",
+   "Ghana",
+   "Greece",
+   "Grenada",
+   "Guatemala",
+   "Guinea",
+   "Guinea-Bissau",
+   "Guyana",
+   "Haiti",
+   "Honduras",
+   "Hungary",
+   "Iceland",
+   "India",
+   "Indonesia",
+   "Iran",
+   "Iraq",
+   "Ireland",
+   "Israel",
+   "Italy",
+   "Jamaica",
+   "Japan",
+   "Jordan",
+   "Kazakhstan",
+   "Kenya",
+   "Kiribati",
+   "Kosovo",
+   "Kuwait",
+   "Kyrgyzstan",
+   "Laos",
+   "Latvia",
+   "Lebanon",
+   "Lesotho",
+   "Liberia",
+   "Libya",
+   "Liechtenstein",
+   "Lithuania",
+   "Luxembourg",
+   "Macedonia",
+   "Madagascar",
+   "Malawi",
+   "Malaysia",
+   "Maldives",
+   "Mali",
+   "Malta",
+   "Marshall Islands",
+   "Mauritania",
+   "Mauritius",
+   "Mexico",
+   "Micronesia",
+   "Moldova",
+   "Monaco",
+   "Mongolia",
+   "Montenegro",
+   "Morocco",
+   "Mozambique",
+   "Myanmar",
+   "Namibia",
+   "Nauru",
+   "Nepal",
+   "Netherlands",
+   "New Zealand",
+   "Nicaragua",
+   "Niger",
+   "Nigeria",
+   "Norway",
+   "Oman",
+   "Pakistan",
+   "Palau",
+   "Palestine",
+   "Panama",
+   "Papua New Guinea",
+   "Paraguay",
+   "Peru",
+   "Philippines",
+   "Poland",
+   "Portugal",
+   "Qatar",
+   "Romania",
+   "Russia",
+   "Rwanda",
+   "Saint Kitts and Nevis",
+   "Saint Lucia",
+   "Saint Vincent and the Grenadines",
+   "Samoa",
+   "San Marino",
+   "Sao Tome and Principe",
+   "Saudi Arabia",
+   "Senegal",
+   "Serbia",
+   "Seychelles",
+   "Sierra Leone",
+   "Singapore",
+   "Slovakia",
+   "Slovenia",
+   "Solomon Islands",
+   "Somalia",
+   "South Africa",
+   "South Korea",
+   "South Sudan",
+   "Spain",
+   "Sri Lanka",
+   "Sudan",
+   "Suriname",
+   "Sweden",
+   "Switzerland",
+   "Syria",
+   "Taiwan",
+   "Tajikistan",
+   "Tanzania",
+   "Thailand",
+   "Timor-Leste",
+   "Togo",
+   "Tonga",
+   "Trinidad and Tobago",
+   "Tunisia",
+   "Turkey",
+   "Turkmenistan",
+   "Tuvalu",
+   "Uganda",
+   "Ukraine",
+   "United Arab Emirates",
+   "United Kingdom",
+   "United States of America",
+   "Uruguay",
+   "Uzbekistan",
+   "Vanuatu",
+   "Vatican City",
+   "Venezuela",
+   "Vietnam",
+   "Yemen",
+   "Zambia",
+   "Zimbabwe"
+  ]
+ },
+ {
+  "id": "h7",
+  "label": "Who is your current or previous employer?",
+  "type": "input_text",
+  "name": "question_68935488",
+  "options": []
+ },
+ {
+  "id": "h8",
+  "label": "What is your current or previous job title?",
+  "type": "input_text",
+  "name": "question_68935489",
+  "options": []
+ },
+ {
+  "id": "h9",
+  "label": "Please select the country where you currently reside.",
+  "type": "multi_value_single_select",
+  "name": "question_68935490",
+  "options": [
+   "Australia",
+   "Belgium",
+   "Brazil",
+   "Canada",
+   "Egypt",
+   "France",
+   "Germany",
+   "India",
+   "Indonesia",
+   "Ireland",
+   "Israel",
+   "Italy",
+   "Japan",
+   "Malaysia",
+   "Mexico",
+   "New Zealand",
+   "Poland",
+   "Portugal",
+   "Romania",
+   "Singapore",
+   "South Korea",
+   "Spain",
+   "Sweden",
+   "Switzerland",
+   "Taiwan",
+   "Thailand",
+   "The Netherlands",
+   "UAE",
+   "UK",
+   "US",
+   "Other"
+  ]
+ },
+ {
+  "id": "h10",
+  "label": "Please select the country or countries you anticipate working in for the role in which you are applying.",
+  "type": "multi_value_multi_select",
+  "name": "question_68935491[]",
+  "options": [
+   "Australia",
+   "Belgium",
+   "Brazil",
+   "Canada",
+   "France",
+   "Germany",
+   "India",
+   "Indonesia",
+   "Ireland",
+   "Israel",
+   "Italy",
+   "Japan",
+   "Luxembourg",
+   "Malaysia",
+   "Mexico",
+   "New Zealand",
+   "Poland",
+   "Portugal",
+   "Romania",
+   "Singapore",
+   "South Korea",
+   "Spain",
+   "Sweden",
+   "Switzerland",
+   "Taiwan",
+   "Thailand",
+   "The Netherlands",
+   "UAE",
+   "UK",
+   "US"
+  ]
+ },
+ {
+  "id": "h11",
+  "label": "Are you authorized to work in the location(s) you selected in your previous response?",
+  "type": "multi_value_single_select",
+  "name": "question_68935492",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h12",
+  "label": "Will you require Stripe to sponsor you for a work permit now or in the future for the location(s) you selected in in your previous response?",
+  "type": "multi_value_single_select",
+  "name": "question_68935493",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h13",
+  "label": "To ensure we can focus fully on our conversation, we use BrightHire to record and transcribe interviews. This helps us get to know you better without the distraction of note-taking. We also use BrightHire to help us analyze interview notes and for internal Stripe interview quality training and assurance purposes. After the recruitment process ends, recordings may be shared internally for recruiter and interviewer training to help us improve our interview processes. Please confirm if you consent to BrightHire being enabled for this interview and for your personal data to be collected and processed for the purposes mentioned above, by responding below",
+  "type": "multi_value_single_select",
+  "name": "question_69457838",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h14",
+  "label": "Are you legally work authorized to work in the US?",
+  "type": "multi_value_single_select",
+  "name": "question_70139012",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h15",
+  "label": "Will you now (or in the future) require visa sponsorship in order to work in the US?",
+  "type": "multi_value_single_select",
+  "name": "question_70139013",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h16",
+  "label": "Have you ever worked for Robinhood as an employee, intern or contractor? Note that providing false or misleading information may result in disqualification from the hiring process.",
+  "type": "multi_value_single_select",
+  "name": "question_70139014",
+  "options": [
+   "I currently work at Robinhood as a full-time employee or intern",
+   "I have previously worked at Robinhood as a full-time employee or intern (Hoodie Alumni)",
+   "I currently work at Robinhood in a contractor role",
+   "I have previously worked at Robinhood in a contractor role",
+   "I have never worked at Robinhood"
+  ]
+ },
+ {
+  "id": "h17",
+  "label": "Are you willing to work from the office(s) listed on the job description?",
+  "type": "multi_value_single_select",
+  "name": "question_70139015",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h18",
+  "label": "Do you have: a) any Personal/Familial Relationships (current Robinhood employees or employees of Robinhood’s vendors); b) any Outside Business Activities that you wish to continue; c) any investment that is greater than 5% of the outstanding shares of a publicly-traded company; d) any investment in a private company that has a business relationship or that is a current competitor of Robinhood; or e) any Intellectual Property Ownership (patents, trademarks, copyrights) that you wish to retain and/or create/develop while at Robinhood?",
+  "type": "multi_value_single_select",
+  "name": "question_70139017",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h19",
+  "label": "If you answered \"Yes\" to the above question, please provide additional information here:",
+  "type": "input_text",
+  "name": "question_70139018",
+  "options": []
+ },
+ {
+  "id": "h20",
+  "label": "Robinhood adheres to applicable laws and regulations in relation to government officials given inherent bribery and/or corruption risk. A government official is any person that performs a public function on any level or acts in any official capacity on behalf of a government or government owned entity. a) Do you currently hold or have you held, within the last 5 years, a position as a government official? b) Have you been referred or recommended for this position by a government official? c) Are you related to or have a close personal relationship with a government official?",
+  "type": "multi_value_single_select",
+  "name": "question_70139019",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h21",
+  "label": "After onboarding, in-person attendance is required at least 3 days per week.",
+  "type": "multi_value_single_select",
+  "name": "question_70139022",
+  "options": [
+   "Yes, I can meet these requirements.",
+   "No, I cannot meet these requirements."
+  ]
+ },
+ {
+  "id": "h22",
+  "label": "This role requires in-person attendance at either our Denver, CO or Westlake, TX office.",
+  "type": "multi_value_single_select",
+  "name": "question_70139024",
+  "options": [
+   "Yes, I can meet these requirements.",
+   "No, I cannot meet these requirements."
+  ]
+ },
+ {
+  "id": "h23",
+  "label": "What is your race or ethnicity?",
+  "type": "multi_value_single_select",
+  "name": "demographic_1258",
+  "options": [
+   "American Indian or Alaskan Native",
+   "Black or African American",
+   "East Asian",
+   "Hispanic or Latino",
+   "Middle Eastern or North African",
+   "Native Hawaiian or Other Pacific Islander",
+   "South Asian",
+   "Southeast Asian",
+   "White",
+   "Two or More Races",
+   "I don't wish to answer"
+  ]
+ },
+ {
+  "id": "h24",
+  "label": "What is your military status?",
+  "type": "multi_value_single_select",
+  "name": "demographic_1259",
+  "options": [
+   "I am on active duty",
+   "I am part of the national guard or on reserve",
+   "I have never served in the military",
+   "I identify as a protected veteran",
+   "I identify as a non-protected veteran",
+   "I identify in multiple military status categories",
+   "I don't wish to answer"
+  ]
+ },
+ {
+  "id": "h25",
+  "label": "What is your disability status?",
+  "type": "multi_value_single_select",
+  "name": "demographic_1261",
+  "options": [
+   "Yes, I have a disability",
+   "No, I don't have a disability",
+   "I don't wish to answer"
+  ]
+ },
+ {
+  "id": "h26",
+  "label": "Do you identify as part of the LGBTQ+ community?",
+  "type": "multi_value_single_select",
+  "name": "demographic_1465",
+  "options": [
+   "Yes",
+   "No",
+   "Questioning",
+   "I don't wish to answer"
+  ]
+ },
+ {
+  "id": "h27",
+  "label": "Have you used Robinhood?",
+  "type": "multi_value_single_select",
+  "name": "question_70051797",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h28",
+  "label": "What is your preferred office location?",
+  "type": "multi_value_single_select",
+  "name": "question_70051802",
+  "options": [
+   "Menlo Park, CA",
+   "New York, NY",
+   "Bellevue, WA",
+   "Toronto, Canada"
+  ]
+ },
+ {
+  "id": "h29",
+  "label": "What is your legal first name?",
+  "type": "input_text",
+  "name": "question_68839951",
+  "options": []
+ },
+ {
+  "id": "h30",
+  "label": "What are your personal pronouns?",
+  "type": "multi_value_single_select",
+  "name": "question_68839952",
+  "options": [
+   "She / Her / Hers",
+   "He / Him / His",
+   "They / Them / Their",
+   "Zie / Ze / Zir / Hir / Zir",
+   "Please use my name",
+   "Multiple pronouns - Please ask me",
+   "Other - Please ask me"
+  ]
+ },
+ {
+  "id": "h31",
+  "label": "Current Location",
+  "type": "multi_value_single_select",
+  "name": "question_68839953",
+  "options": [
+   "Australia",
+   "Canada - Alberta",
+   "Canada - British Columbia",
+   "Canada - Ontario",
+   "Canada - Quebec",
+   "Canada - Saskatchewan",
+   "Canada - New Brunswick",
+   "Canada - Newfoundland and Labrador",
+   "Canada - Northwest Territories",
+   "Canada - Nova Scotia",
+   "Canada - Nunavut",
+   "Canada - Manitoba",
+   "Canada - Prince Edward Island",
+   "Canada - Yukon",
+   "United Kingdom",
+   "France",
+   "Germany",
+   "Ireland",
+   "Israel",
+   "Japan",
+   "Mexico",
+   "Netherlands",
+   "Poland",
+   "Singapore",
+   "Sweden",
+   "Switzerland",
+   "Taiwan",
+   "US - Alabama",
+   "US - Alaska",
+   "US - Arizona",
+   "US - Arkansas",
+   "US - California",
+   "US - Colorado",
+   "US - Connecticut",
+   "US - Delaware",
+   "US - Florida",
+   "US - Georgia",
+   "US - Hawaii",
+   "US - Idaho",
+   "US - Illinois",
+   "US - Indiana",
+   "US - Iowa",
+   "US - Kansas",
+   "US - Kentucky",
+   "US - Louisiana",
+   "US - Maine",
+   "US - Maryland",
+   "US - Massachusetts",
+   "US - Michigan",
+   "US - Minnesota",
+   "US - Mississippi",
+   "US - Missouri",
+   "US - Montana",
+   "US - Nebraska",
+   "US - Nevada",
+   "US - New Hampshire",
+   "US - New Jersey",
+   "US - New Mexico",
+   "US - New York",
+   "US - North Carolina",
+   "US - North Dakota",
+   "US - Ohio",
+   "US - Oklahoma",
+   "US - Oregon",
+   "US - Pennsylvania",
+   "US - Rhode Island",
+   "US - South Carolina",
+   "US - South Dakota",
+   "US - Tennessee",
+   "US - Texas",
+   "US - Utah",
+   "US - Vermont",
+   "US - Virginia",
+   "US - Washington",
+   "US - Washington, D.C",
+   "US - West Virginia",
+   "US - Wisconsin",
+   "Other Location"
+  ]
+ },
+ {
+  "id": "h32",
+  "label": "Please provide the zip code of your primary residence.",
+  "type": "input_text",
+  "name": "question_68839954",
+  "options": []
+ },
+ {
+  "id": "h33",
+  "label": "Will you now or in the future require sponsorship or a visa transfer for employment visa status (ie: H-1B visa)?",
+  "type": "multi_value_single_select",
+  "name": "question_68839955",
+  "options": [
+   "No, I can work for any US employer without sponsorship (eg: US citizen, permanent resident, EAD, etc.)",
+   "Yes, I require sponsorship or a visa transfer (eg: J-1, F-1 CPT/OPT, H-1B, TN, etc.)"
+  ]
+ },
+ {
+  "id": "h34",
+  "label": "How did you hear about this role? (Please select all that apply)",
+  "type": "multi_value_multi_select",
+  "name": "question_68839956[]",
+  "options": [
+   "BuiltIn",
+   "Contacted by Recruiter",
+   "Dropbox Career Site",
+   "Dropbox Talent Community",
+   "Facebook",
+   "Glassdoor",
+   "Google Search",
+   "In Person Event",
+   "Indeed",
+   "InHerSight",
+   "Instagram",
+   "LinkedIn",
+   "Referral from Dropboxer",
+   "The Muse"
+  ]
+ },
+ {
+  "id": "h35",
+  "label": "Have you previously worked for Dropbox?",
+  "type": "multi_value_single_select",
+  "name": "question_68839957",
+  "options": [
+   "Yes, former employee",
+   "Yes, former contingent worker or vendor",
+   "No, I have not previously worked for Dropbox"
+  ]
+ },
+ {
+  "id": "h36",
+  "label": "Please email me about future job openings",
+  "type": "multi_value_single_select",
+  "name": "question_68839958",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h37",
+  "label": "Do you have 4+ years of B2B SaaS sales experience?",
+  "type": "multi_value_single_select",
+  "name": "question_68839959",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h38",
+  "label": "Location Cost Tier",
+  "type": "multi_value_single_select",
+  "name": "question_68839960",
+  "options": [
+   "High Cost",
+   "Mid Cost",
+   "Low Cost",
+   "Unknown"
+  ]
+ },
+ {
+  "id": "h39",
+  "label": "Fingerprint",
+  "type": "input_text",
+  "name": "question_68839961",
+  "options": []
+ },
+ {
+  "id": "h40",
+  "label": "Do you live in Mexico?",
+  "type": "multi_value_single_select",
+  "name": "question_59484882",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h41",
+  "label": "Are you currently authorized to work for any employer in the country outlined for this role?",
+  "type": "multi_value_single_select",
+  "name": "question_59484883",
+  "options": [
+   "No, I can work for any employer in the offer location without sponsorship",
+   "Yes, I require sponsorship for work authorization in the offer location"
+  ]
+ },
+ {
+  "id": "h42",
+  "label": "Do you have at least 5 years of full time relevant working experience?",
+  "type": "multi_value_single_select",
+  "name": "question_59484886",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h43",
+  "label": "Legal Name (if different than above)",
+  "type": "input_text",
+  "name": "question_64278780",
+  "options": []
+ },
+ {
+  "id": "h44",
+  "label": "Would you like to include your LinkedIn profile, personal website or blog?",
+  "type": "input_text",
+  "name": "question_64278782",
+  "options": []
+ },
+ {
+  "id": "h45",
+  "label": "Do you now or will you in the future require immigration sponsorship to work at Cloudflare?",
+  "type": "multi_value_single_select",
+  "name": "question_64278783",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h46",
+  "label": "Please review and acknowledge Cloudflare's Candidate Privacy Policy (cloudflare.com/candidate-privacy-notice/).",
+  "type": "multi_value_multi_select",
+  "name": "question_64278784[]",
+  "options": [
+   "Acknowledge/Confirm"
+  ]
+ },
+ {
+  "id": "h47",
+  "label": "Do you now or will you in the future require immigration sponsorship to work at Cloudflare in Singapore?",
+  "type": "multi_value_single_select",
+  "name": "question_68936005",
+  "options": [
+   "Yes",
+   "No, I'm a Singapore Citizen.",
+   "No, I'm a Permanent resident."
+  ]
+ },
+ {
+  "id": "h48",
+  "label": "I certify that the information provided in this application is true and correct to the best of my knowledge. I understand that any false statements or omissions may result in disqualification from employment consideration or, if employed, in termination.",
+  "type": "multi_value_single_select",
+  "name": "question_69650954",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h49",
+  "label": "I understand my application will be processed in accordance with Datadog’s Candidate Privacy Policy.",
+  "type": "multi_value_single_select",
+  "name": "question_69650955",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h50",
+  "label": "Are you legally authorised to work full-time in the country where this job is based?",
+  "type": "multi_value_single_select",
+  "name": "question_69650956",
+  "options": [
+   "Yes, no restriction.",
+   "Yes, but I will need sponsorship in the future.",
+   "No, I need sponsorship now."
+  ]
+ },
+ {
+  "id": "h51",
+  "label": "In what cities are you available to work?",
+  "type": "multi_value_multi_select",
+  "name": "question_69650957[]",
+  "options": [
+   "Amsterdam",
+   "Atlanta",
+   "Bangalore",
+   "Barcelona",
+   "Barueri São Paulo",
+   "Bordeaux",
+   "Boston",
+   "Chicago",
+   "Copenhagen",
+   "Denver",
+   "Dubai",
+   "Dublin",
+   "Grenoble",
+   "Hamburg",
+   "Jakarta",
+   "Lisbon",
+   "London",
+   "Lyon",
+   "Madrid",
+   "Melbourne",
+   "Mexico City",
+   "Montpellier",
+   "Mumbai",
+   "Nantes",
+   "New York City",
+   "Nice",
+   "Osaka",
+   "Paris",
+   "Pittsburgh",
+   "Remote",
+   "Riyadh",
+   "Salt Lake City",
+   "San Francisco",
+   "San Jose (Campbell)",
+   "San Sebastian",
+   "São Paulo",
+   "Seattle",
+   "Seoul",
+   "Singapore",
+   "Sophia Antipolis",
+   "Stockholm",
+   "Sydney",
+   "Tel Aviv",
+   "Tokyo",
+   "Toronto"
+  ]
+ },
+ {
+  "id": "h52",
+  "label": "Please select all the languages you speak fluently.",
+  "type": "multi_value_multi_select",
+  "name": "question_69650958[]",
+  "options": [
+   "Arabic",
+   "Bahasa Indonesia",
+   "Bulgarian",
+   "Cantonese",
+   "Croatian",
+   "Czech",
+   "Danish",
+   "Dutch",
+   "English",
+   "Estonian",
+   "Finnish",
+   "French",
+   "German",
+   "Greek",
+   "Hebrew",
+   "Hindi",
+   "Hungarian",
+   "Italian",
+   "Japanese",
+   "Korean",
+   "Latvian",
+   "Lithuanian",
+   "Malay",
+   "Mandarin",
+   "Norwegian",
+   "Polish",
+   "Portuguese",
+   "Portuguese (Brazilian)",
+   "Romanian",
+   "Russian",
+   "Slovak",
+   "Slovenian",
+   "Spanish",
+   "Swedish",
+   "Tagalog",
+   "Thai",
+   "Turkish",
+   "Ukrainian",
+   "Vietnamese"
+  ]
+ },
+ {
+  "id": "h53",
+  "label": "Voluntary Self-Identification of Gender:",
+  "type": "multi_value_single_select",
+  "name": "demographic_1757",
+  "options": [
+   "Female",
+   "Male",
+   "Non-binary/third gender",
+   "Prefer to self describe as",
+   "I don't wish to answer"
+  ]
+ },
+ {
+  "id": "h54",
+  "label": "Please describe any need for a reasonable accommodation for this hiring process (no documentation required).",
+  "type": "input_text",
+  "name": "question_38774067002",
+  "options": []
+ },
+ {
+  "id": "h55",
+  "label": "Work Authorization",
+  "type": "multi_value_single_select",
+  "name": "question_38774068002",
+  "options": [
+   "I am authorized to work for any employer in the country in which this position is based.",
+   "I require/will require Lyft's sponsorship to obtain work authorization in the country in which this position is based (e.g. H-1B, TN, etc.)",
+   "My status to work in the country in which this position is based is unknown."
+  ]
+ },
+ {
+  "id": "h56",
+  "label": "Please review the linked document:",
+  "type": "multi_value_single_select",
+  "name": "question_38774069002",
+  "options": [
+   "I acknowledge that I have read and understood the terms of the Lyft Candidate Privacy Notice."
+  ]
+ },
+ {
+  "id": "h57",
+  "label": "Please share your gender pronouns.",
+  "type": "multi_value_multi_select",
+  "name": "question_38774070002[]",
+  "options": [
+   "She / Her",
+   "He / Him",
+   "They / Them",
+   "Ae / Aer",
+   "Ey / Em",
+   "Fae / Faer",
+   "Ne / Nem",
+   "Per / Per",
+   "Ve / Vir",
+   "Xe / Xem",
+   "Xie / Hir",
+   "Yo / Yo",
+   "Ze / Hir",
+   "Ze / Zir",
+   "Other"
+  ]
+ },
+ {
+  "id": "h58",
+  "label": "Do you have an advanced english level (writing, listening, speaking)?",
+  "type": "multi_value_single_select",
+  "name": "question_38774072002",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h59",
+  "label": "Have you been employed by Lyft, or any subsidiary, affiliate, or business unit of Lyft, in the past (whether on a full-time or part-time basis)?",
+  "type": "multi_value_single_select",
+  "name": "question_38774073002",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h60",
+  "label": "Zip / postal code",
+  "type": "input_text",
+  "name": "question_38774074002",
+  "options": []
+ },
+ {
+  "id": "h61",
+  "label": "This position is required to work out of a Lyft Office in Mexico City, if you do not reside within the country and within commutable proximity to the office, are you open to relocating?",
+  "type": "multi_value_single_select",
+  "name": "question_38774075002",
+  "options": [
+   "I am willing to relocate before starting employment.",
+   "I am not willing to relocate before starting employment.",
+   "I already reside near a Lyft office and I am able to work at an On-site Office."
+  ]
+ },
+ {
+  "id": "h62",
+  "label": "I certify that the facts set forth in this Application for Employment are true and complete to the best of my knowledge. I understand that if I am employed, false statements, omissions or misrepresentations may result in my dismissal. I authorize the Employer to make an investigation of any of the facts set forth in this application and release the Employer from any liability. The employer may contact any provided references.",
+  "type": "input_text",
+  "name": "question_38774076002",
+  "options": []
+ },
+ {
+  "id": "h63",
+  "label": "Please enter your relevant employment and military service above using the + Add Another Employment link.",
+  "type": "multi_value_single_select",
+  "name": "question_39108984002",
+  "options": [
+   "Thank you"
+  ]
+ },
+ {
+  "id": "h64",
+  "label": "May we contact your current employer?",
+  "type": "multi_value_single_select",
+  "name": "question_39108985002",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h65",
+  "label": "Can you perform these essential functions of the job with reasonable accommodation?",
+  "type": "multi_value_single_select",
+  "name": "question_39108986002",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h66",
+  "label": "This position is based in the United States. Do you currently reside in commutable proximity to a Lyft Office located in New York City or are you open to relocating?",
+  "type": "multi_value_single_select",
+  "name": "question_39108994002",
+  "options": [
+   "I am willing to relocate before starting employment.",
+   "I am not willing to relocate before starting employment.",
+   "I already reside near a Lyft office and I am able to work at a Lyft On-site Office."
+  ]
+ },
+ {
+  "id": "h67",
+  "label": "Website or GitHub",
+  "type": "input_text",
+  "name": "question_38956982002",
+  "options": []
+ },
+ {
+  "id": "h68",
+  "label": "What are your preferred gender pronouns? (She/Her/Hers; He/Him/His; They/Them/Theirs, etc.)",
+  "type": "input_text",
+  "name": "question_38956983002",
+  "options": []
+ },
+ {
+  "id": "h69",
+  "label": "How did you hear about us?",
+  "type": "multi_value_single_select",
+  "name": "question_38956984002",
+  "options": [
+   "Career Page",
+   "Referral",
+   "LinkedIn",
+   "Social Media (Instagram, X)",
+   "Glassdoor",
+   "RepVue",
+   "Brex Blog / Employee Stories",
+   "Brex Video / Ad",
+   "Event / Conference",
+   "News / Media / Podcast",
+   "Other"
+  ]
+ },
+ {
+  "id": "h70",
+  "label": "If you heard about us through a referral, please state the Brex employee's name.",
+  "type": "input_text",
+  "name": "question_38956985002",
+  "options": []
+ },
+ {
+  "id": "h71",
+  "label": "What country are you based in?",
+  "type": "multi_value_single_select",
+  "name": "question_38956986002",
+  "options": [
+   "Brazil",
+   "Canada",
+   "USA",
+   "Netherlands",
+   "United Kingdom",
+   "Other"
+  ]
+ },
+ {
+  "id": "h72",
+  "label": "Are you authorized to work in the stated location of this role?",
+  "type": "multi_value_single_select",
+  "name": "question_38956987002",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h73",
+  "label": "If you're not authorized to work at the stated location, what sponsorship would you require for the role?",
+  "type": "input_text",
+  "name": "question_38956988002",
+  "options": []
+ },
+ {
+  "id": "h74",
+  "label": "Do you currently live in, or plan to relocate to, the specified location to meet this in-office requirement?",
+  "type": "multi_value_single_select",
+  "name": "question_38956989002",
+  "options": [
+   "Yes, I live here",
+   "Yes, I plan to relocate",
+   "No"
+  ]
+ },
+ {
+  "id": "h75",
+  "label": "Do you consent to Brex processing your personal information for the purpose of assessing your candidacy for this position in accordance with Brex’s Applicant Privacy Policy?",
+  "type": "multi_value_single_select",
+  "name": "question_38956990002",
+  "options": [
+   "Consent"
+  ]
+ },
+ {
+  "id": "h76",
+  "label": "This role requires in-office work three days per week (Mon, Wed, Thurs). Do you acknowledge and agree to this requirement?",
+  "type": "multi_value_single_select",
+  "name": "question_38956991002",
+  "options": [
+   "Yes, I’m currently located here",
+   "Yes, I’d relocate prior to the start of the role",
+   "No, I’m not located nearby"
+  ]
+ },
+ {
+  "id": "h77",
+  "label": "Do you currently, or have you previously, worked at Capital One or a company acquired by Capital One as an employee, contractor, consultant, or temp? (For example Capital One Bank, N.A., Capital One Services, Inc., Chevy Chase Bank, Discover, Hibernia, ING Direct, North Fork Bank)",
+  "type": "multi_value_single_select",
+  "name": "question_38956992002",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h78",
+  "label": "If you currently work, or have previously worked, at Capital One or a company acquired by Capital One, please provide your Employee ID (EID). This information is required for former/current employees.",
+  "type": "input_text",
+  "name": "question_38956993002",
+  "options": []
+ },
+ {
+  "id": "h79",
+  "label": "Are you legally authorized to work in the country you reside?",
+  "type": "multi_value_single_select",
+  "name": "question_68197079",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h80",
+  "label": "Will you now or in the future require Visa Sponsorship?",
+  "type": "multi_value_single_select",
+  "name": "question_68197080",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h81",
+  "label": "To the best of your knowledge, do you have any family members / relatives or personal relationships at Okta or at any suppliers, partners, or vendors that have a business relationship with Okta? (For purposes of this question, a “family member / relative or personal relationship” is defined as close personal friends (including sexual and/or romantic relationships), close relatives (spouse, partner, children, cousins, aunts, uncles, nieces, nephews, grandparents or grandchildren), someone who lives in your household, or anyone else with whom you have a close enough personal relationship or connection that it could improperly bias your conduct or decision making or be perceived to be capable of impacting your conduct or decision making.",
+  "type": "multi_value_single_select",
+  "name": "question_68197081",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h82",
+  "label": "If yes, please identify name of person / vendor and describe relationship / association:",
+  "type": "input_text",
+  "name": "question_68197082",
+  "options": []
+ },
+ {
+  "id": "h83",
+  "label": "Do you have any outside business activity(ies) (advisory, consulting, or board roles, or side businesses) that you would continue engaging in or plan to engage in if you joined Okta in this role?",
+  "type": "multi_value_single_select",
+  "name": "question_68197083",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h84",
+  "label": "If yes, please describe:",
+  "type": "input_text",
+  "name": "question_68197084",
+  "options": []
+ },
+ {
+  "id": "h85",
+  "label": "Have you been employed by Okta, Inc. or any of its subsidiaries in the past?",
+  "type": "multi_value_single_select",
+  "name": "question_68197085",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h86",
+  "label": "I acknowledge and agree to the processing of my personal data in accordance with Okta's privacy policy and personnel privacy policy (see below).",
+  "type": "multi_value_multi_select",
+  "name": "question_68197086[]",
+  "options": [
+   "I acknowledge"
+  ]
+ },
+ {
+  "id": "h87",
+  "label": "By checking this box, you consent to Okta using your data to evaluate your candidacy for this role and any other current or future roles that may be a fit for your profile. You may request the removal of your data at any time by contacting greenhouse@okta.com.",
+  "type": "multi_value_multi_select",
+  "name": "question_68197087[]",
+  "options": [
+   "Yes"
+  ]
+ },
+ {
+  "id": "h88",
+  "label": "Are you open to working in person in our San Francisco or New York office 3 times a week?",
+  "type": "multi_value_single_select",
+  "name": "question_9128145005",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h89",
+  "label": "Are you currently bound by any agreements with a current or former employer that may restrict your ability to work for Scale AI or perform the duties of the position for which you are applying? This includes, but is not limited to, non-compete agreements, non-solicitation agreements, confidentiality or non-disclosure agreements, or any other contractual obligations that could limit your employment activities.",
+  "type": "multi_value_single_select",
+  "name": "question_9128147005",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h90",
+  "label": "If yes, please provide further explanation below.",
+  "type": "input_text",
+  "name": "question_9128148005",
+  "options": []
+ },
+ {
+  "id": "h91",
+  "label": "Who is your current or most recent employer?",
+  "type": "input_text",
+  "name": "question_9128151005",
+  "options": []
+ },
+ {
+  "id": "h92",
+  "label": "Are you currently based in any of these countries? Please note these are the only countries where we are accepting applications",
+  "type": "multi_value_single_select",
+  "name": "question_20361583004",
+  "options": [
+   "United States",
+   "Germany",
+   "United Kingdom",
+   "Argentina",
+   "Australia",
+   "Canada",
+   "India",
+   "Japan",
+   "Other"
+  ]
+ },
+ {
+  "id": "h93",
+  "label": "Will you require Visa Sponsorship now, or in the future?",
+  "type": "multi_value_single_select",
+  "name": "question_20361584004",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h94",
+  "label": "Your authorization to work in the country where you live. Please choose the option that describes your work authorization.",
+  "type": "multi_value_single_select",
+  "name": "question_20361585004",
+  "options": [
+   "I am authorized to work in the country due to my nationality",
+   "I am authorized to work in the country based on a valid work permit and do not need a company to sponsor my visa",
+   "I am authorized to work in the country based on a valid work permit which needs to be sponsored by the company I work for",
+   "I am not authorized to work in the country and need visa support",
+   "Other"
+  ]
+ },
+ {
+  "id": "h95",
+  "label": "Do you live in one of the following states? Alabama, Alaska, Delaware, Kansas, Maine, Mississippi, Montana, Nebraska, New Mexico, North Dakota, South Dakota, West Virginia, or Wyoming.",
+  "type": "multi_value_single_select",
+  "name": "question_20361586004",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h96",
+  "label": "Where did you first hear about this role?",
+  "type": "multi_value_single_select",
+  "name": "question_20361591004",
+  "options": [
+   "Events",
+   "Built In",
+   "LinkedIn",
+   "Google Search",
+   "Advertisements",
+   "Other job boards",
+   "LLMs (ChatGPT, etc.)",
+   "I'm a Vercel customer",
+   "Referral from a Vercel customer",
+   "Referral from a Vercel team member",
+   "Social media (X, Instagram, YouTube, etc.)",
+   "Other Content (news articles, podcasts, blogs)",
+   "Developer communities (GitHub, Hacker News, Reddit, etc.)",
+   "Other"
+  ]
+ },
+ {
+  "id": "h97",
+  "label": "By submitting my application, I acknowledge that I have read and understand Vercel’s Job Applicant Privacy Notice - https://vercel.com/legal/job-applicant-privacy-notice",
+  "type": "multi_value_single_select",
+  "name": "question_20361592004",
+  "options": [
+   "Acknowledge/Confirm"
+  ]
+ },
+ {
+  "id": "h98",
+  "label": "Please double-check all the information provided above. Ensuring accuracy is crucial, as any errors or omissions may impact the review of your application.",
+  "type": "multi_value_single_select",
+  "name": "question_20361593004",
+  "options": [
+   "I have reviewed and confirmed that all the information provided is accurate and complete."
+  ]
+ },
+ {
+  "id": "h99",
+  "label": "Do you have a disability or chronic condition (physical, visual, auditory, cognitive, mental, emotional, or other) that substantially limits one or more of your major life activities, including mobility, communication (seeing, hearing, speaking), and learning?",
+  "type": "multi_value_single_select",
+  "name": "demographic_4015781004",
+  "options": [
+   "Yes",
+   "No",
+   "I prefer to self-describe",
+   "I don't wish to answer"
+  ]
+ },
+ {
+  "id": "h100",
+  "label": "Are you authorized to work in the UK?",
+  "type": "multi_value_single_select",
+  "name": "question_17855255004",
+  "options": [
+   "I am authorized to work in the country due to my nationality",
+   "I am authorized to work in the country based on a valid work permit and do not need a company to sponsor my visa",
+   "I am authorized to work in the country based on a valid work permit which needs to be sponsored by the company I work for",
+   "I am not authorized to work in the country and need visa support",
+   "Other"
+  ]
+ },
+ {
+  "id": "h101",
+  "label": "Please select your current state of residence. Select “Not in the US” if you reside outside the United States. This information helps us understand our talent pool and ensures we provide accurate resources throughout the hiring process.",
+  "type": "multi_value_single_select",
+  "name": "question_38714836002",
+  "options": [
+   "Alabama",
+   "Alaska",
+   "Arizona",
+   "Arkansas",
+   "California",
+   "Colorado",
+   "Connecticut",
+   "Delaware",
+   "Florida",
+   "Georgia",
+   "Hawaii",
+   "Idaho",
+   "Illinois",
+   "Indiana",
+   "Iowa",
+   "Kansas",
+   "Kentucky",
+   "Louisiana",
+   "Maine",
+   "Maryland",
+   "Massachusetts",
+   "Michigan",
+   "Minnesota",
+   "Mississippi",
+   "Missouri",
+   "Montana",
+   "Nebraska",
+   "Nevada",
+   "New Hampshire",
+   "New Jersey",
+   "New Mexico",
+   "New York",
+   "North Carolina",
+   "North Dakota",
+   "Ohio",
+   "Oklahoma",
+   "Oregon",
+   "Pennsylvania",
+   "Rhode Island",
+   "South Carolina",
+   "South Dakota",
+   "Tennessee",
+   "Texas",
+   "Utah",
+   "Vermont",
+   "Virginia",
+   "Washington",
+   "West Virginia",
+   "Wisconsin",
+   "Wyoming",
+   "Not in the US"
+  ]
+ },
+ {
+  "id": "h102",
+  "label": "This role will be in-office on a hybrid schedule, can you commit to being in-office three days per week at the location where this position is posted?",
+  "type": "multi_value_single_select",
+  "name": "question_38714838002",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h103",
+  "label": "Before seeing this job posting, how familiar were you with Faire as a company? (Your response will not impact your application)",
+  "type": "multi_value_single_select",
+  "name": "question_38714839002",
+  "options": [
+   "Never heard of it before",
+   "Had heard of it but knew little about it",
+   "Somewhat familiar",
+   "Very familiar"
+  ]
+ },
+ {
+  "id": "h104",
+  "label": "How did you hear about Faire? (Select all that apply)",
+  "type": "multi_value_multi_select",
+  "name": "question_38714840002[]",
+  "options": [
+   "Answered “unaware” to previous question",
+   "Online advertisement (social media, display ads, etc.)",
+   "Billboard or outdoor advertising",
+   "Faire's website",
+   "Faire’s technical blogs (Faire.Tech, The Craft)",
+   "Someone I know personally (friend, family, former colleague)",
+   "Job posting on LinkedIn, Indeed, or other job board",
+   "LinkedIn post or content (not a job posting)",
+   "News article or media coverage",
+   "Industry event or conference",
+   "Other"
+  ]
+ },
+ {
+  "id": "h105",
+  "label": "Do you consider yourself a member of the LGBTQIA+ community?",
+  "type": "multi_value_multi_select",
+  "name": "demographic_4000362002",
+  "options": [
+   "Yes",
+   "No",
+   "I don't wish to answer"
+  ]
+ },
+ {
+  "id": "h106",
+  "label": "Which categories describe you? Select all that apply to you:",
+  "type": "multi_value_multi_select",
+  "name": "demographic_4000407002",
+  "options": [
+   "American Indian or Alaska Native",
+   "Black/of African origin ",
+   "East Asian (For example - Chinese, Japanese, Korean) ",
+   "Hispanic, Latinx or Spanish origin",
+   "Middle Eastern or North African",
+   "Native Hawaiian or Other Pacific Islander",
+   "South Asian (For example - Bangladeshi, Bhutanese, Indian) ",
+   "Southeast Asian (For example - Filipino, Indonesian, Vietnamese)",
+   "Non-Hispanic White or Caucasian",
+   "I don't wish to answer"
+  ]
+ },
+ {
+  "id": "h107",
+  "label": "How do you currently describe your gender identity?",
+  "type": "multi_value_multi_select",
+  "name": "demographic_4000408002",
+  "options": [
+   "Man, male or masculine",
+   "Non-binary/third gender (For example - bigender, gender non-conforming, androgynous)",
+   "Transgender man, male, or masculine",
+   "Transgender woman, female or feminine",
+   "Woman, female or feminine ",
+   "I prefer to self describe:",
+   "I don't wish to answer"
+  ]
+ },
+ {
+  "id": "h108",
+  "label": "Do you identify as a military veteran or service member?",
+  "type": "multi_value_multi_select",
+  "name": "demographic_4000409002",
+  "options": [
+   "Yes",
+   "No",
+   "I don't wish to answer"
+  ]
+ },
+ {
+  "id": "h109",
+  "label": "Are you a person living with a disability?",
+  "type": "multi_value_single_select",
+  "name": "demographic_4000995002",
+  "options": [
+   "Blindness",
+   "Chronic illness or pain",
+   "Deaf or hard of hearing",
+   "Wheelchair user",
+   "None of these apply",
+   "Other, please specify..."
+  ]
+ },
+ {
+  "id": "h110",
+  "label": "CLEARANCE ELIGIBILITY - This position may require eligibility to obtain and maintain a U.S. security clearance.",
+  "type": "multi_value_single_select",
+  "name": "question_9753036007",
+  "options": [
+   "Yes, I hold an active U.S. security clearance",
+   "Yes, I am eligible for a U.S. security clearance",
+   "No"
+  ]
+ },
+ {
+  "id": "h111",
+  "label": "If you have held a U.S. security clearance in the past, what clearance level have you held?",
+  "type": "multi_value_single_select",
+  "name": "question_9753037007",
+  "options": [
+   "N/A - have never held U.S. security clearance",
+   "Confidential",
+   "Secret",
+   "Top Secret"
+  ]
+ },
+ {
+  "id": "h112",
+  "label": "EXPORT CONTROLS - This position requires access to information and technology that is subject to U.S. export controls. Your responses to the questions below will be used solely to determine your eligibility under U.S. law to receive information and materials subject to U.S. export controls.",
+  "type": "multi_value_single_select",
+  "name": "question_9753038007",
+  "options": [
+   "A United States citizen or national",
+   "A person lawfully admitted for permanent residence of the United States (i.e., “Green Card” holder)",
+   "A person admitted as a refugee to the United States under 8 U.S.C. 1157",
+   "A person admitted as an asylee to the United States under 8 U.S.C. 1158",
+   "None of the above"
+  ]
+ },
+ {
+  "id": "h113",
+  "label": "U.S. WORK AUTHORIZATION",
+  "type": "multi_value_single_select",
+  "name": "question_9753039007",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h114",
+  "label": "Will you require sponsorship from Anduril for employment now or in the future (e.g, H1B visa)?",
+  "type": "multi_value_single_select",
+  "name": "question_9753040007",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h115",
+  "label": "U.S. Person status and/or U.S. clearance eligibility is required for this role due to access requirements for U.S. export-controlled information/facilities and/or depending on program, are you eligible to meet this requirement?",
+  "type": "multi_value_single_select",
+  "name": "question_9753041007",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h116",
+  "label": "HISTORY WITH ANDURIL",
+  "type": "multi_value_single_select",
+  "name": "question_9753042007",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h117",
+  "label": "Have you ever been employed by Anduril or any company that Anduril has acquired?",
+  "type": "multi_value_single_select",
+  "name": "question_9753043007",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h118",
+  "label": "CONFLICT OF INTEREST",
+  "type": "multi_value_single_select",
+  "name": "question_9753044007",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h119",
+  "label": "What is your top location preference?",
+  "type": "multi_value_single_select",
+  "name": "question_12415488007",
+  "options": [
+   "Costa Mesa, CA",
+   "Fort Collins, CO"
+  ]
+ },
+ {
+  "id": "h120",
+  "label": "Do you have a minimum of 3 months - 2 years of technical work to include technical internship and able to start full time in 2026?",
+  "type": "multi_value_single_select",
+  "name": "question_9753998007",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h121",
+  "label": "Are you open to a rotational program?",
+  "type": "multi_value_single_select",
+  "name": "question_9755019007",
+  "options": [
+   "Yes",
+   "No"
+  ]
+ },
+ {
+  "id": "h122",
+  "label": "How did you hear about Anduril?",
+  "type": "multi_value_single_select",
+  "name": "question_9802058007",
+  "options": [
+   "Google job search",
+   "News coverage of Anduril",
+   "Don't Work at Anduril campaign",
+   "Friend/know someone at the company",
+   "Outreach from an Anduril recruiter",
+   "JobsOhio",
+   "BuiltIn",
+   "Indeed",
+   "Anduril social media",
+   "Anduril YouTube videos",
+   "Podcast featuring an Anduril leader",
+   "LinkedIn",
+   "GitHub",
+   "Handshake",
+   "Glassdoor",
+   "Simplify",
+   "Anduril Website",
+   "ClearanceJobs",
+   "University Career Fair",
+   "Networking Event",
+   "Hardware FYI",
+   "Other"
+  ]
+ },
+ {
+  "id": "h123",
+  "label": "If other, please specify",
+  "type": "input_text",
+  "name": "question_9802065007",
+  "options": []
+ },
+ {
+  "id": "h124",
+  "label": "Legal First Name",
+  "type": "input_text",
+  "name": "question_13259830007",
+  "options": []
+ },
+ {
+  "id": "h125",
+  "label": "Legal Last Name",
+  "type": "input_text",
+  "name": "question_13259833007",
+  "options": []
+ }
+]
