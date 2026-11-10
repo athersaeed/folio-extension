@@ -28,6 +28,32 @@ function setNativeValue(el, value) {
   Object.getOwnPropertyDescriptor(proto, "value").set.call(el, value);
 }
 
+// Workday (and other forms that validate on blur) only commit a value when they
+// see the field gain and lose focus *after* re-rendering with the input. Two
+// things break that: programmatic focus()/blur() fire no events while the page
+// window is unfocused (the toolbar popup has focus), and a blur in the same
+// tick as the input event is handled before React re-renders, so the blur
+// validator still sees the old, empty value. So: yield between steps, and fire
+// the focus events ourselves when the browser didn't.
+const FOCUS = {
+  focus: ["focus", "focusin"],
+  blur: ["blur", "focusout"],
+};
+function focusMove(el, dir) {
+  const [own, bubbling] = FOCUS[dir];
+  let seen = false;
+  const note = () => (seen = true);
+  el.addEventListener(own, note, { once: true });
+  el[dir]();
+  el.removeEventListener(own, note);
+  if (seen) return;
+  const Ctor = el.ownerDocument.defaultView.FocusEvent;
+  el.dispatchEvent(new Ctor(own, { bubbles: false }));
+  el.dispatchEvent(new Ctor(bubbling, { bubbles: true }));
+}
+export const enter = (el) => focusMove(el, "focus");
+export const leave = (el) => focusMove(el, "blur");
+
 const pressed = (b) => b.getAttribute("aria-pressed") === "true";
 
 export function hasValue(field) {
@@ -61,12 +87,15 @@ export function readValue(field) {
   return el.value || "";
 }
 
-export function fillText(el, value) {
-  el.focus();
+export async function fillText(el, value) {
+  enter(el);
+  await sleep(0);
   setNativeValue(el, value);
   fire(el, "input");
+  await sleep(0);
   fire(el, "change");
-  el.blur();
+  leave(el);
+  await sleep(0);
   // Masked inputs (phone, dates) reformat as they go; same characters means it stuck.
   const bare = (v) => v.replace(/[^\p{L}\p{N}]/gu, "");
   const got = bare(el.value),
@@ -155,7 +184,7 @@ export async function fillSuggest(
   const results = () => [
     ...scope.querySelectorAll('.dropdown-location, [role="option"]'),
   ];
-  el.focus();
+  enter(el);
   setNativeValue(el, value);
   fire(el, "input");
   key(el, "keydown", "a");
@@ -169,14 +198,14 @@ export async function fillSuggest(
   if (i < 0) {
     setNativeValue(el, "");
     fire(el, "input");
-    el.blur();
+    leave(el);
     return false;
   }
   mouse(options[i], "mousedown");
   mouse(options[i], "mouseup");
   mouse(options[i], "click");
   await sleep(50);
-  el.blur();
+  leave(el);
   return !!el.value.trim();
 }
 
@@ -240,7 +269,7 @@ async function waitForOptions(el, ms = 1500) {
   return [];
 }
 async function openCombobox(el) {
-  el.focus();
+  enter(el);
   // Greenhouse opens its menu on keyup / mouseup, not on react-select's own
   // mousedown, so send the full sequences and stop as soon as options appear.
   key(el, "keydown", "ArrowDown");
@@ -276,14 +305,14 @@ export async function fillCombobox(
       setNativeValue(el, "");
       fire(el, "input");
     }
-    el.blur();
+    leave(el);
     return false;
   }
   mouse(options[i], "mousedown");
   mouse(options[i], "mouseup");
   mouse(options[i], "click");
   await sleep(100);
-  el.blur();
+  leave(el);
   return !!comboboxValue(el) || el.value === options[i].textContent.trim();
 }
 

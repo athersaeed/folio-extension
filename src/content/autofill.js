@@ -136,7 +136,7 @@ export async function autofill(
         ok = await fillButtons(field, value, key);
       else if (field.kind === "checkbox" || field.kind === "checkboxes")
         ok = false;
-      else ok = fillText(field.el, textForEntry(key, value));
+      else ok = await fillText(field.el, textForEntry(key, value));
     } catch (e) {
       entry.error = String(e?.message || e);
     }
@@ -246,7 +246,7 @@ export async function autofill(
         ok = await fillCombobox(field.el, value, profileKey);
       else if (field.kind === "suggest")
         ok = await fillSuggest(field.el, value, profileKey);
-      else ok = fillText(field.el, value);
+      else ok = await fillText(field.el, value);
     } catch (e) {
       entry.error = String(e?.message || e);
     }
