@@ -111,11 +111,33 @@ function buttonGroups(root, fields) {
   }
 }
 
+// Workday's dropdowns are a <button aria-haspopup="listbox"> showing
+// "Select One"; the option list only exists once it is clicked.
+function listboxButtons(root, fields) {
+  for (const el of root.querySelectorAll('button[aria-haspopup="listbox"]')) {
+    if (!visible(el)) continue;
+    const label = labelFor(el);
+    fields.push({
+      el,
+      id: el.id || "",
+      name: el.getAttribute("name") || "",
+      autocomplete: "",
+      required:
+        el.getAttribute("aria-required") === "true" ||
+        /\brequired\b/i.test(el.getAttribute("aria-label") || "") ||
+        /\*\s*$/.test(label),
+      kind: "combobox",
+      label,
+    });
+  }
+}
+
 export function collectFields(root) {
   const fields = [];
   const radioGroups = new Map();
   const checkGroups = new Map();
   buttonGroups(root, fields);
+  listboxButtons(root, fields);
   for (const el of root.querySelectorAll("input, textarea, select")) {
     const type = (el.getAttribute("type") || "text").toLowerCase();
     if (SKIP_TYPES.has(type) || !visible(el)) continue;

@@ -65,7 +65,10 @@ export function hasValue(field) {
   if (kind === "file") return el.files?.length > 0;
   if (kind === "select") return el.selectedIndex > 0 && !!el.value;
   // Ashby's autocomplete keeps the picked value in the input itself.
-  if (kind === "combobox") return !!comboboxValue(el) || !!el.value.trim();
+  if (kind === "combobox")
+    return (
+      !!comboboxValue(el) || (el.tagName !== "BUTTON" && !!el.value.trim())
+    );
   return !!el.value.trim();
 }
 
@@ -83,7 +86,8 @@ export function readValue(field) {
     return field.options.find((o) => pressed(o.el))?.label || "";
   if (kind === "select")
     return el.value ? el.selectedOptions[0]?.textContent.trim() || "" : "";
-  if (kind === "combobox") return comboboxValue(el) || el.value || "";
+  if (kind === "combobox")
+    return comboboxValue(el) || (el.tagName === "BUTTON" ? "" : el.value || "");
   return el.value || "";
 }
 
@@ -223,6 +227,7 @@ function comboboxRoot(el) {
 }
 // Single selects show one value; multi selects (pronouns) show a chip per pick.
 function comboboxValue(el) {
+  if (el.tagName === "BUTTON") return buttonValue(el);
   const root = comboboxRoot(el);
   const single = root?.querySelector(
     '[class*="single-value"], [class*="singleValue"]',
@@ -282,12 +287,61 @@ async function openCombobox(el) {
   mouse(control, "click");
   return waitForOptions(el, 500);
 }
+// --- Workday listbox buttons ---------------------------------------------
+const PLACEHOLDER = /^(select( one)?|choose( one)?|please select|-+)?\.*$/i;
+function buttonValue(el) {
+  const shown = (el.textContent || "").replace(/\s+/g, " ").trim();
+  return PLACEHOLDER.test(shown) ? "" : shown;
+}
+// Workday renders the open list in a popup at the end of <body>.
+function openListbox(el) {
+  const doc = el.ownerDocument;
+  const owned =
+    el.getAttribute("aria-controls") || el.getAttribute("aria-owns");
+  const scope = owned && doc.getElementById(owned);
+  if (scope) return [...scope.querySelectorAll('[role="option"]')];
+  const open = [...doc.querySelectorAll('[role="listbox"]')].filter(
+    (l) => l !== el && l.querySelector('[role="option"]'),
+  );
+  return open.length === 1
+    ? [...open[0].querySelectorAll('[role="option"]')]
+    : [];
+}
+async function fillListboxButton(el, pick) {
+  enter(el);
+  mouse(el, "mousedown");
+  mouse(el, "mouseup");
+  mouse(el, "click");
+  let options = [];
+  for (let t = 0; t < 2000 && !options.length; t += 50) {
+    await sleep(50);
+    options = openListbox(el);
+  }
+  const i = pick(options.map((o) => o.textContent.replace(/\s+/g, " ").trim()));
+  if (i < 0) {
+    if (options.length) {
+      key(el, "keydown", "Escape");
+      key(el, "keyup", "Escape");
+    }
+    leave(el);
+    return false;
+  }
+  options[i].scrollIntoView?.({ block: "nearest" });
+  mouse(options[i], "mousedown");
+  mouse(options[i], "mouseup");
+  mouse(options[i], "click");
+  for (let t = 0; t < 1000 && !buttonValue(el); t += 50) await sleep(50);
+  leave(el);
+  return !!buttonValue(el);
+}
+
 export async function fillCombobox(
   el,
   value,
   profileKey,
   pick = byWording(value, profileKey),
 ) {
+  if (el.tagName === "BUTTON") return fillListboxButton(el, pick);
   let options = await openCombobox(el);
   // Async lists (locations) only load after typing.
   if (!options.length || pick(options.map((o) => o.textContent)) < 0) {

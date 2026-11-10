@@ -135,7 +135,7 @@ const RULES = [
   { key: "city", re: /^(city|town|city town|town city)$/ },
   {
     key: "region",
-    re: /^(state|province|region|territory)( ?\/ ?(state|province|region|territory))*( of residence)?$|^state or province$|^province or state$|\b(state|province)\b.*\b(reside|live|located|based)\b|\b(state|province) of residence\b/,
+    re: /^(state|province|region|territory)( ?(\/|or) ?(state|province|region|territory))*( of residence)?$|\b(state|province)\b.*\b(reside|live|located|based)\b|\b(state|province) of residence\b/,
     guard:
       /\b(city|country|address)\b|^(please )?state (your|the|why|how|what|where|which)\b/,
   },

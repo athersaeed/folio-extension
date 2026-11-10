@@ -30,6 +30,8 @@ const CASES = [
   ["Address", "addressLine1"],
   ["Address Line 2 (Optional)", "addressLine2"],
   ["Province/State", "region"],
+  ["Province or Territory", "region"],
+  ["State or Province", "region"],
   ["State", "region"],
   ["Which U.S. State or Canadian Province do you reside in?", "region"],
   ["What province do you live in?", "region"],
