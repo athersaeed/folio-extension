@@ -6,6 +6,11 @@
           "version": "0.1.6",
           "update_link": "https://github.com/athersaeed/folio-extension/releases/download/v0.1.6/folio-autofill-0.1.6.xpi",
           "update_hash": "sha256:16c76a740b3e2382de28526606c01004a7b463eb439b3a01b18e6e5af94972f7"
+        },
+        {
+          "version": "0.1.7",
+          "update_link": "https://github.com/athersaeed/folio-extension/releases/download/v0.1.7/folio-autofill-0.1.7.xpi",
+          "update_hash": "sha256:4b62cc961b5ba971b4db533fe71b6555990127c1f4051d3c2cd81d6f834a576b"
         }
       ]
     }
