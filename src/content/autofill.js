@@ -52,41 +52,53 @@ export async function autofill(
   // fields that showed up during the pass.
   const seen = new Set();
   const passes = 3 + wanted.education + wanted.experience;
+  let clicked = false;
   for (let pass = 0; pass < passes; pass++) {
-    if (pass) await sleep(150);
+    // After an "Add" click, give the form time to render the new entry.
+    if (pass) await waitForNew(clicked ? 2000 : 150);
     const all = collectFields(doc);
     const { entries } = assignEntries(all);
     const fresh = all.filter((f) => !seen.has(f.el));
-    if (!fresh.length) break;
+    if (pass && !fresh.length && !clicked) break;
     for (const field of fresh) {
       seen.add(field.el);
       const slot = entries.get(field);
       if (slot) await fillEntryField(field, slot);
       else await fillField(field);
     }
-    for (const section of SECTIONS) addEntry(section);
+    clicked = false;
+    for (const section of SECTIONS) clicked = addEntry(section) || clicked;
   }
   return report;
+
+  async function waitForNew(ms) {
+    for (let t = 0; t < ms; t += 50) {
+      await sleep(50);
+      if (collectFields(doc).some((f) => !seen.has(f.el))) return;
+    }
+  }
 
   // Clicks the section's "Add another" when the resume has more entries than
   // the form shows, but only after every earlier entry filled cleanly, at most
   // once per pass, and never more than the resume needs.
+  // Workday starts a section with no entry at all, just an "Add" button under
+  // its heading; that click starts the first entry.
   function addEntry(section) {
     const all = collectFields(doc);
     const { entries, count } = assignEntries(all);
     const have = count[section];
-    if (
-      !have ||
-      have >= wanted[section] ||
-      added[section] >= wanted[section] - 1
-    )
-      return;
-    for (let i = 0; i < have; i++) if (bad.has(`${section}:${i}`)) return;
-    const last = all.filter((f) => entries.get(f)?.section === section).pop();
-    const button = addButtonAfter(last.el);
-    if (!button) return;
+    if (have >= wanted[section] || added[section] >= wanted[section])
+      return false;
+    for (let i = 0; i < have; i++) if (bad.has(`${section}:${i}`)) return false;
+    let button;
+    if (have) {
+      const last = all.filter((f) => entries.get(f)?.section === section).pop();
+      button = addButtonAfter(last.el) || sectionAddButton(doc, section);
+    } else button = sectionAddButton(doc, section);
+    if (!button) return false;
     button.click();
     added[section]++;
+    return true;
   }
 
   async function fillEntryField(field, slot) {
@@ -325,6 +337,34 @@ function addButtonAfter(el) {
       ADD.test(b.textContent.replace(/\s+/g, " ").trim()) &&
       el.compareDocumentPosition(b) & after,
   );
+}
+
+// A bare "Add" / "Add Another" button whose nearest heading names the section.
+const SECTION_HEADING = {
+  education: /^education\b/i,
+  experience:
+    /^(work experience|employment( history)?|experience|work history)\b/i,
+};
+const BARE_ADD = /^\+?\s*add( another)?$/i;
+function sectionAddButton(doc, section) {
+  const before = doc.defaultView.Node.DOCUMENT_POSITION_PRECEDING;
+  for (const b of doc.querySelectorAll("button, [role=button]")) {
+    if (!BARE_ADD.test(b.textContent.replace(/\s+/g, " ").trim())) continue;
+    for (
+      let box = b.parentElement, i = 0;
+      box && i < 6;
+      box = box.parentElement, i++
+    ) {
+      const heads = [
+        ...box.querySelectorAll("h1, h2, h3, h4, [role=heading], legend"),
+      ].filter((h) => b.compareDocumentPosition(h) & before);
+      if (!heads.length) continue;
+      const title = heads.pop().textContent.replace(/\s+/g, " ").trim();
+      if (SECTION_HEADING[section].test(title)) return b;
+      break;
+    }
+  }
+  return null;
 }
 
 // Hidden upload inputs: outline the visible group instead.

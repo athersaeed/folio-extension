@@ -9,7 +9,7 @@ const RULES = [
   {
     key: "school",
     section: "education",
-    re: /^(school|school name|university|college|institution)( name)?$/,
+    re: /^(school|school name|university|college|institution|school or university)( name)?$/,
   },
   {
     key: "degree",
@@ -36,6 +36,11 @@ const RULES = [
     section: "experience",
     re: /^(current role|i currently work here|current(ly)? (employed|working) here|current position)$/,
   },
+  {
+    key: "description",
+    section: "experience",
+    re: /^(role description|job description|description of (your )?(role|duties|responsibilities))$/,
+  },
   // Dates belong to whichever section the entry around them is in.
   { key: "startMonth", re: /^start (date )?month$/ },
   { key: "startYear", re: /^start (date )?year$/ },
@@ -43,7 +48,38 @@ const RULES = [
   { key: "endYear", re: /^end (date )?year$/ },
 ];
 
+// Workday ids name the section and field: "workExperience-3--jobTitle",
+// "education-5--schoolName", "workExperience-3--startDate-dateSectionMonth-input".
+const WORKDAY_KEYS = {
+  jobTitle: "title",
+  companyName: "company",
+  currentlyWorkHere: "current",
+  roleDescription: "description",
+  schoolName: "school",
+  degree: "degree",
+  fieldOfStudy: "discipline",
+};
+const WORKDAY_DATES = {
+  startDate: "start",
+  endDate: "end",
+  firstYearAttended: "start",
+  lastYearAttended: "end",
+};
+function workdayKind(id) {
+  const m = id.match(
+    /^(workExperience|education)-\d+--([A-Za-z]+)(?:-dateSection(Month|Year)-input)?$/,
+  );
+  if (!m) return null;
+  const section = m[1] === "education" ? "education" : "experience";
+  const [, , name, part] = m;
+  if (WORKDAY_DATES[name])
+    return part ? { key: `${WORKDAY_DATES[name]}${part}`, section } : null;
+  return WORKDAY_KEYS[name] ? { key: WORKDAY_KEYS[name], section } : null;
+}
+
 export function entryKind(field) {
+  const workday = workdayKind(field.id || "");
+  if (workday) return workday;
   for (const text of [
     normalize(field.label),
     normalize(`${field.id} ${field.name}`)
@@ -136,6 +172,8 @@ export function entryValue(applicant, { section, index, key }) {
       return item.company || null;
     case "title":
       return item.title || null;
+    case "description":
+      return item.description || null;
     case "current":
       return !!end?.present;
     case "startMonth":
