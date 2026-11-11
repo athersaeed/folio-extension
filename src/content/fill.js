@@ -56,6 +56,9 @@ export const leave = (el) => focusMove(el, "blur");
 
 const pressed = (b) => b.getAttribute("aria-pressed") === "true";
 
+// Workday's buttons and search prompts show their value elsewhere, not in .value.
+const selfValued = (el) => el.tagName !== "BUTTON" && !isPrompt(el);
+
 export function hasValue(field) {
   const { el, kind } = field;
   if (kind === "radio" || kind === "checkboxes")
@@ -66,9 +69,7 @@ export function hasValue(field) {
   if (kind === "select") return el.selectedIndex > 0 && !!el.value;
   // Ashby's autocomplete keeps the picked value in the input itself.
   if (kind === "combobox")
-    return (
-      !!comboboxValue(el) || (el.tagName !== "BUTTON" && !!el.value.trim())
-    );
+    return !!comboboxValue(el) || (selfValued(el) && !!el.value.trim());
   return !!el.value.trim();
 }
 
@@ -87,7 +88,7 @@ export function readValue(field) {
   if (kind === "select")
     return el.value ? el.selectedOptions[0]?.textContent.trim() || "" : "";
   if (kind === "combobox")
-    return comboboxValue(el) || (el.tagName === "BUTTON" ? "" : el.value || "");
+    return comboboxValue(el) || (selfValued(el) ? el.value || "" : "");
   return el.value || "";
 }
 
@@ -228,6 +229,7 @@ function comboboxRoot(el) {
 // Single selects show one value; multi selects (pronouns) show a chip per pick.
 function comboboxValue(el) {
   if (el.tagName === "BUTTON") return buttonValue(el);
+  if (isPrompt(el)) return promptValue(el);
   const root = comboboxRoot(el);
   const single = root?.querySelector(
     '[class*="single-value"], [class*="singleValue"]',
@@ -300,36 +302,103 @@ function openListbox(el) {
     el.getAttribute("aria-controls") || el.getAttribute("aria-owns");
   const scope = owned && doc.getElementById(owned);
   if (scope) return [...scope.querySelectorAll('[role="option"]')];
+  // Closed Workday popups can linger in the DOM hidden; use the newest shown one.
+  const view = doc.defaultView;
+  const shown = (n) => {
+    for (let x = n; x && x.nodeType === 1; x = x.parentElement) {
+      if (x.getAttribute("aria-hidden") === "true") return false;
+      const st = view.getComputedStyle(x);
+      if (st.display === "none" || st.visibility === "hidden") return false;
+    }
+    return true;
+  };
   const open = [...doc.querySelectorAll('[role="listbox"]')].filter(
-    (l) => l !== el && l.querySelector('[role="option"]'),
+    (l) => l !== el && l.querySelector('[role="option"]') && shown(l),
   );
-  return open.length === 1
-    ? [...open[0].querySelectorAll('[role="option"]')]
+  return open.length
+    ? [...open.at(-1).querySelectorAll('[role="option"]')]
     : [];
 }
+const optionText = (o) => o.textContent.replace(/\s+/g, " ").trim();
+async function waitForListbox(el, ms) {
+  for (let t = 0; t < ms; t += 50) {
+    await sleep(50);
+    const options = openListbox(el);
+    if (options.length) return options;
+  }
+  return [];
+}
+function choose(option) {
+  option.scrollIntoView?.({ block: "nearest" });
+  mouse(option, "mousedown");
+  mouse(option, "mouseup");
+  mouse(option, "click");
+}
+function closeList(el) {
+  key(el, "keydown", "Escape");
+  key(el, "keyup", "Escape");
+}
+
+// Workday's search prompts (Field of Study, "How did you hear about us"): type,
+// press Enter, pick a result; the pick shows as a pill and the box empties.
+const isPrompt = (el) =>
+  el.getAttribute("data-uxi-widget-type") === "selectinput" ||
+  el.getAttribute("data-automation-id") === "searchBox";
+function promptRoot(el) {
+  return (
+    el.closest('[data-automation-id^="formField"]') ||
+    el.closest('[data-automation-id="multiSelectContainer"]') ||
+    el.parentElement?.parentElement ||
+    el.parentElement
+  );
+}
+function promptValue(el) {
+  return [
+    ...(promptRoot(el)?.querySelectorAll(
+      '[data-automation-id="selectedItem"]',
+    ) || []),
+  ]
+    .map((p) => p.textContent.replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .join(", ");
+}
+async function fillPrompt(el, value, pick) {
+  enter(el);
+  setNativeValue(el, value);
+  fire(el, "input");
+  await sleep(0);
+  key(el, "keydown", "Enter");
+  key(el, "keypress", "Enter");
+  key(el, "keyup", "Enter");
+  const options = await waitForListbox(el, 3000);
+  const i = pick(options.map(optionText));
+  if (i < 0) {
+    if (options.length) closeList(el);
+    setNativeValue(el, "");
+    fire(el, "input");
+    leave(el);
+    return false;
+  }
+  choose(options[i]);
+  for (let t = 0; t < 1500 && !promptValue(el); t += 50) await sleep(50);
+  if (openListbox(el).length) closeList(el);
+  leave(el);
+  return !!promptValue(el);
+}
+
 async function fillListboxButton(el, pick) {
   enter(el);
   mouse(el, "mousedown");
   mouse(el, "mouseup");
   mouse(el, "click");
-  let options = [];
-  for (let t = 0; t < 2000 && !options.length; t += 50) {
-    await sleep(50);
-    options = openListbox(el);
-  }
-  const i = pick(options.map((o) => o.textContent.replace(/\s+/g, " ").trim()));
+  const options = await waitForListbox(el, 2000);
+  const i = pick(options.map(optionText));
   if (i < 0) {
-    if (options.length) {
-      key(el, "keydown", "Escape");
-      key(el, "keyup", "Escape");
-    }
+    if (options.length) closeList(el);
     leave(el);
     return false;
   }
-  options[i].scrollIntoView?.({ block: "nearest" });
-  mouse(options[i], "mousedown");
-  mouse(options[i], "mouseup");
-  mouse(options[i], "click");
+  choose(options[i]);
   for (let t = 0; t < 1000 && !buttonValue(el); t += 50) await sleep(50);
   leave(el);
   return !!buttonValue(el);
@@ -342,6 +411,7 @@ export async function fillCombobox(
   pick = byWording(value, profileKey),
 ) {
   if (el.tagName === "BUTTON") return fillListboxButton(el, pick);
+  if (isPrompt(el)) return fillPrompt(el, value, pick);
   let options = await openCombobox(el);
   // Async lists (locations) only load after typing.
   if (!options.length || pick(options.map((o) => o.textContent)) < 0) {

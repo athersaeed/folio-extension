@@ -238,6 +238,17 @@ export function matchOption(options, value, key = "") {
       )
       .filter((n) => n >= 0);
     if (hits.length === 1) return hits[0];
+    // Several of the level ("Bachelor of Arts (BA)", "Bachelor of Science
+    // (BS)"): the one that reads as the saved degree, fewest extra words first.
+    const starts = (a, b) => a === b || a.startsWith(`${b} `);
+    const same = hits
+      .filter((n) => starts(list[n], wanted) || starts(wanted, list[n]))
+      .sort(
+        (a, b) =>
+          Math.abs(list[a].length - wanted.length) -
+          Math.abs(list[b].length - wanted.length),
+      );
+    if (same.length) return same[0];
     // "Bachelors" and "Bachelor's Degree" both mean the same thing; a
     // qualified one ("Accelerated Master's") does not, so pick only plain ones.
     const plain = hits.filter((n) =>

@@ -154,3 +154,90 @@ test("adds and fills Workday work and education entries from empty", async () =>
     JSON.stringify(report.filter((e) => e.status === "failed")),
   );
 });
+
+// Education entry with a Degree button (several bachelor options) and a
+// Field of Study search prompt: type + Enter shows results, a pick adds a pill.
+function educationPage() {
+  const { window } =
+    new JSDOM(`<form><div data-automation-id="formField-degree">
+      <label for="education-4--degree">Degree*</label>
+      <button type="button" id="education-4--degree" aria-haspopup="listbox">Select One</button></div>
+    <div data-automation-id="formField-fieldOfStudy">
+      <label for="education-4--fieldOfStudy">Field of Study</label>
+      <div data-automation-id="multiSelectContainer"><div class="pills"></div>
+        <input id="education-4--fieldOfStudy" data-uxi-widget-type="selectinput" data-automation-id="searchBox" placeholder="Search">
+      </div></div>
+    <ul role="listbox" style="display:none"><li role="option">Stale</li></ul></form>`);
+  const doc = window.document;
+  const popup = (items, onPick) => {
+    doc.querySelectorAll(".popup").forEach((p) => p.remove());
+    const box = doc.createElement("div");
+    box.className = "popup";
+    box.innerHTML = `<ul role="listbox">${items.map((t) => `<li role="option">${t}</li>`).join("")}</ul>`;
+    box.addEventListener("click", (e) => {
+      const li = e.target.closest('[role="option"]');
+      if (li) (onPick(li.textContent), box.remove());
+    });
+    doc.body.append(box);
+  };
+  const degree = doc.getElementById("education-4--degree");
+  degree.addEventListener("click", () =>
+    popup(
+      [
+        "High School",
+        "Bachelor of Arts (BA)",
+        "Bachelor of Science (BS)",
+        "Bachelor of Science in Nursing",
+        "Master of Science (MS)",
+      ],
+      (t) => (degree.textContent = t),
+    ),
+  );
+  const study = doc.getElementById("education-4--fieldOfStudy");
+  study.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    setTimeout(
+      () =>
+        popup(
+          [
+            "Computer Engineering",
+            "Computer Science",
+            "Computer Information Systems",
+          ],
+          (t) => {
+            doc.querySelector(".pills").innerHTML =
+              `<div data-automation-id="selectedItem">${t}</div>`;
+            study.value = "";
+          },
+        ),
+      100,
+    );
+  });
+  return doc;
+}
+
+test("picks the matching Workday degree and searches Field of Study", async () => {
+  const doc = educationPage();
+  const report = await autofill(doc, {
+    fields: {},
+    education: [
+      {
+        school: "",
+        degree: "Bachelor of Science",
+        fieldOfStudy: "Computer Science",
+      },
+    ],
+  });
+  assert.equal(
+    doc.getElementById("education-4--degree").textContent,
+    "Bachelor of Science (BS)",
+  );
+  assert.equal(
+    doc.querySelector('[data-automation-id="selectedItem"]')?.textContent,
+    "Computer Science",
+  );
+  assert.deepEqual(
+    report.filter((e) => e.status !== "filled").map((e) => e.key),
+    [],
+  );
+});

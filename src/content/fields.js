@@ -193,6 +193,12 @@ export function collectFields(root) {
     else if (type === "file") kind = "file";
     else if (type === "checkbox") kind = "checkbox";
     else if (el.getAttribute("role") === "combobox") kind = "combobox";
+    // Workday's search prompts only keep a value picked from their results.
+    else if (
+      el.getAttribute("data-uxi-widget-type") === "selectinput" ||
+      el.getAttribute("data-automation-id") === "searchBox"
+    )
+      kind = "combobox";
     // Lever's location box: typed text only counts once a suggestion is picked.
     else if (el.classList.contains("location-input")) kind = "suggest";
     const label = kind === "file" ? fileLabel(el) : labelFor(el);
