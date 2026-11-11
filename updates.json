@@ -1,7 +1,13 @@
 {
   "addons": {
     "folio-autofill@folio.local": {
-      "updates": []
+      "updates": [
+        {
+          "version": "0.1.6",
+          "update_link": "https://github.com/athersaeed/folio-extension/releases/download/v0.1.6/folio-autofill-0.1.6.xpi",
+          "update_hash": "sha256:16c76a740b3e2382de28526606c01004a7b463eb439b3a01b18e6e5af94972f7"
+        }
+      ]
     }
   }
 }
