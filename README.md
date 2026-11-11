@@ -39,6 +39,12 @@ a Gecko ID and no Chrome-only manifest keys.
   `.env` and paste them in. Then `npm run sign:firefox` builds, uploads, waits
   for Mozilla's signature and saves the signed `.xpi` in `web-ext-artifacts/`.
   Bump `version` in `static/manifest.json` before signing a new release.
+- **Updates:** from 0.1.6 the Firefox build carries an `update_url` pointing at
+  `updates.json` in this repo. To ship a version, bump `version` in
+  `static/manifest.json` and `package.json`, commit, then `npm run release`: it
+  tests, signs, pushes, attaches the `.xpi` to a GitHub release and adds it to
+  `updates.json`. Installed copies update on Firefox's next check
+  (about:addons → gear → **Check for Updates** to force it).
   (`npm run package:firefox` only builds an unsigned zip, for manual upload.)
 - **Site access:** Firefox lets you withhold an add-on's site access. The popup
   asks for access to Folio and the job sites (Greenhouse, Lever, Ashby) when you click **Save and connect** or

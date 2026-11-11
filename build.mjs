@@ -25,6 +25,9 @@ const firefoxManifest = () => {
     gecko: {
       id: "folio-autofill@folio.local",
       strict_min_version: "140.0",
+      // Firefox checks this for new signed versions; `npm run release` keeps it current.
+      update_url:
+        "https://raw.githubusercontent.com/athersaeed/folio-extension/main/updates.json",
       // Data only goes to the user's own Folio on 127.0.0.1, never to us.
       data_collection_permissions: { required: ["none"] },
     },
